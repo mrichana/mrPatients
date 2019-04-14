@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <mat-toolbar class="header">
     mrPatients
     <span class="fill-center"></span>
@@ -14,4 +14,25 @@
   </mat-toolbar>
 
   <router-outlet></router-outlet>
+</div> -->
+
+
+<div class="flex-col">
+  <mat-toolbar class="header">
+    mrPatients
+    <span class="fill-center"></span>
+    <button mat-icon-button (click)="auth.signOut()" *ngIf="auth.user$ | async as user; else login">
+      <img class="photo" src="{{user.photoURL}}">
+    </button>
+
+    <ng-template #login>
+      <button mat-icon-button (click)="auth.googleSignin()">
+        <mat-icon>person</mat-icon>
+      </button>
+    </ng-template>
+  </mat-toolbar>
+    
+  <div class="scroll">
+    <router-outlet></router-outlet>
+  </div>
 </div>

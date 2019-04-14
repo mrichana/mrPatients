@@ -12,20 +12,20 @@
     </mat-button-toggle>
   </mat-button-toggle-group>
 </mat-menu>
-<div class="section">    
-  <div class="content">
-    <span style="display: flex">
-      <mat-form-field id="search-field" class="fill-center">
-        <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)">
-        <button mat-button matSuffix mat-icon-button>
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-      <button mat-button [matMenuTriggerFor]="sortMenu"><mat-icon>sort</mat-icon></button>
-    </span>
-  </div>
 
-  <div class="content scrollable-content">
+
+<div class="scroll">    
+  <span style="display: flex">
+    <mat-form-field id="search-field" class="fill-center">
+      <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)">
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-button [matMenuTriggerFor]="sortMenu"><mat-icon>sort</mat-icon></button>
+  </span>
+
+  <div>
     <mat-nav-list id="patients-list">
       <a href="{{patient.id}}" mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
         {{displayName(patient.patient)}} {{age(patient.patient)}}
@@ -38,6 +38,6 @@
   </div>
 </div>
 
-  <button mat-fab class="fab-bottom-right">
-    <mat-icon>add</mat-icon>
-  </button>
+<button mat-fab class="fab-bottom-right">
+  <mat-icon>add</mat-icon>
+</button>
