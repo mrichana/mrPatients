@@ -27,7 +27,7 @@
 
   <div>
     <mat-nav-list id="patients-list">
-      <a href="{{patient.id}}" mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
+      <a [routerLink]="['/patient',patient.id]" mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
         {{displayName(patient.patient)}} {{age(patient.patient)}}
         <span class="fill-center"></span>
         <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}"><mat-icon>phone</mat-icon></a>
@@ -38,6 +38,6 @@
   </div>
 </div>
 
-<button mat-fab class="fab-bottom-right" (click)="addPatient()">
+<a mat-fab class="fab-bottom-right" [routerLink]="['/patient', this.searchString]">
   <mat-icon>add</mat-icon>
-</button>
+</a>

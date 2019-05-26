@@ -25,6 +25,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { PatientsComponent } from './patients/patients.component';
 import { LoginComponent } from './login/login.component';
+import { PatientComponent } from './patient/patient.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -39,7 +41,9 @@ const config = {
   declarations: [
     AppComponent,
     LoginComponent,
-    PatientsComponent
+    PatientsComponent,
+    PatientComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

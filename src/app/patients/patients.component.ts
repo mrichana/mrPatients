@@ -13,6 +13,7 @@ import * as moment from 'moment';
 export class PatientsComponent implements OnInit {
 
   private searchObserver: Subscriber<{}>;
+  public searchString: String = '';
 
   constructor(public patients: PatientsService) {
   }
@@ -34,6 +35,7 @@ export class PatientsComponent implements OnInit {
   }
 
   public search (value: string): void {
+    this.searchString = value;
     this.patients.FilterBy(value);
   }
 
@@ -46,6 +48,6 @@ export class PatientsComponent implements OnInit {
   }
 
   public addPatient (): void {
-    console.log("addPatient");
+    console.log('addPatient');
   }
 }

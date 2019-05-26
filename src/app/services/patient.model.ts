@@ -6,4 +6,6 @@ export interface Patient {
     Telephone?: string;
     Mobile?: string;
     Address?: string;
+
+    LastUpdate: firebase.firestore.Timestamp;
 }

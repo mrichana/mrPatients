@@ -108,7 +108,7 @@ export class PatientsService {
 
   private filter (patient: {id: string, patient: Patient}, filterBy: string): boolean {
     const filter = new RegExp( filterBy );
-    const fullText: string = 
+    const fullText: string =
       (  patient.patient.LastName + '|' + patient.patient.FirstName + '|' + (patient.patient.Amka ? patient.patient.Amka + '|' : '')
       + (patient.patient.Mobile ? patient.patient.Mobile + '|' : '') + (patient.patient.Telephone ? patient.patient.Telephone + '|' : '')
       + (patient.patient.Birthdate ? patient.patient.Birthdate.toDate().toLocaleDateString() : '')).toLocaleLowerCase();
