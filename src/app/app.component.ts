@@ -1,7 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
