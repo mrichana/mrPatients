@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Patient } from './../services/patient.model';
 import { PatientService } from './../services/patient.service';
+import { PatientFormatingService} from './../services/patient-formating.service';
 
 @Component({
   selector: 'app-patient',
@@ -11,11 +13,12 @@ import { PatientService } from './../services/patient.service';
 export class PatientComponent implements OnInit {
 
   private patientId: string;
+  public patient$: Observable<Patient>;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private patientService: PatientService
+    private patientService: PatientService,
+    public patientFormat: PatientFormatingService
   ) { }
 
   ngOnInit() {
@@ -23,9 +26,7 @@ export class PatientComponent implements OnInit {
     _this.route.paramMap.subscribe(
       (params: ParamMap) => {
         _this.patientId = params.get('id');
-        _this.patientService.loadPatient(_this.patientId).subscribe(patient => {
-          console.log(patient);
-        });
+        _this.patient$ = _this.patientService.loadPatient(_this.patientId);
       }
     );
   }

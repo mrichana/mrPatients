@@ -15,7 +15,7 @@ import { MatButtonModule,
   MatIconModule,
   MatInputModule,
   MatMenuModule,
-  MatButtonToggleModule, MatSidenavModule,
+  MatButtonToggleModule, MatSidenavModule, MatExpansionModule, MatChipsModule,
 } from '@angular/material';
 
 
@@ -27,6 +27,7 @@ import { PatientsComponent } from './patients/patients.component';
 import { LoginComponent } from './login/login.component';
 import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PatientAddComponent } from './patient-add/patient-add.component';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -43,7 +44,8 @@ const config = {
     LoginComponent,
     PatientsComponent,
     PatientComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PatientAddComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,9 @@ const config = {
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
