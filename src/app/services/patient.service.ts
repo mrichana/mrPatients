@@ -3,6 +3,9 @@ import { Observable, Subject, BehaviorSubject, merge, combineLatest, of } from '
 import { AngularFirestore, DocumentChangeAction, DocumentSnapshot } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import { PatientFormatingService } from '../services/patient-formating.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ import { Injectable } from '@angular/core';
 
 export class PatientService {
 
-  constructor( private auth: AuthService, private db: AngularFirestore ) {
+  constructor( private auth: AuthService, private db: AngularFirestore, public patientFormat: PatientFormatingService) {
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -21,6 +24,15 @@ export class PatientService {
           .collection('patients').doc<Patient>(patientId).valueChanges().subscribe(d => ret.next(d));
       }
     });
+    return ret;
+  }
+
+  public savePatient(patient: Patient): string {
+    return '';
+  }
+
+  public createPatient(data: string): Patient {
+    const ret = this.patientFormat.fromString(data);
     return ret;
   }
 }

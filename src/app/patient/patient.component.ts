@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Patient } from './../services/patient.model';
 import { PatientService } from './../services/patient.service';
 import { PatientFormatingService} from './../services/patient-formating.service';
