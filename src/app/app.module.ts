@@ -6,8 +6,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -62,8 +60,6 @@ const config = {
     AngularFireAuthModule,
 
     BrowserAnimationsModule,
-
-    FlexLayoutModule,
 
     MatButtonModule,
     MatIconModule,

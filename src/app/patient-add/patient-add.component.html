@@ -7,25 +7,31 @@
       <input matInput placeholder="Όνομα" />
     </mat-form-field>
     <mat-radio-group aria-label="Φύλο" class="sex">
-        <mat-radio-button value=false >♀</mat-radio-button>
-        <mat-radio-button value=true>♂</mat-radio-button>
+        <mat-radio-button value=false >♀Θήλυ</mat-radio-button>
+        <mat-radio-button value=true>♂Άρρεν</mat-radio-button>
     </mat-radio-group>
   </div>
-  <mat-form-field>
-    <input matInput placeholder="Α.Μ.Κ.Α." type="tel">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία Γέννησης">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Τηλέφωνο" type="tel">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Κινητό" type="tel">
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput placeholder="Διεύθυνση" type="tel"></textarea>
-  </mat-form-field>
+  <div class="row">
+    <mat-form-field class="amka">
+      <input matInput placeholder="Α.Μ.Κ.Α." type="tel">
+    </mat-form-field>
+    <mat-form-field class="birthDate">
+      <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία Γέννησης">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="telephone">
+      <input matInput placeholder="Τηλέφωνο" type="tel">
+    </mat-form-field>
+    <mat-form-field class="mobile">
+      <input matInput placeholder="Κινητό" type="tel">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="address">
+      <textarea matInput placeholder="Διεύθυνση" type="tel"></textarea>
+    </mat-form-field>
+  </div>
 </form>
