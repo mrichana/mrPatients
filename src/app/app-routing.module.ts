@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'patients', component: PatientsComponent, canActivate: [AuthGuard]},
   { path: 'patient/add/:search', component: PatientAddComponent, canActivate: [AuthGuard]},
+  { path: 'patient/add', component: PatientAddComponent, canActivate: [AuthGuard]},
   { path: 'patient/:id', component: PatientComponent, canActivate: [AuthGuard]},
   { path: '',   redirectTo: '/patients', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent }];

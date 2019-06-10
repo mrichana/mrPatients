@@ -16,12 +16,12 @@
     <h2>{{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}}</h2>
     <mat-nav-list>
       <mat-list-item *ngIf="patient.Amka">Α.Μ.Κ.Α.<span class="fill-center"></span>{{patient.Amka}}</mat-list-item>
-      <mat-list-item *ngIf="patient.Birthdate">Ημερομηνία Γέννησης<span class="fill-center"></span>{{patientFormat.dateString(patient.Birthdate)}}</mat-list-item>
+      <mat-list-item *ngIf="patient.Birthdate">Ημερομηνία Γέννησης<span class="fill-center"></span>{{patientFormat.dateToString(patient.Birthdate)}}</mat-list-item>
       <a mat-list-item *ngIf="patient.Telephone" href="tel:{{patient.Telephone}}"><mat-icon>phone</mat-icon>Τηλεφωνό<span class="fill-center"></span>{{patient.Telephone}}</a>
       <a mat-list-item *ngIf="patient.Mobile" href="tel:{{patient.Mobile}}"><mat-icon>phone_android</mat-icon>Κινητό<span class="fill-center"></span>{{patient.Mobile}}</a>
       <a mat-list-item *ngIf="patient.Address" href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}"><mat-icon>home</mat-icon>Διεύθυνση<span class="fill-center"></span>{{patient.Address}}</a>
   </mat-nav-list>
-  <div style="text-align:right; width:100%; padding:0;">
+  <div class="fab-button">
       <button mat-fab color="warn"><mat-icon>edit</mat-icon></button>
   </div>
 </mat-expansion-panel>
