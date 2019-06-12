@@ -3,6 +3,7 @@ import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {NgForm, NgModel} from '@angular/forms';
 
 @Component({
   selector: 'app-patient-add',
@@ -28,6 +29,11 @@ export class PatientAddComponent implements OnInit {
         _this.patient = _this.patientService.createPatient(_this.patientParameters);
       }
     );
+  }
+
+  onSubmit(): void {
+    console.log('submit');
+    console.log(this.patient);
   }
 
 }

@@ -20,70 +20,74 @@ export class PatientFormatingService {
 
   constructor() { }
 
-  public displayName (patient: Patient): string {
+  public displayName(patient: Patient): string {
     let ret: string = patient.LastName;
     if (patient.FirstName) { ret += (', ' + patient.FirstName); }
     return ret;
   }
 
-  public age (patient: Patient): string {
-    if (!patient.Birthdate) {return ''; }
+  public age(patient: Patient): string {
+    if (!patient.Birthdate) { return ''; }
     return '(' + moment().diff(patient.Birthdate.toDate(), 'years').toString() + ')';
   }
 
-  public encodeURI (URI: string): string {
+  public encodeURI(URI: string): string {
     return encodeURIComponent(URI);
   }
 
-  public date (timestamp: firebase.firestore.Timestamp): Date {
+  public date(timestamp: firebase.firestore.Timestamp): Date {
     return timestamp.toDate();
   }
 
-  public dateToString (timestamp: firebase.firestore.Timestamp): string {
+  public dateToString(timestamp: firebase.firestore.Timestamp): string {
     return moment(timestamp.toDate()).format('DD/MM/YYYY');
   }
 
-  public fromString (searchString: string): Patient {
+  public fromString(searchString: string): Patient {
     const ret: any = {};
 
-    let result: RegExpExecArray;
+    if (searchString) {
+      let result: RegExpExecArray;
 
-    if (result = PatientFormatingService.regexMobile.exec(searchString)) {
-      ret.Mobile = result[0];
-    }
-
-    if (result = PatientFormatingService.regexTel.exec(searchString)) {
-      ret.Telephone = result[0];
-    }
-
-    if (result = PatientFormatingService.regexAmka.exec(searchString)) {
-      ret.Amka = result[0];
-      let date = moment(result[0], 'DDMMYY');
-      if (date.isAfter(moment())) {
-        date = moment({year: date.year() - 100, month: date.month(), day: date.day()});
+      if (result = PatientFormatingService.regexMobile.exec(searchString)) {
+        ret.Mobile = result[0];
       }
-      ret.Birthdate = date.toDate();
-      ret.Sex = (!!(Number(result.groups['Sex']) % 2));
-    }
 
-    if (result = PatientFormatingService.regexBirthdate.exec(searchString)) {
-      let date = moment(result[0], 'DDMMYYYY');
-      if (date.isAfter(moment())) {
-        date = moment({year: date.year() - 100, month: date.month(), day: date.day()});
+      if (result = PatientFormatingService.regexTel.exec(searchString)) {
+        ret.Telephone = result[0];
       }
-      ret.Birthdate = date.toDate();
-    }
+
+      if (result = PatientFormatingService.regexAmka.exec(searchString)) {
+        ret.Amka = result[0];
+        let date = moment(result[0], 'DDMMYY');
+        if (date.isAfter(moment())) {
+          date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
+        }
+        ret.Birthdate = date.toDate();
+        ret.Sex = (!!(Number(result.groups['Sex']) % 2));
+      }
+
+      if (result = PatientFormatingService.regexBirthdate.exec(searchString)) {
+        let date = moment(result[0], 'DDMMYYYY');
+        if (date.isAfter(moment())) {
+          date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
+        }
+        ret.Birthdate = date.toDate();
+      }
 
 
-    if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) {} else
-    if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) {} else {
-      result = PatientFormatingService.regexLastName.exec(searchString);
+      if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) { } else
+        if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) { } else {
+          result = PatientFormatingService.regexLastName.exec(searchString);
+        }
+
+      if (result) {
+        ret.LastName = result.groups['LastName'] || '';
+        ret.FirstName = result.groups['FirstName'] || '';
+      }
     }
 
-    if (result) {
-      ret.LastName = result.groups['LastName'];
-      ret.FirstName = result.groups['FirstName'];
-    }
+    console.log(ret);
     return ret;
   }
 }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import {HttpClientModule} from '@angular/common/http';
 
@@ -18,6 +19,7 @@ import { MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatListModule} from '@angular/material/list';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule} from '@angular/material-moment-adapter';
+import { MatCardModule} from '@angular/material/card';
 
 
 import { AngularFireModule } from '@angular/fire';
@@ -30,6 +32,7 @@ import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PatientAddComponent } from './patient-add/patient-add.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AmkaValidatorDirective } from './directives/amka.validator.directive';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -47,11 +50,13 @@ const config = {
     PatientsComponent,
     PatientComponent,
     PageNotFoundComponent,
-    PatientAddComponent
+    PatientAddComponent,
+    AmkaValidatorDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
 
     HttpClientModule,
 
@@ -71,7 +76,8 @@ const config = {
     MatButtonToggleModule,
     MatListModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatCardModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'el'}
