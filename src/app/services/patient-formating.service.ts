@@ -86,8 +86,6 @@ export class PatientFormatingService {
         ret.FirstName = result.groups['FirstName'] || '';
       }
     }
-
-    console.log(ret);
     return ret;
   }
 }
