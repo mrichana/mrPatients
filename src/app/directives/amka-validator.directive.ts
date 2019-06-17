@@ -23,7 +23,8 @@ export class AmkaValidatorDirective implements Validator {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    const amkaTest = control.value ? AmkaValidatorDirective.regexAmka.test(control.value) : true;
-    return control.value && amkaTest && this.luhnValid(control.value) ? null : {'notValidAmka': {value: control.value}};
+    if (!control.value) { return null; }
+    const amkaTest = AmkaValidatorDirective.regexAmka.test(control.value);
+    return amkaTest && this.luhnValid(control.value) ? null : {'notValidAmka': {value: control.value}};
   }
 }

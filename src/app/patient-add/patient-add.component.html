@@ -14,7 +14,7 @@
     </div>
     <div class="row">
       <mat-form-field class="amka">
-        <input matInput placeholder="Α.Μ.Κ.Α." type="tel" [(ngModel)]="patient.Amka" name="amka" #amka="ngModel" (change)="amkaChanged()" appAmkaValidator>
+        <input matInput placeholder="Α.Μ.Κ.Α." type="tel" [(ngModel)]="patient.Amka" name="amka" #amka="ngModel" (change)="amkaChanged(amka.errors)" appAmkaValidator [maxLength]=11 [minLength]=11>
         <mat-error *ngIf="amka.hasError('notValidAmka')">
           Παρακαλώ ελέγξτε τον Α.Μ.Κ.Α.
         </mat-error>
@@ -50,7 +50,7 @@
     </div>
     <mat-card-actions align="end">
       <a mat-button color="warn" [routerLink]="['/patients']" >Απόρριψη</a>
-      <button mat-raised-button color="primary" type="submit" >Αποθήκευση</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!patientForm.form.valid">Αποθήκευση</button>
     </mat-card-actions>
   </form>
 </mat-card>

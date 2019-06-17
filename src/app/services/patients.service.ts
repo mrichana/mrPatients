@@ -50,7 +50,7 @@ export class PatientsService {
               return actions.map((a: DocumentChangeAction<Patient>) => {
                 const id: string = a.payload.doc.id;
                 const patient: Patient = a.payload.doc.data();
-                patient.Birthdate = moment((patient.Birthdate as firebase.firestore.Timestamp).toDate());
+                patient.Birthdate = patient.Birthdate ? moment((patient.Birthdate as firebase.firestore.Timestamp).toDate()) : null;
                 return {id, patient};
               });
             })

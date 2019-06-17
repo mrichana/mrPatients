@@ -23,7 +23,7 @@ export class PatientService {
       if (user) {
         this.db.collection('doctors').doc(user.uid)
           .collection('patients').doc<Patient>(patientId).valueChanges().subscribe(d => {
-            d.Birthdate = this.patientFormat.timestampToMoment(d.Birthdate as firebase.firestore.Timestamp);
+            d.Birthdate = d.Birthdate ? this.patientFormat.timestampToMoment(d.Birthdate as firebase.firestore.Timestamp) : null;
             ret.next(d);
           });
       }
@@ -35,7 +35,7 @@ export class PatientService {
     this.auth.user$.subscribe(user => {
       if (user) {
         patient.LastUpdate = firebase.firestore.FieldValue.serverTimestamp();
-        patient.Birthdate = (patient.Birthdate as Moment).toDate();
+        patient.Birthdate = patient.Birthdate ? (patient.Birthdate as Moment).toDate() : null;
         this.db.collection('doctors').doc(user.uid)
           .collection('patients').doc<Patient>(patient.id).set(patient);
       }

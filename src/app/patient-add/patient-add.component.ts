@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import {NgForm, NgModel} from '@angular/forms';
+import { Location } from '@angular/common';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
 
 @Component({
@@ -21,7 +21,8 @@ export class PatientAddComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientService,
-    public patientFormat: PatientFormatingService
+    private router: Router,
+    public patientFormat: PatientFormatingService,
 ) { }
 
   ngOnInit() {
@@ -35,9 +36,8 @@ export class PatientAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('submit');
-    console.log(this.patient);
     this.patientService.savePatient(this.patient);
+    this.router.navigate(['/patients']);
   }
 
   Today(): Date {
@@ -49,15 +49,17 @@ export class PatientAddComponent implements OnInit {
   }
 
 
-  amkaChanged(): void {
-    let result: RegExpExecArray;
-    if (result = PatientFormatingService.regexAmka.exec(this.patient.Amka)) {
-      let date = moment(result[0], 'DDMMYY');
-      if (date.isAfter(moment())) {
-        date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
+  amkaChanged(errors: boolean): void {
+    if (!errors) {
+      let result: RegExpExecArray;
+      if (result = PatientFormatingService.regexAmka.exec(this.patient.Amka)) {
+        let date = moment(result[0], 'DDMMYY');
+        if (date.isAfter(moment())) {
+          date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
+        }
+        this.patient.Birthdate = this.patient.Birthdate || date;
+        this.patient.Sex = (this.patient.Sex == null) ? (!!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
       }
-      this.patient.Birthdate = this.patient.Birthdate || date;
-      this.patient.Sex = (this.patient.Sex == null) ? (!!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
     }
   }
 }
