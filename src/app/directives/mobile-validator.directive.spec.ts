@@ -1,8 +1,8 @@
-import { Mobile.ValidatorDirective } from './mobile.validator.directive';
+import { MobileValidatorDirective } from './mobile-validator.directive';
 
 describe('Mobile.ValidatorDirective', () => {
   it('should create an instance', () => {
-    const directive = new Mobile.ValidatorDirective();
+    const directive = new MobileValidatorDirective();
     expect(directive).toBeTruthy();
   });
 });

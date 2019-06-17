@@ -1,8 +1,8 @@
-import { Telephone.ValidatorDirective } from './telephone.validator.directive';
+import { TelephoneValidatorDirective } from './telephone-validator.directive';
 
 describe('Telephone.ValidatorDirective', () => {
   it('should create an instance', () => {
-    const directive = new Telephone.ValidatorDirective();
+    const directive = new TelephoneValidatorDirective();
     expect(directive).toBeTruthy();
   });
 });

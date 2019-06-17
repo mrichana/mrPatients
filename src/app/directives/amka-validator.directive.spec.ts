@@ -1,4 +1,4 @@
-import { AmkaValidatorDirective } from './amka.validator.directive';
+import { AmkaValidatorDirective } from './amka-validator.directive';
 
 describe('AmkaValidatorDirective', () => {
   it('should create an instance', () => {
