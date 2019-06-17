@@ -11,7 +11,7 @@ export class PatientFormatingService {
 
   static regexTel = /\b2\d{9}\b/;
   static regexMobile = /\b69\d{8}\b/;
-  static regexAmka = /\b(?<Birthdate>\d{6})\d{4}(?<Sex>\d)\b/;
+  static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)(?<Checksum>\d)\b/;
   static regexBirthdate = /\b(?<Birthdate>(?<day>[0-3]?\d)\/(?<Month>[0-1]?\d{1})\/(?<Year>(?:19|20)?\d{2}))\b/;
   static regexLastFirstName =
     /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
@@ -69,8 +69,8 @@ export class PatientFormatingService {
         if (date.isAfter(moment())) {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
-        ret.Birthdate = date.toDate();
-        ret.Sex = (!(Number(result.groups['Sex']) % 2));
+        ret.Birthdate = date;
+        ret.Sex = (!!(Number(result.groups['Sex']) % 2));
       }
 
       if (result = PatientFormatingService.regexBirthdate.exec(searchString)) {
@@ -78,7 +78,7 @@ export class PatientFormatingService {
         if (date.isAfter(moment())) {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
-        ret.Birthdate = date.toDate();
+        ret.Birthdate = date;
       }
 
 

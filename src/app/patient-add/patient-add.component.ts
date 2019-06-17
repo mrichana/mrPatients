@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class PatientAddComponent implements OnInit {
 
-  static regexAmka = /\b(?<Birthdate>\d{6})\d{4}(?<Sex>\d)\b/;
+  static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)(?<Checksum>\d)\b/;
 
   public patient: Patient;
   private patientParameters: string;
@@ -57,7 +57,7 @@ export class PatientAddComponent implements OnInit {
         date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
       }
       this.patient.Birthdate = this.patient.Birthdate || date;
-      this.patient.Sex = (this.patient.Sex == null) ? (!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
+      this.patient.Sex = (this.patient.Sex == null) ? (!!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
     }
   }
 }

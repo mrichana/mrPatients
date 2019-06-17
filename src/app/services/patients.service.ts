@@ -4,6 +4,9 @@ import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore'
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +50,7 @@ export class PatientsService {
               return actions.map((a: DocumentChangeAction<Patient>) => {
                 const id: string = a.payload.doc.id;
                 const patient: Patient = a.payload.doc.data();
+                patient.Birthdate = moment((patient.Birthdate as firebase.firestore.Timestamp).toDate());
                 return {id, patient};
               });
             })
@@ -111,7 +115,7 @@ export class PatientsService {
     const fullText: string =
       (  patient.patient.LastName + '|' + patient.patient.FirstName + '|' + (patient.patient.Amka ? patient.patient.Amka + '|' : '')
       + (patient.patient.Mobile ? patient.patient.Mobile + '|' : '') + (patient.patient.Telephone ? patient.patient.Telephone + '|' : '')
-      + (patient.patient.Birthdate ? patient.patient.Birthdate.toDate().toLocaleDateString() : '')).toLocaleLowerCase();
+      + (patient.patient.Birthdate ? patient.patient.Birthdate.toLocaleString() : '')).toLocaleLowerCase();
     return filter.test(fullText);
   }
 }
