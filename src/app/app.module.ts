@@ -32,9 +32,10 @@ import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PatientAddComponent } from './patient-add/patient-add.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AmkaValidatorDirective } from './directives/amka.validator.directive';
-import { TelephoneValidatorDirective } from './directives/telephone.validator.directive';
-import { MobileValidatorDirective } from './directives/mobile.validator.directive';
+import { AmkaValidatorDirective } from './directives/amka-validator.directive';
+import { TelephoneValidatorDirective } from './directives/telephone-validator.directive';
+import { MobileValidatorDirective } from './directives/mobile-validator.directive';
+import { BirthdateValidatorDirective } from './directives/birthdate-validator.directive';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -55,7 +56,8 @@ const config = {
     PatientAddComponent,
     AmkaValidatorDirective,
     TelephoneValidatorDirective,
-    MobileValidatorDirective
+    MobileValidatorDirective,
+    BirthdateValidatorDirective
   ],
   imports: [
     BrowserModule,

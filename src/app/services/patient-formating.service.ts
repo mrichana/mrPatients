@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Patient } from './patient.model';
 import * as moment from 'moment';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ export class PatientFormatingService {
 
   static regexTel = /\b2\d{9}\b/;
   static regexMobile = /\b69\d{8}\b/;
-  static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)\d\b/;
+  static regexAmka = /\b(?<Birthdate>\d{6})\d{4}(?<Sex>\d)\b/;
   static regexBirthdate = /\b(?<Birthdate>(?<day>[0-3]?\d)\/(?<Month>[0-1]?\d{1})\/(?<Year>(?:19|20)?\d{2}))\b/;
   static regexLastFirstName =
     /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
@@ -28,19 +30,23 @@ export class PatientFormatingService {
 
   public age(patient: Patient): string {
     if (!patient.Birthdate) { return ''; }
-    return '(' + moment().diff(patient.Birthdate.toDate(), 'years').toString() + ')';
+    return '(' + moment().diff(patient.Birthdate, 'years').toString() + ')';
   }
 
   public encodeURI(URI: string): string {
     return encodeURIComponent(URI);
   }
 
-  public date(timestamp: firebase.firestore.Timestamp): Date {
-    return timestamp.toDate();
+  public timestampToMoment(date: firebase.firestore.Timestamp): moment.Moment {
+    return date ? moment(date.toDate()) : null;
   }
 
-  public dateToString(timestamp: firebase.firestore.Timestamp): string {
-    return moment(timestamp.toDate()).format('DD/MM/YYYY');
+  public timestampToString(date: firebase.firestore.Timestamp): string {
+    return moment(date.toDate()).format('DD/MM/YYYY');
+  }
+
+  public momentToString(date: moment.Moment): string {
+    return date.format('DD/MM/YYYY');
   }
 
   public fromString(searchString: string): Patient {
@@ -64,7 +70,7 @@ export class PatientFormatingService {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
         ret.Birthdate = date.toDate();
-        ret.Sex = (!!(Number(result.groups['Sex']) % 2));
+        ret.Sex = (!(Number(result.groups['Sex']) % 2));
       }
 
       if (result = PatientFormatingService.regexBirthdate.exec(searchString)) {

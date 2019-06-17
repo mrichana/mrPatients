@@ -1,3 +1,12 @@
-2019/05/24-23:54:09.400 14a8 Reusing MANIFEST /home/mrichana/Projects/mrPatients/DevProfile/Default/Session Storage/MANIFEST-000001
-2019/05/24-23:54:09.400 14a8 Recovering log #3
-2019/05/24-23:54:09.400 14a8 Reusing old log /home/mrichana/Projects/mrPatients/DevProfile/Default/Session Storage/000003.log 
+2019/06/10-00:24:03.677 3990 Reusing MANIFEST Session Storage/MANIFEST-000001
+2019/06/10-00:24:03.679 3990 Recovering log #3
+2019/06/10-00:24:03.681 3990 Reusing old log Session Storage/000003.log 
+2019/06/10-01:56:44.964 4694 Level-0 table #5: started
+2019/06/10-01:56:44.969 4694 Level-0 table #5: 19265 bytes OK
+2019/06/10-01:56:44.973 4694 Delete type=0 #3
+2019/06/10-02:50:09.475 4c10 Level-0 table #7: started
+2019/06/10-02:50:09.480 4c10 Level-0 table #7: 20732 bytes OK
+2019/06/10-02:50:09.482 4c10 Delete type=0 #4
+2019/06/10-10:07:40.643 61f8 Level-0 table #9: started
+2019/06/10-10:07:40.649 61f8 Level-0 table #9: 25281 bytes OK
+2019/06/10-10:07:40.653 61f8 Delete type=0 #6

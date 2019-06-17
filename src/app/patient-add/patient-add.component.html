@@ -14,15 +14,19 @@
     </div>
     <div class="row">
       <mat-form-field class="amka">
-        <input matInput placeholder="Α.Μ.Κ.Α." type="tel" [(ngModel)]="patient.Amka" name="amka" #amka="ngModel" appAmkaValidator>
+        <input matInput placeholder="Α.Μ.Κ.Α." type="tel" [(ngModel)]="patient.Amka" name="amka" #amka="ngModel" (change)="amkaChanged()" appAmkaValidator>
         <mat-error *ngIf="amka.hasError('notValidAmka')">
           Παρακαλώ ελέγξτε τον Α.Μ.Κ.Α.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="birthDate">
-        <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία Γέννησης" [(ngModel)]="patient.Birthdate" name="birthDate" >
+        <input matInput [matDatepicker]="picker" [max]="Today()" placeholder="Ημερομηνία Γέννησης" [(ngModel)]="patient.Birthdate" name="birthDate" #birthdate="ngModel" appBirthdateValidator>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-hint align="start" *ngIf="Age()">{{Age()}} Ετών</mat-hint>
+        <mat-error>
+          Παρακαλώ ελέγξτε την ημερομηνία
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="row">

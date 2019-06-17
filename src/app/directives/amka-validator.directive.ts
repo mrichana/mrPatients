@@ -6,7 +6,7 @@ import { NG_VALIDATORS, AbstractControl, ValidationErrors, Validator} from '@ang
   providers: [{provide: NG_VALIDATORS, useExisting: AmkaValidatorDirective, multi: true}]
 })
 export class AmkaValidatorDirective implements Validator {
-  static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)\d\b/;
+  static regexAmka = /\b(?<Birthdate>\d{6})\d{4}(?<Sex>\d)\b/;
 
   validate(control: AbstractControl): ValidationErrors | null {
     const amkaTest = control.value? AmkaValidatorDirective.regexAmka.test(control.value) : true;
