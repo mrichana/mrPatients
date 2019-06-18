@@ -3,7 +3,7 @@ import { Observable, Subject, BehaviorSubject, merge, combineLatest, of } from '
 import { AngularFirestore, DocumentChangeAction, DocumentSnapshot } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { Moment } from 'moment';

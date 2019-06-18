@@ -58,7 +58,7 @@ export class PatientAddComponent implements OnInit {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
         this.patient.Birthdate = this.patient.Birthdate || date;
-        this.patient.Sex = (this.patient.Sex == null) ? (!!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
+        this.patient.Sex = (this.patient.Sex == null) ? (!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
       }
     }
   }

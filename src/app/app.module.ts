@@ -36,6 +36,7 @@ import { AmkaValidatorDirective } from './directives/amka-validator.directive';
 import { TelephoneValidatorDirective } from './directives/telephone-validator.directive';
 import { MobileValidatorDirective } from './directives/mobile-validator.directive';
 import { BirthdateValidatorDirective } from './directives/birthdate-validator.directive';
+import { PatientEditComponent } from './patient-edit/patient-edit.component';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -57,7 +58,8 @@ const config = {
     AmkaValidatorDirective,
     TelephoneValidatorDirective,
     MobileValidatorDirective,
-    BirthdateValidatorDirective
+    BirthdateValidatorDirective,
+    PatientEditComponent
   ],
   imports: [
     BrowserModule,

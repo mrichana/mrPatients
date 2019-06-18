@@ -22,7 +22,7 @@
       <a mat-list-item *ngIf="patient.Address" href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}"><mat-icon>home</mat-icon>Διεύθυνση<span class="fill-center"></span>{{patient.Address}}</a>
   </mat-nav-list>
   <div class="fab-button">
-      <button mat-fab color="warn"><mat-icon>edit</mat-icon></button>
+      <button [routerLink]="['/patient/edit', patient.id]" mat-fab color="warn"><mat-icon>edit</mat-icon></button>
   </div>
 </mat-expansion-panel>
  

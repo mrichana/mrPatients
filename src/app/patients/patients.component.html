@@ -1,5 +1,5 @@
 <mat-menu #sortMenu="matMenu">
-  <button mat-menu-item (click)="sortBy('FirstName')"><b>Όνομα</b></button>
+  <button mat-menu-item (click)="sortBy('FirstName')">Όνομα</button>
   <button mat-menu-item (click)="sortBy('LastName')">Επίθετο</button>
   <button mat-menu-item (click)="sortBy('Birthdate')">Ηλικία</button>
   <button mat-menu-item (click)="sortBy('LastVisit')">Επίσκεψη</button>
@@ -28,8 +28,7 @@
   <div>
     <mat-nav-list id="patients-list">
       <mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
-        <a [routerLink]="['/patient',patient.id]">{{patientFormat.displayName(patient.patient)}} {{patientFormat.age(patient.patient)}}</a>
-        <span class="fill-center"></span>
+        <a [routerLink]="['/patient',patient.id]" class="fill-center">{{patientFormat.displayName(patient.patient)}} {{patientFormat.age(patient.patient)}}</a>
         <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}"><mat-icon>phone</mat-icon></a>
         <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}"><mat-icon>phone_android</mat-icon></a>
         <a *ngIf="patient.patient.Address" mat-icon-button href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}"><mat-icon>home</mat-icon></a>
