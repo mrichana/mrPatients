@@ -8,8 +8,8 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'app-patient-add',
-  templateUrl: './patient-add.component.html',
-  styleUrls: ['./patient-add.component.less']
+  templateUrl: '../patient-edit/patient-edit.component.html',
+  styleUrls: ['../patient-edit/patient-edit.component.less']
 })
 export class PatientAddComponent implements OnInit {
 

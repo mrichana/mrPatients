@@ -1,7 +1,7 @@
 <div class="flex-col">
   <mat-toolbar class="header">
     <button mat-button routerLink="/">mrPatients</button>
-    <span class="fill-center"></span>
+    <span class="stretch"></span>
     <button mat-icon-button (click)="auth.signOut()" *ngIf="auth.user$ | async as user; else login">
       <img class="photo" src="{{user.photoURL}}">
     </button>

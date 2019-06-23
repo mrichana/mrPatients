@@ -49,4 +49,13 @@ export class PatientService {
     ret.id = id;
     return ret;
   }
+
+  public deletePatient(patient: Patient): void {
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.db.collection('doctors').doc(user.uid)
+          .collection('patients').doc<Patient>(patient.id).delete();
+      }
+    });
+  }
 }

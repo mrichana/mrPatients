@@ -131,4 +131,15 @@ export class PatientFormatingService {
     }
     return ret;
   }
+
+
+  public displaySex(patient: Patient): string {
+    if (patient.Sex === true) {
+      return '♂';
+    }
+    if (patient.Sex === false) {
+      return '♀';
+    }
+
+  }
 }

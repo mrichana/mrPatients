@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +21,7 @@ import { MatListModule} from '@angular/material/list';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatCardModule} from '@angular/material/card';
-
+import { MatDialogModule} from '@angular/material/dialog';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -37,6 +38,7 @@ import { TelephoneValidatorDirective } from './directives/telephone-validator.di
 import { MobileValidatorDirective } from './directives/mobile-validator.directive';
 import { BirthdateValidatorDirective } from './directives/birthdate-validator.directive';
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
+import { VerifyDeleteDialogComponent } from './verify-delete-dialog/verify-delete-dialog.component';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -59,7 +61,8 @@ const config = {
     TelephoneValidatorDirective,
     MobileValidatorDirective,
     BirthdateValidatorDirective,
-    PatientEditComponent
+    PatientEditComponent,
+    VerifyDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -85,11 +88,13 @@ const config = {
     MatListModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'el'}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [VerifyDeleteDialogComponent]
 })
 export class AppModule { }
