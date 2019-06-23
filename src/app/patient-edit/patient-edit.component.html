@@ -53,7 +53,8 @@
   <mat-card-actions align="end">
     <button *ngIf="patient.LastUpdate" mat-button color="warn" (click)="deletePatient()"><mat-icon>delete_forever</mat-icon>Διαγραφή</button>
     <span class="stretch"></span>
-    <button mat-button color="accent" [routerLink]="['/patients']" >Απόρριψη</button>
+    <button *ngIf="!patient.LastUpdate" mat-button color="accent" [routerLink]="['/patients']" >Απόρριψη</button>
+    <button *ngIf="patient.LastUpdate" mat-button color="accent" [routerLink]="['/patient/' + patient.id]" >Απόρριψη</button>
     <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!patientForm.form.valid"><mat-icon>save</mat-icon>Αποθήκευση</button>
   </mat-card-actions>
 </mat-card>

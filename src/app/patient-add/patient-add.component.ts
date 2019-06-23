@@ -37,7 +37,7 @@ export class PatientAddComponent implements OnInit {
 
   onSubmit(): void {
     this.patientService.savePatient(this.patient);
-    this.router.navigate(['/patients']);
+    this.router.navigate(['/patient/' + this.patient.id]);
   }
 
   Today(): Date {
