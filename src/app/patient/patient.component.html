@@ -25,7 +25,7 @@
   </mat-nav-list>
 </mat-expansion-panel>
 
-{{patient.Notes}}
+<quill-view [content]="patient.Notes" format="json"></quill-view>
 
 <div class="fab-bottom-right">
   <button [routerLink]="['/patient/edit', patient.id]" mat-fab color="warn"><mat-icon>edit</mat-icon></button>

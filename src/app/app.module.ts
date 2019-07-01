@@ -23,6 +23,8 @@ import { MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatCardModule} from '@angular/material/card';
 import { MatDialogModule} from '@angular/material/dialog';
 
+import { QuillModule } from 'ngx-quill';
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -89,7 +91,9 @@ const config = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+
+    QuillModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'el'}
