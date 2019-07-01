@@ -14,6 +14,7 @@ export class PatientComponent implements OnInit {
 
   private patientId: string;
   public patient$: Observable<Patient>;
+  public panelOpenState: Boolean = false;
 
   constructor(
     private route: ActivatedRoute,

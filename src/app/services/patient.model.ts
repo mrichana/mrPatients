@@ -16,4 +16,5 @@ export interface Patient {
     Mobile?: string;
     Address?: string;
 
+    Notes?: string;
 }
