@@ -1,5 +1,5 @@
 import { Patient } from './patient.model';
-import { Observable, Subject, BehaviorSubject, merge, combineLatest } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';

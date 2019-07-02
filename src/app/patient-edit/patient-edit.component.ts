@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
-import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
 import {MatDialog, MatDialogConfig } from '@angular/material';
@@ -25,7 +25,8 @@ export class PatientEditComponent implements OnInit {
     private patientService: PatientService,
     private router: Router,
     public patientFormat: PatientFormatingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titleService: Title
 ) { }
 
   ngOnInit() {
@@ -33,7 +34,10 @@ export class PatientEditComponent implements OnInit {
     _this.route.paramMap.subscribe(
       (params: ParamMap) => {
         _this.patientId = params.get('id');
-        _this.patientService.loadPatient(_this.patientId).subscribe(d => _this.patient = d);
+        _this.patientService.loadPatient(_this.patientId).subscribe(d => {
+          _this.patient = d;
+          _this.titleService.setTitle('Ασθενείς - ' + _this.patientFormat.displayName(d));
+        });
       }
     );
   }
@@ -58,9 +62,9 @@ export class PatientEditComponent implements OnInit {
     verifyDialog.afterClosed().subscribe(verifyDelete => {
       if (verifyDelete) {
         _this.patientService.deletePatient(_this.patient);
-        this.router.navigate(['/patients']);
+        this.router.navigate(['/patients'], {replaceUrl: true});
       }
-    })
+    });
 
   }
 

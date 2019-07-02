@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
-import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -23,9 +23,11 @@ export class PatientAddComponent implements OnInit {
     private patientService: PatientService,
     private router: Router,
     public patientFormat: PatientFormatingService,
+    private titleService: Title
 ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Ασθενείς - Νέος');
     const _this = this;
     _this.route.paramMap.subscribe(
       (params: ParamMap) => {

@@ -2,63 +2,27 @@
   <form class="formContainer" #patientForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <mat-form-field class="lastName">
-        <input
-          matInput
-          type="text"
-          placeholder="Επώνυμο"
-          [(ngModel)]="patient.LastName"
-          name="lastName"
-          required
-        />
+        <input matInput type="text" placeholder="Επώνυμο" [(ngModel)]="patient.LastName" name="lastName" required />
       </mat-form-field>
       <mat-form-field class="firstName">
-        <input
-          matInput
-          type="text"
-          placeholder="Όνομα"
-          [(ngModel)]="patient.FirstName"
-          name="firstName"
-        />
+        <input matInput type="text" placeholder="Όνομα" [(ngModel)]="patient.FirstName" name="firstName" />
       </mat-form-field>
-      <mat-radio-group
-        aria-label="Φύλο"
-        class="sex"
-        [(ngModel)]="patient.Sex"
-        name="sex"
-      >
+      <mat-radio-group aria-label="Φύλο" class="sex" [(ngModel)]="patient.Sex" name="sex">
         <mat-radio-button [value]="false">♀Θήλυ</mat-radio-button>
         <mat-radio-button [value]="true">♂Άρρεν</mat-radio-button>
       </mat-radio-group>
     </div>
     <div class="row">
       <mat-form-field class="amka">
-        <input
-          matInput
-          placeholder="Α.Μ.Κ.Α."
-          type="tel"
-          [(ngModel)]="patient.Amka"
-          name="amka"
-          #amka="ngModel"
-          (change)="amkaChanged(amka.errors)"
-          appAmkaValidator
-          [maxLength]="11"
-          [minLength]="11"
-        />
+        <input matInput placeholder="Α.Μ.Κ.Α." type="tel" [(ngModel)]="patient.Amka" name="amka" #amka="ngModel"
+          (change)="amkaChanged(amka.errors)" appAmkaValidator [maxLength]="11" [minLength]="11" />
         <mat-error *ngIf="amka.hasError('notValidAmka')">
           Παρακαλώ ελέγξτε τον Α.Μ.Κ.Α.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="birthDate">
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [max]="Today()"
-          placeholder="Ημερομηνία Γέννησης"
-          [(ngModel)]="patient.Birthdate"
-          name="birthDate"
-          #birthdate="ngModel"
-          appBirthdateValidator
-        />
+        <input matInput [matDatepicker]="picker" [max]="Today()" placeholder="Ημερομηνία Γέννησης"
+          [(ngModel)]="patient.Birthdate" name="birthDate" #birthdate="ngModel" appBirthdateValidator />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-hint align="start" *ngIf="Age()">{{ Age() }} Ετών</mat-hint>
@@ -69,29 +33,15 @@
     </div>
     <div class="row">
       <mat-form-field class="telephone">
-        <input
-          matInput
-          placeholder="Τηλέφωνο"
-          type="tel"
-          [(ngModel)]="patient.Telephone"
-          name="telephone"
-          #telephone="ngModel"
-          appTelephoneValidator
-        />
+        <input matInput placeholder="Τηλέφωνο" type="tel" [(ngModel)]="patient.Telephone" name="telephone"
+          #telephone="ngModel" appTelephoneValidator />
         <mat-error *ngIf="telephone.hasError('notValidTelephone')">
           Παρακαλώ ελέγξτε τον αριθμό τηλεφώνου
         </mat-error>
       </mat-form-field>
       <mat-form-field class="mobile">
-        <input
-          matInput
-          placeholder="Κινητό"
-          type="tel"
-          [(ngModel)]="patient.Mobile"
-          name="mobile"
-          #mobile="ngModel"
-          appMobileValidator
-        />
+        <input matInput placeholder="Κινητό" type="tel" [(ngModel)]="patient.Mobile" name="mobile" #mobile="ngModel"
+          appMobileValidator />
         <mat-error *ngIf="mobile.hasError('notValidMobile')">
           Παρακαλώ ελέγξτε τον αριθμό κινητού
         </mat-error>
@@ -99,20 +49,10 @@
     </div>
     <div class="row">
       <mat-form-field class="address">
-        <textarea
-          matInput
-          placeholder="Διεύθυνση"
-          [(ngModel)]="patient.Address"
-          name="address"
-        ></textarea>
+        <textarea matInput placeholder="Διεύθυνση" [(ngModel)]="patient.Address" name="address"></textarea>
       </mat-form-field>
     </div>
-    <quill-editor
-      placeholder="Σημειώσεις"
-      [(ngModel)]="patient.Notes"
-      name="notes"
-      format="json"
-    >
+    <quill-editor placeholder="Σημειώσεις" [(ngModel)]="patient.Notes" name="notes" format="json">
       <div quill-editor-toolbar>
         <span class="ql-formats">
           <select class="ql-font">
@@ -156,37 +96,17 @@
   </form>
 
   <mat-card-actions align="end">
-    <button
-      *ngIf="patient.LastUpdate"
-      mat-button
-      color="warn"
-      (click)="deletePatient()"
-    >
+    <button *ngIf="patient.LastUpdate" mat-button color="warn" (click)="deletePatient()">
       <mat-icon>delete_forever</mat-icon>Διαγραφή
     </button>
     <span class="stretch"></span>
-    <button
-      *ngIf="!patient.LastUpdate"
-      mat-button
-      color="accent"
-      [routerLink]="['/patients']"
-    >
+    <button *ngIf="!patient.LastUpdate" mat-button color="accent" [routerLink]="['/patients']">
       Απόρριψη
     </button>
-    <button
-      *ngIf="patient.LastUpdate"
-      mat-button
-      color="accent"
-      [routerLink]="['/patient/' + patient.id]"
-    >
+    <button *ngIf="patient.LastUpdate" mat-button color="accent" [routerLink]="['/patient/' + patient.id]">
       Απόρριψη
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onSubmit()"
-      [disabled]="!patientForm.form.valid"
-    >
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!patientForm.form.valid">
       <mat-icon>save</mat-icon>Αποθήκευση
     </button>
   </mat-card-actions>

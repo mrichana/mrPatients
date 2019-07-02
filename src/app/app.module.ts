@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -96,7 +96,8 @@ const config = {
     QuillModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'el'}
+    {provide: MAT_DATE_LOCALE, useValue: 'el'},
+    Title
   ],
   bootstrap: [AppComponent],
   entryComponents: [VerifyDeleteDialogComponent]

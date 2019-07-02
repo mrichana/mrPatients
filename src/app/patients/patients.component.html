@@ -37,6 +37,6 @@
   </div>
 </div>
 
-<a mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]">
+<a mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]"  [skipLocationChange]="true">
   <mat-icon>add</mat-icon>
 </a>

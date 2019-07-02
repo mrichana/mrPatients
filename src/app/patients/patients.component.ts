@@ -1,9 +1,8 @@
-import { Observable, Subject, Subscriber } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Patient } from './../services/patient.model';
+import { Subscriber } from 'rxjs';
 import { PatientFormatingService} from './../services/patient-formating.service';
 import { PatientsService } from './../services/patients.service';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-patients',
@@ -15,10 +14,11 @@ export class PatientsComponent implements OnInit {
   private searchObserver: Subscriber<{}>;
   public searchString: String = '';
 
-  constructor(public patients: PatientsService, public patientFormat: PatientFormatingService) {
+  constructor(public patients: PatientsService, public patientFormat: PatientFormatingService, private titleService: Title) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Ασθενείς - Λίστα');
   }
 
   public search (value: string): void {
