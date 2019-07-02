@@ -9,14 +9,10 @@ import { MatIconRegistry } from '@angular/material/icon';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  constructor(
-    public auth: AuthService,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
-  ) {
+  constructor( public auth: AuthService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
-      'account',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/account.svg')
+      'favicon',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
     );
   }
 }
