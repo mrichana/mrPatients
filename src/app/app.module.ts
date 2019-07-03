@@ -64,7 +64,7 @@ const config = {
     MobileValidatorDirective,
     BirthdateValidatorDirective,
     PatientEditComponent,
-    VerifyDeleteDialogComponent
+    VerifyDeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
