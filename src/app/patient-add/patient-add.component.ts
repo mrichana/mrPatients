@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { VerifyDropchangesDialogComponent } from '../verify-dropchanges-dialog/verify-dropchanges-dialog.component';
 
 @Component({
   selector: 'app-patient-add',
@@ -18,13 +22,16 @@ export class PatientAddComponent implements OnInit {
   public patient: Patient;
   private patientParameters: string;
 
+  @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
+
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientService,
     private router: Router,
     public patientFormat: PatientFormatingService,
-    private titleService: Title
-) { }
+    private titleService: Title,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.titleService.setTitle('Ασθενείς - Νέος');
@@ -38,8 +45,10 @@ export class PatientAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.patientService.savePatient(this.patient);
-    this.router.navigate(['/patient/' + this.patient.id]);
+    if (this.patientForm.valid) {
+      this.patientService.savePatient(this.patient);
+      this.router.navigate(['/patient/' + this.patient.id]);
+    }
   }
 
   Today(): Date {
@@ -64,4 +73,21 @@ export class PatientAddComponent implements OnInit {
       }
     }
   }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    console.log(this.patientForm);
+    if (!this.patientForm.dirty) {
+      return true;
+    }
+
+    const _this = this;
+    const verifyDialog = this.dialog.open(VerifyDropchangesDialogComponent);
+    return verifyDialog.afterClosed();
+  }
+
+  notesEditorCreated(editor) {
+    return;
+  }
+
 }
+

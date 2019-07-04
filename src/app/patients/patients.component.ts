@@ -33,8 +33,4 @@ export class PatientsComponent implements OnInit {
   public sortOrder (value: string): void {
     this.patients.SortOrder(value);
   }
-
-  public addPatient (): void {
-    console.log('addPatient');
-  }
 }

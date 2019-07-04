@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
-import {MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
+import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { VerifyDropchangesDialogComponent } from '../verify-dropchanges-dialog/verify-dropchanges-dialog.component';
 
 @Component({
   selector: 'app-patient-edit',
@@ -20,6 +23,8 @@ export class PatientEditComponent implements OnInit {
   public patient: Patient;
   private patientId: string;
 
+  @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
+
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientService,
@@ -27,7 +32,7 @@ export class PatientEditComponent implements OnInit {
     public patientFormat: PatientFormatingService,
     private dialog: MatDialog,
     private titleService: Title
-) { }
+  ) { }
 
   ngOnInit() {
     const _this = this;
@@ -43,8 +48,10 @@ export class PatientEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.patientService.savePatient(this.patient);
-    this.router.navigate(['/patient/' + this.patient.id]);
+    if (this.patientForm.dirty && this.patientForm.valid) {
+      this.patientService.savePatient(this.patient);
+      this.router.navigate(['/patient/' + this.patient.id]);
+    }
   }
 
   Today(): Date {
@@ -56,16 +63,14 @@ export class PatientEditComponent implements OnInit {
   }
 
   deletePatient() {
-    console.log('click');
     const _this = this;
     const verifyDialog = this.dialog.open(VerifyDeleteDialogComponent);
     verifyDialog.afterClosed().subscribe(verifyDelete => {
       if (verifyDelete) {
         _this.patientService.deletePatient(_this.patient);
-        this.router.navigate(['/patients'], {replaceUrl: true});
+        this.router.navigate(['/patients'], { replaceUrl: true });
       }
     });
-
   }
 
   amkaChanged(errors: boolean): void {
@@ -80,5 +85,19 @@ export class PatientEditComponent implements OnInit {
         this.patient.Sex = (this.patient.Sex == null) ? (!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
       }
     }
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.patientForm.dirty) {
+      return true;
+    }
+
+    const _this = this;
+    const verifyDialog = this.dialog.open(VerifyDropchangesDialogComponent);
+    return verifyDialog.afterClosed();
+  }
+
+  notesEditorCreated(editor) {
+    editor.focus();
   }
 }

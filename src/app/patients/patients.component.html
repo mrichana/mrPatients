@@ -1,20 +1,24 @@
 <mat-menu #sortMenu="matMenu">
-  <button mat-menu-item (click)="sortBy('FirstName')">Όνομα</button>
-  <button mat-menu-item (click)="sortBy('LastName')">Επίθετο</button>
-  <button mat-menu-item (click)="sortBy('Birthdate')">Ηλικία</button>
-  <button mat-menu-item (click)="sortBy('LastVisit')">Επίσκεψη</button>
-  <mat-button-toggle-group mat-menu-item #group="matButtonToggleGroup" value="normal">
-    <mat-button-toggle value="normal" (click)="sortOrder('normal')">
-      <mat-icon class="mat-menu-icon-centered">keyboard_arrow_down</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="inverse"(click)="sortOrder('inverse')">
-      <mat-icon class="mat-menu-icon-centered">keyboard_arrow_up</mat-icon>
-    </mat-button-toggle>
+  <mat-toolbar-row>
+    <mat-button-toggle-group #group="matButtonToggleGroup" value="normal">
+      <mat-button-toggle value="normal" (click)="sortOrder('normal')">
+        <mat-icon class="mat-menu-icon-centered">keyboard_arrow_down</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="inverse" (click)="sortOrder('inverse')">
+        <mat-icon class="mat-menu-icon-centered">keyboard_arrow_up</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-toolbar-row>
+  <mat-button-toggle-group vertical value="LastUpdate" class="sortByToggle">
+    <mat-button-toggle class="sortByToggleItem" value="FirstName" (click)="sortBy('FirstName')">Όνομα</mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="LastName" (click)="sortBy('LastName')">Επίθετο</mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="Birthdate" (click)="sortBy('Birthdate')">Ηλικία</mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="LastUpdate" (click)="sortBy('LastUpdate')">Επίσκεψη</mat-button-toggle>
   </mat-button-toggle-group>
 </mat-menu>
 
 
-<div class="scroll">    
+<div class="scroll">
   <span style="display: flex">
     <mat-form-field id="search-field" class="stretch">
       <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)">
@@ -22,21 +26,31 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-button [matMenuTriggerFor]="sortMenu"><mat-icon>sort</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="sortMenu">
+      <mat-icon>sort</mat-icon>
+    </button>
   </span>
 
   <div>
     <mat-nav-list id="patients-list">
       <mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
-        <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}} {{patientFormat.age(patient.patient)}}</a>
-        <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}"><mat-icon>phone</mat-icon></a>
-        <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}"><mat-icon>phone_android</mat-icon></a>
-        <a *ngIf="patient.patient.Address" mat-icon-button href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}"><mat-icon>home</mat-icon></a>
+        <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}}
+          {{patientFormat.age(patient.patient)}}</a>
+        <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}">
+          <mat-icon>phone</mat-icon>
+        </a>
+        <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}">
+          <mat-icon>phone_android</mat-icon>
+        </a>
+        <a *ngIf="patient.patient.Address" mat-icon-button
+          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}">
+          <mat-icon>home</mat-icon>
+        </a>
       </mat-list-item>
     </mat-nav-list>
   </div>
 </div>
 
-<a mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]"  [skipLocationChange]="true">
+<a mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]" [skipLocationChange]="true">
   <mat-icon>add</mat-icon>
 </a>

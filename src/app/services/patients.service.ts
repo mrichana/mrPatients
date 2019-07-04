@@ -22,7 +22,7 @@ export class PatientsService {
   private filterBy$: Subject<string|null>;
 
   constructor( private auth: AuthService, private db: AngularFirestore ) {
-    this.sortBy$ = new BehaviorSubject('LastVisit');
+    this.sortBy$ = new BehaviorSubject('LastUpdate');
     this.sortOrder$ = new BehaviorSubject('normal');
     this.filterBy$ = new BehaviorSubject(null);
     this.filteredPatients$ = new BehaviorSubject<{id: string, patient: Patient}[]>([]);
@@ -88,26 +88,23 @@ export class PatientsService {
     let valueA = a[field];
     let valueB = b[field];
 
-    if (typeof valueA === 'undefined') {
-      valueA = 0;
-    }
-
-    if (typeof valueB === 'undefined') {
-      valueB = 0;
-    }
-
-    if (typeof valueA['localeCompare'] === 'function') {
+    if (valueA && typeof valueA['localeCompare'] === 'function') {
       return valueA.toLocaleLowerCase().localeCompare(valueB.toLocaleLowerCase());
     }
 
-    if (typeof valueA['toMillis'] === 'function') {
+    if (!valueA || typeof valueA === 'undefined') {
+      valueA = 0;
+    } else if (typeof valueA['toMillis'] === 'function') {
       valueA = valueA.toMillis();
     }
-    if (typeof valueB['toMillis'] === 'function') {
+
+    if (!valueB || typeof valueB === 'undefined') {
+      valueB = 0;
+    } else if (typeof valueB['toMillis'] === 'function') {
       valueB = valueB.toMillis();
     }
 
-      return -(valueA - valueB);
+    return -(valueA - valueB);
   }
 
   private filter (patient: {id: string, patient: Patient}, filterBy: string): boolean {
@@ -115,7 +112,7 @@ export class PatientsService {
     const fullText: string =
       (  patient.patient.LastName + '|' + patient.patient.FirstName + '|' + (patient.patient.Amka ? patient.patient.Amka + '|' : '')
       + (patient.patient.Mobile ? patient.patient.Mobile + '|' : '') + (patient.patient.Telephone ? patient.patient.Telephone + '|' : '')
-      + (patient.patient.Birthdate ? patient.patient.Birthdate.toLocaleString() : '')).toLocaleLowerCase();
+      ).toLocaleLowerCase();
     return filter.test(fullText);
   }
 }
