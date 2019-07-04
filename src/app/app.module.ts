@@ -22,6 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
 
 import { QuillModule } from 'ngx-quill';
 
@@ -94,6 +95,7 @@ const config = {
     MatMomentDateModule,
     MatCardModule,
     MatDialogModule,
+    MatChipsModule,
 
     QuillModule
   ],
