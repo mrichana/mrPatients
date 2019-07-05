@@ -75,8 +75,7 @@ export class PatientAddComponent implements OnInit {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    console.log(this.patientForm);
-    if (!this.patientForm.dirty) {
+    if (!this.patientForm.dirty || this.patientForm.submitted) {
       return true;
     }
 

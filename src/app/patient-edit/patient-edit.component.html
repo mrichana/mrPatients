@@ -1,6 +1,7 @@
-<mat-card *ngIf="patient">
-  <form class="formContainer" #patientForm="ngForm" (ngSubmit)="onSubmit()">
-    <mat-expansion-panel [expanded]="!patient.LastUpdate" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+<form class="formContainer" #patientForm="ngForm" (ngSubmit)="onSubmit()">
+  <mat-card *ngIf="patient">
+    <mat-expansion-panel [expanded]="!patient.LastUpdate" (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title *ngIf="!panelOpenState">
           {{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}
@@ -20,8 +21,8 @@
       </mat-expansion-panel-header>
       <div class="row">
         <mat-form-field class="lastName">
-          <input matInput autofocus ngController="patientForm" type="text" placeholder="Επώνυμο" [(ngModel)]="patient.LastName"
-            name="lastName" required />
+          <input matInput autofocus ngController="patientForm" type="text" placeholder="Επώνυμο"
+            [(ngModel)]="patient.LastName" name="lastName" required />
         </mat-form-field>
         <mat-form-field class="firstName">
           <input matInput ngController="patientForm" type="text" placeholder="Όνομα" [(ngModel)]="patient.FirstName"
@@ -77,8 +78,8 @@
       </div>
     </mat-expansion-panel>
 
-    <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις" [(ngModel)]="patient.Notes" name="notes"
-      format="json">
+    <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις"
+      [(ngModel)]="patient.Notes" name="notes" format="json">
       <div quill-editor-toolbar>
         <span class="ql-formats">
           <select class="ql-font">
@@ -119,21 +120,21 @@
         </span>
       </div>
     </quill-editor>
-  </form>
 
-  <mat-card-actions align="end">
-    <button *ngIf="patient.LastUpdate" mat-button color="warn" (click)="deletePatient()">
-      <mat-icon>delete_forever</mat-icon>Διαγραφή
-    </button>
-    <span class="stretch"></span>
-    <button *ngIf="!patient.LastUpdate" mat-button color="accent" [routerLink]="['/patients']">
-      Απόρριψη
-    </button>
-    <button *ngIf="patient.LastUpdate" mat-button color="accent" [routerLink]="['/patient/' + patient.id]">
-      Απόρριψη
-    </button>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!patientForm.form.valid">
-      <mat-icon>save</mat-icon>Αποθήκευση
-    </button>
-  </mat-card-actions>
-</mat-card>
+    <mat-card-actions align="end">
+      <button *ngIf="patient.LastUpdate" mat-button color="warn" type="button" (click)="deletePatient()">
+        <mat-icon>delete_forever</mat-icon>Διαγραφή
+      </button>
+      <span class="stretch"></span>
+      <button *ngIf="!patient.LastUpdate" mat-button color="accent" type="button" [routerLink]="['/patients']">
+        Απόρριψη
+      </button>
+      <button *ngIf="patient.LastUpdate" mat-button color="accent" type="button" [routerLink]="['/patient/' + patient.id]">
+        Απόρριψη
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="patientForm.invalid">
+        <mat-icon>save</mat-icon>Αποθήκευση
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

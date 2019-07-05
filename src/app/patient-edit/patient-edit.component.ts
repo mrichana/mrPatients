@@ -48,7 +48,7 @@ export class PatientEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.patientForm.dirty && this.patientForm.valid) {
+    if (this.patientForm.valid) {
       this.patientService.savePatient(this.patient);
       this.router.navigate(['/patient/' + this.patient.id]);
     }
@@ -88,7 +88,7 @@ export class PatientEditComponent implements OnInit {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.patientForm.dirty) {
+    if (this.patientForm.pristine || this.patientForm.submitted) {
       return true;
     }
 
