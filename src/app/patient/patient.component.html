@@ -40,7 +40,7 @@
   </mat-expansion-panel>
   <mat-card>
     <mat-chip-list selectable="false">
-      <mat-chip *ngFor="let Diagnosis of patient.Diagnoses">{{Diagnosis}}</mat-chip>
+      <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true">{{Diagnosis}}</mat-chip>
     </mat-chip-list>
     <quill-view [content]="patient.Notes" format="json"></quill-view>
   </mat-card>

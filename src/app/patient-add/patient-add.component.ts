@@ -7,7 +7,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDropchangesDialogComponent } from '../verify-dropchanges-dialog/verify-dropchanges-dialog.component';
 
 @Component({
@@ -88,5 +88,33 @@ export class PatientAddComponent implements OnInit {
     return;
   }
 
+
+  addDiagnosis(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      if (!this.patient.Diagnoses) {
+        this.patient.Diagnoses = [] as string[];
+      }
+      this.patient.Diagnoses.push(value.trim());
+      this.patientForm.form.markAsDirty();
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeDiagnosis(diagnosis: string, event) {
+    if (!this.patient.Diagnoses) { return; }
+    const index = this.patient.Diagnoses.indexOf(diagnosis);
+
+    if (index >= 0) {
+      this.patient.Diagnoses.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
+  }
 }
 

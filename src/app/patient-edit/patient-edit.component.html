@@ -77,49 +77,65 @@
         </mat-form-field>
       </div>
     </mat-expansion-panel>
-
-    <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις"
-      [(ngModel)]="patient.Notes" name="notes" format="json">
-      <div quill-editor-toolbar>
-        <span class="ql-formats">
-          <select class="ql-font">
-            <option selected></option>
-            <option value="serif"></option>
-            <option value="monospace"></option>
-          </select>
-          <select class="ql-size">
-            <option value="small"></option>
-            <option selected></option>
-            <option value="large"></option>
-            <option value="huge"></option>
-          </select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-bold"></button>
-          <button class="ql-italic"></button>
-          <button class="ql-underline"></button>
-          <button class="ql-strike"></button>
-        </span>
-        <span class="ql-formats">
-          <select class="ql-color"></select>
-          <select class="ql-background"></select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-list" value="ordered"></button>
-          <button class="ql-list" value="bullet"></button>
-          <select class="ql-align">
-            <option selected></option>
-            <option value="center"></option>
-            <option value="right"></option>
-            <option value="justify"></option>
-          </select>
-        </span>
-        <span class="ql-formats">
-          <button class="ql-link"></button>
-          <button class="ql-image"></button>
-        </span>
+    <mat-card>
+      <div class="row">
+        <mat-form-field class="diagnoses">
+          <mat-chip-list #diagnosesList aria-label="Διαγνώσεις" ngController="patientForm">
+            <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true" removable="true"
+              (removed)="removeDiagnosis(Diagnosis)">
+              {{Diagnosis}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="diagnosesList" placeholder="Διαγνώσεις..." matChipInputAddOnBlur="true"
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addDiagnosis($event)">
+          </mat-chip-list>
+        </mat-form-field>
       </div>
-    </quill-editor>
+
+      <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις"
+        [(ngModel)]="patient.Notes" name="notes" format="json">
+        <div quill-editor-toolbar>
+          <span class="ql-formats">
+            <select class="ql-font">
+              <option selected></option>
+              <option value="serif"></option>
+              <option value="monospace"></option>
+            </select>
+            <select class="ql-size">
+              <option value="small"></option>
+              <option selected></option>
+              <option value="large"></option>
+              <option value="huge"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+            <button class="ql-strike"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+            <select class="ql-align">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link"></button>
+            <button class="ql-image"></button>
+          </span>
+        </div>
+      </quill-editor>
+    </mat-card>
+
 
     <mat-card-actions align="end">
       <button *ngIf="patient.LastUpdate" mat-button color="warn" type="button" (click)="deletePatient()">
@@ -129,10 +145,11 @@
       <button *ngIf="!patient.LastUpdate" mat-button color="accent" type="button" [routerLink]="['/patients']">
         Απόρριψη
       </button>
-      <button *ngIf="patient.LastUpdate" mat-button color="accent" type="button" [routerLink]="['/patient/' + patient.id]">
+      <button *ngIf="patient.LastUpdate" mat-button color="accent" type="button"
+        [routerLink]="['/patient/' + patient.id]">
         Απόρριψη
       </button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="patientForm.invalid">
+      <button mat-raised-button color="primary" type="submit" [disabled]="patientForm.invalid || patientForm.pristine">
         <mat-icon>save</mat-icon>Αποθήκευση
       </button>
     </mat-card-actions>

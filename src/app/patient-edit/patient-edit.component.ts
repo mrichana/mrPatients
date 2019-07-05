@@ -5,7 +5,7 @@ import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatChipInputEvent, MatChipListChange } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -99,5 +99,33 @@ export class PatientEditComponent implements OnInit {
 
   notesEditorCreated(editor) {
     editor.focus();
+  }
+
+  addDiagnosis(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      if (!this.patient.Diagnoses) {
+        this.patient.Diagnoses = [] as string[];
+      }
+      this.patient.Diagnoses.push(value.trim());
+      this.patientForm.form.markAsDirty();
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeDiagnosis(diagnosis: string, event) {
+    if (!this.patient.Diagnoses) { return; }
+    const index = this.patient.Diagnoses.indexOf(diagnosis);
+
+    if (index >= 0) {
+      this.patient.Diagnoses.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
   }
 }
