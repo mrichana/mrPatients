@@ -16,6 +16,7 @@ export class PatientComponent implements OnInit {
   private patientId: string;
   public patient$: Observable<Patient>;
   public panelOpenState: Boolean = false;
+  public patient: Patient;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class PatientComponent implements OnInit {
         _this.patient$ = _this.patientService.loadPatient(_this.patientId);
         _this.patient$.subscribe(d => {
           _this.titleService.setTitle('Ασθενείς - ' + _this.patientFormat.displayName(d));
+          _this.patient = d;
         });
       }
     );

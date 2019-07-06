@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatChipInputEvent } from '@angular/material';
-import { VerifyDropchangesDialogComponent } from '../verify-dropchanges-dialog/verify-dropchanges-dialog.component';
+import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 
 @Component({
   selector: 'app-patient-add',
@@ -80,7 +80,7 @@ export class PatientAddComponent implements OnInit {
     }
 
     const _this = this;
-    const verifyDialog = this.dialog.open(VerifyDropchangesDialogComponent);
+    const verifyDialog = this.dialog.open(VerifyDropChangesDialogComponent);
     return verifyDialog.afterClosed();
   }
 

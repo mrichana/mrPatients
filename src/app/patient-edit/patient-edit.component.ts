@@ -9,7 +9,7 @@ import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { VerifyDropchangesDialogComponent } from '../verify-dropchanges-dialog/verify-dropchanges-dialog.component';
+import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 
 @Component({
   selector: 'app-patient-edit',
@@ -93,7 +93,7 @@ export class PatientEditComponent implements OnInit {
     }
 
     const _this = this;
-    const verifyDialog = this.dialog.open(VerifyDropchangesDialogComponent);
+    const verifyDialog = this.dialog.open(VerifyDropChangesDialogComponent);
     return verifyDialog.afterClosed();
   }
 

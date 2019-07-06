@@ -1,13 +1,12 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing.module';
 import { AppComponent } from './app.component';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,7 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { QuillModule } from 'ngx-quill';
 
@@ -42,7 +41,7 @@ import { MobileValidatorDirective } from './directives/mobile-validator.directiv
 import { BirthdateValidatorDirective } from './directives/birthdate-validator.directive';
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
 import { VerifyDeleteDialogComponent } from './verify-delete-dialog/verify-delete-dialog.component';
-import { VerifyDropchangesDialogComponent } from './verify-dropchanges-dialog/verify-dropchanges-dialog.component';
+import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -67,10 +66,11 @@ const config = {
     BirthdateValidatorDirective,
     PatientEditComponent,
     VerifyDeleteDialogComponent,
-    VerifyDropchangesDialogComponent,
+    VerifyDropChangesDialogComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
 
@@ -79,8 +79,6 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule,
     AngularFireAuthModule,
-
-    BrowserAnimationsModule,
 
     MatButtonModule,
     MatIconModule,
@@ -104,6 +102,6 @@ const config = {
     Title
   ],
   bootstrap: [AppComponent],
-  entryComponents: [VerifyDeleteDialogComponent, VerifyDropchangesDialogComponent]
+  entryComponents: [VerifyDeleteDialogComponent, VerifyDropChangesDialogComponent]
 })
 export class AppModule { }
