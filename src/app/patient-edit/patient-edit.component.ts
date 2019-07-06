@@ -5,7 +5,7 @@ import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MatChipInputEvent, MatChipListChange } from '@angular/material';
+import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -119,7 +119,7 @@ export class PatientEditComponent implements OnInit {
     }
   }
 
-  removeDiagnosis(diagnosis: string, event) {
+  removeDiagnosis(diagnosis: string) {
     if (!this.patient.Diagnoses) { return; }
     const index = this.patient.Diagnoses.indexOf(diagnosis);
 
