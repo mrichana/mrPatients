@@ -48,7 +48,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "extra-webpack-config": "webpack.extra.js",
               "budgets": [
                 {
                   "type": "initial",
