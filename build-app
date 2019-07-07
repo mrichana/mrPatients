@@ -1,0 +1,3 @@
+#!/bin/bash
+npm run build -- --outputPath electronjs/dist --configuration es5 --base-href ./ --extra-webpack-config webpack.extra.js
+npx electron . &
