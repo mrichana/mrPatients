@@ -10,7 +10,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login', component: LoginComponent,
+    data: { animation: 'login' }
+  },
   {
     path: 'patients', component: PatientsComponent, canActivate: [AuthGuard],
     data: { animation: 'list' }
