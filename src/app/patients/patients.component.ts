@@ -18,7 +18,7 @@ export class PatientsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Ασθενείς - Λίστα');
+    this.titleService.setTitle('Ασθενείς');
   }
 
   public search (value: string): void {
