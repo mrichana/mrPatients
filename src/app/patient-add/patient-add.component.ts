@@ -24,6 +24,8 @@ export class PatientAddComponent implements OnInit {
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
 
+  panelOpenState = false;
+
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientService,

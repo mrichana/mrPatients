@@ -21,9 +21,10 @@ export class PatientEditComponent implements OnInit {
   static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)(?<Checksum>\d)\b/;
 
   public patient: Patient;
-  private patientId: string;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
+
+  panelOpenState = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,17 +36,7 @@ export class PatientEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // const _this = this;
-    // _this.route.paramMap.subscribe(
-    //   (params: ParamMap) => {
-    //     _this.patientId = params.get('id');
-    //     _this.patientService.loadPatient(_this.patientId).subscribe(d => {
-    //       _this.patient = d;
-    //       _this.titleService.setTitle('Ασθενείς - ' + _this.patientFormat.displayName(d));
-    //     });
-    //   }
-    // );
-    this.route.data.subscribe((data: { patient: Patient }) => {
+      this.route.data.subscribe((data: { patient: Patient }) => {
       this.titleService.setTitle('Ασθενείς - ' + this.patientFormat.displayName(data.patient));
       this.patient = data.patient;
     });

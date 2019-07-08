@@ -18,24 +18,27 @@
         </a>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <h2>{{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}</h2>
-    <mat-list>
-      <mat-list-item *ngIf="patient.Amka">Α.Μ.Κ.Α.<span class="stretch"></span>{{patient.Amka}}</mat-list-item>
-      <mat-list-item *ngIf="patient.Birthdate">Ημερομηνία Γέννησης<span
-          class="stretch"></span>{{patientFormat.momentToString(patient.Birthdate)}}</mat-list-item>
-    </mat-list>
-    <mat-nav-list>
-      <a mat-list-item *ngIf="patient.Telephone" href="tel:{{patient.Telephone}}">
-        <mat-icon>phone</mat-icon>Τηλεφωνό<span class="stretch"></span>{{patient.Telephone}}
-      </a>
-      <a mat-list-item *ngIf="patient.Mobile" href="tel:{{patient.Mobile}}">
-        <mat-icon>phone_android</mat-icon>Κινητό<span class="stretch"></span>{{patient.Mobile}}
-      </a>
-      <a mat-list-item *ngIf="patient.Address"
-        href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}">
-        <mat-icon>home</mat-icon>Διεύθυνση<span class="stretch"></span>{{patient.Address}}
-      </a>
-    </mat-nav-list>
+    <ng-template matExpansionPanelContent>
+      <h2>{{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}
+      </h2>
+      <mat-list>
+        <mat-list-item *ngIf="patient.Amka">Α.Μ.Κ.Α.<span class="stretch"></span>{{patient.Amka}}</mat-list-item>
+        <mat-list-item *ngIf="patient.Birthdate">Ημερομηνία Γέννησης<span
+            class="stretch"></span>{{patientFormat.momentToString(patient.Birthdate)}}</mat-list-item>
+      </mat-list>
+      <mat-nav-list>
+        <a mat-list-item *ngIf="patient.Telephone" href="tel:{{patient.Telephone}}">
+          <mat-icon>phone</mat-icon>Τηλεφωνό<span class="stretch"></span>{{patient.Telephone}}
+        </a>
+        <a mat-list-item *ngIf="patient.Mobile" href="tel:{{patient.Mobile}}">
+          <mat-icon>phone_android</mat-icon>Κινητό<span class="stretch"></span>{{patient.Mobile}}
+        </a>
+        <a mat-list-item *ngIf="patient.Address"
+          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}">
+          <mat-icon>home</mat-icon>Διεύθυνση<span class="stretch"></span>{{patient.Address}}
+        </a>
+      </mat-nav-list>
+    </ng-template>
   </mat-expansion-panel>
   <mat-card>
     <mat-chip-list selectable="false">
