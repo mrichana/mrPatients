@@ -1,6 +1,6 @@
 import { Patient } from './patient.model';
-import { Observable, Subject} from 'rxjs';
-import { AngularFirestore} from '@angular/fire/firestore';
+import { Observable, Subject, EMPTY } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
@@ -14,7 +14,7 @@ import { Moment } from 'moment';
 
 export class PatientService {
 
-  constructor( private auth: AuthService, private db: AngularFirestore, public patientFormat: PatientFormatingService) {
+  constructor(private auth: AuthService, private db: AngularFirestore, public patientFormat: PatientFormatingService) {
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -22,10 +22,17 @@ export class PatientService {
     this.auth.user$.subscribe(user => {
       if (user) {
         this.db.collection('doctors').doc(user.uid)
-          .collection('patients').doc<Patient>(patientId).valueChanges().subscribe(d => {
-            d.Birthdate = d.Birthdate ? this.patientFormat.timestampToMoment(d.Birthdate as firebase.firestore.Timestamp) : null;
-            ret.next(d);
-          });
+          .collection('patients').doc<Patient>(patientId).valueChanges().subscribe(
+            d => {
+              if (d) {
+                d.Birthdate = d.Birthdate ? this.patientFormat.timestampToMoment(d.Birthdate as firebase.firestore.Timestamp) : null;
+              }
+              ret.next(d);
+            },
+            error => {
+              ret.next(undefined);
+            }
+          );
       }
     });
     return ret;

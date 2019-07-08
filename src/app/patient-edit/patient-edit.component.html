@@ -1,5 +1,5 @@
 <form class="formContainer" #patientForm="ngForm" (ngSubmit)="onSubmit()">
-  <mat-card *ngIf="patient">
+  <mat-card>
     <mat-expansion-panel [expanded]="!patient.LastUpdate" (opened)="panelOpenState = true"
       (closed)="panelOpenState = false">
       <mat-expansion-panel-header>

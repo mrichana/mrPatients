@@ -94,10 +94,10 @@ const fadeView = animation([
     query(':leave', animateChild(), { optional: true }),
     group([
         query(':leave', [
-            animate('300ms ease-out', style({ opacity: 0 }))
+            animate('150ms ease-out', style({ opacity: 0 }))
         ], { optional: true }),
         query(':enter', [
-            animate('300ms 150ms ease-out', style({ opacity: 1 }))
+            animate('150ms 150ms ease-out', style({ opacity: 1 }))
         ], { optional: true })
     ]),
     query(':enter', animateChild(), { optional: true }),

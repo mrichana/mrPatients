@@ -8,6 +8,7 @@ import { PatientAddComponent } from './patient-add/patient-add.component';
 import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
+import { PatientPreloadService } from './services/patient-preload.service';
 
 const routes: Routes = [
   {
@@ -15,28 +16,46 @@ const routes: Routes = [
     data: { animation: 'login' }
   },
   {
-    path: 'patients', component: PatientsComponent, canActivate: [AuthGuard],
+    path: 'patients', component: PatientsComponent,
+    canActivate: [AuthGuard],
     data: { animation: 'list' }
   },
   {
-    path: 'patient/edit/:id', component: PatientEditComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard],
-    data: { animation: 'edit' }
-  },
-  { path: 'patient/edit', component: PageNotFoundComponent },
-  {
-    path: 'patient/add/:search', component: PatientAddComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard],
-    data: { animation: 'edit' }
-  },
-  {
-    path: 'patient/add', component: PatientAddComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard],
+    path: 'patient/edit/:id', component: PatientEditComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard],
+    resolve: { patient: PatientPreloadService },
     data: { animation: 'edit' }
   },
   {
-    path: 'patient/:id', component: PatientComponent, canActivate: [AuthGuard],
+    path: 'patient/edit', component: PageNotFoundComponent
+  },
+  {
+    path: 'patient/add/:search', component: PatientAddComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: { animation: 'edit' }
+  },
+  {
+    path: 'patient/add', component: PatientAddComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard],
+    data: { animation: 'edit' }
+  },
+  {
+    path: 'patient/:id', component: PatientComponent,
+    canActivate: [AuthGuard],
+    resolve: { patient: PatientPreloadService },
     data: { animation: 'details' }
   },
-  { path: '', redirectTo: '/patients', pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: '**', component: PageNotFoundComponent }];
+  {
+    path: '', redirectTo: '/patients', pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '404' }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
@@ -35,16 +35,20 @@ export class PatientEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const _this = this;
-    _this.route.paramMap.subscribe(
-      (params: ParamMap) => {
-        _this.patientId = params.get('id');
-        _this.patientService.loadPatient(_this.patientId).subscribe(d => {
-          _this.patient = d;
-          _this.titleService.setTitle('Ασθενείς - ' + _this.patientFormat.displayName(d));
-        });
-      }
-    );
+    // const _this = this;
+    // _this.route.paramMap.subscribe(
+    //   (params: ParamMap) => {
+    //     _this.patientId = params.get('id');
+    //     _this.patientService.loadPatient(_this.patientId).subscribe(d => {
+    //       _this.patient = d;
+    //       _this.titleService.setTitle('Ασθενείς - ' + _this.patientFormat.displayName(d));
+    //     });
+    //   }
+    // );
+    this.route.data.subscribe((data: { patient: Patient }) => {
+      this.titleService.setTitle('Ασθενείς - ' + this.patientFormat.displayName(data.patient));
+      this.patient = data.patient;
+    });
   }
 
   onSubmit(): void {

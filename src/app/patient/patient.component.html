@@ -1,4 +1,4 @@
-<div *ngIf="patient">
+<div>
   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title *ngIf="!panelOpenState">
@@ -44,7 +44,7 @@
     <quill-view [content]="patient.Notes" format="json"></quill-view>
   </mat-card>
 </div>
-<a [routerLink]="['/patient/edit', patient?patient.id:'']" [skipLocationChange]="true" mat-fab color="warn"
+<a [routerLink]="['/patient/edit', patient.id]" [skipLocationChange]="true" mat-fab color="warn"
   class="fab-bottom-right">
   <mat-icon>edit</mat-icon>
 </a>
