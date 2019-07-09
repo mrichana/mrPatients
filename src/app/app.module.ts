@@ -42,6 +42,8 @@ import { BirthdateValidatorDirective } from './directives/birthdate-validator.di
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
 import { VerifyDeleteDialogComponent } from './verify-delete-dialog/verify-delete-dialog.component';
 import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/verify-drop-changes-dialog.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const config = {
   apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
@@ -95,7 +97,9 @@ const config = {
     MatDialogModule,
     MatChipsModule,
 
-    QuillModule
+    QuillModule,
+
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'el' },

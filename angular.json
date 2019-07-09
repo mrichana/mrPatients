@@ -54,7 +54,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "es5": {
               "tsConfig": "src/tsconfig-es5.app.json",
