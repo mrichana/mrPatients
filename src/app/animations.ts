@@ -2,11 +2,11 @@ import { trigger, transition, style, query, animateChild, group, animate, animat
 
 const slideViewFromLeft = animation([
     style({ position: 'relative' }),
-    query('.fab-bottom-right', [
-        style({
-            opacity: 0
-        })
-    ], { optional: true }),
+    // query('.fab-bottom-right', [
+    //     style({
+    //         opacity: 0
+    //     })
+    // ], { optional: true }),
     query(':enter, :leave', [
         style({
             'overflow-x': 'hidden',
@@ -29,11 +29,11 @@ const slideViewFromLeft = animation([
         ], { optional: true })
     ]),
     query(':enter', animateChild(), { optional: true }),
-    query('.fab-bottom-right', [
-        style({
-            opacity: 1
-        })
-    ], { optional: true })
+    // query('.fab-bottom-right', [
+    //     style({
+    //         opacity: 1
+    //     })
+    // ], { optional: true })
 ]);
 
 const slideViewFromRight = animation([
