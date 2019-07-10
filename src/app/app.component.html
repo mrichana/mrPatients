@@ -1,5 +1,5 @@
-<div class="flex-col">
-  <mat-toolbar class="header">
+<div class="box">
+  <mat-toolbar class="row header">
     <button mat-button routerLink="/">
       <h2>
         <mat-icon svgIcon="favicon">Στηθοσκόπιο</mat-icon>Ασθενείς
@@ -17,7 +17,7 @@
     </ng-template>
   </mat-toolbar>
 
-  <div [@routeAnimations]="prepareRoute(outlet)" >
-    <router-outlet #outlet="outlet"></router-outlet>
+  <div [@routeAnimations]="prepareRoute(outlet)" class="row content">
+    <router-outlet #outlet="outlet" class=""></router-outlet>
   </div>
 </div>

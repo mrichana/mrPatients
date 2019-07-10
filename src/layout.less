@@ -1,37 +1,28 @@
 html, body {
   height: 100%;
   margin: 0;
+  padding: 0;
 }
 
-.flex-row {
+.box {
 	display: flex;
-	flex-direction: row;
-	width: 100%;
-	//height: inherit;
-  
-	min-height: 0; //  FF flexbox overflow
-}
-
-.flex-col {
-	display: flex;
-	flex-direction: column;
-	min-width: 0; //  FF flexbox overflow
+	flex-flow: column;
 	height: 100%;
 }
 
-.flex-row,
-.flex-col {
-	> .flex-row,
-	> .flex-col {
-		flex-grow: 1;
-	}
-
-
+.box .row.header {
+	flex: 0 1 auto;
 }
+
+.box .row.content {
+	flex: 1 1 auto;
+	overflow: auto;
+}
+
+.box .row.footer {
+	flex: 0 1 40px;
+}
+
 .stretch {
 	flex-grow: 1;
-}
-
-.scroll {
-	overflow: auto;
 }
