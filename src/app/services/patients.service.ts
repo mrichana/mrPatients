@@ -14,18 +14,18 @@ import 'firebase/firestore';
 
 export class PatientsService {
 
-  public patients$: Observable<{id: string, patient: Patient}[]>;
-  public filteredPatients$: Subject<{id: string, patient: Patient}[]>;
+  public patients$: Observable<{ id: string, patient: Patient }[]>;
+  public filteredPatients$: Subject<{ id: string, patient: Patient }[]>;
   public patientsChanges$: Observable<DocumentChangeAction<any>[]>;
-  private sortBy$: Subject<string|null>;
-  private sortOrder$: Subject<string|null>;
-  private filterBy$: Subject<string|null>;
+  private sortBy$: Subject<string | null>;
+  private sortOrder$: Subject<string | null>;
+  private filterBy$: Subject<string | null>;
 
-  constructor( private auth: AuthService, private db: AngularFirestore ) {
+  constructor(private auth: AuthService, private db: AngularFirestore) {
     this.sortBy$ = new BehaviorSubject('LastUpdate');
     this.sortOrder$ = new BehaviorSubject('normal');
     this.filterBy$ = new BehaviorSubject(null);
-    this.filteredPatients$ = new BehaviorSubject<{id: string, patient: Patient}[]>([]);
+    this.filteredPatients$ = new BehaviorSubject<{ id: string, patient: Patient }[]>([]);
     this.loadPatients();
   }
 
@@ -51,22 +51,22 @@ export class PatientsService {
                 const id: string = a.payload.doc.id;
                 const patient: Patient = a.payload.doc.data();
                 patient.Birthdate = patient.Birthdate ? moment((patient.Birthdate as firebase.firestore.Timestamp).toDate()) : null;
-                return {id, patient};
+                return { id, patient };
               });
             })
           );
-        combineLatest(
+        combineLatest([
           this.patients$,
           this.filterBy$.pipe(debounceTime(300), distinctUntilChanged()),
           this.sortBy$.pipe(distinctUntilChanged()),
-          this.sortOrder$.pipe(distinctUntilChanged())).subscribe(d => this.updatePatients(d));
+          this.sortOrder$.pipe(distinctUntilChanged())]).subscribe(d => this.updatePatients(d));
       } else {
         this.patients$ = null;
       }
     });
   }
 
-  private updatePatients([patients, filterBy, orderBy, sortBy]: [{id: string, patient: Patient}[], string, string, string]) {
+  private updatePatients([patients, filterBy, orderBy, sortBy]: [{ id: string, patient: Patient }[], string, string, string]) {
     if (patients) {
       if (filterBy) {
         patients = patients.filter(patient => this.filter(patient, filterBy));
@@ -80,7 +80,7 @@ export class PatientsService {
     }
   }
 
-  private compare (a: any, b: any, field: string): number {
+  private compare(a: any, b: any, field: string): number {
     if (!field) {
       return 0;
     }
@@ -89,7 +89,7 @@ export class PatientsService {
     let valueB = b[field];
 
     if (valueA && typeof valueA['localeCompare'] === 'function') {
-      return valueA.toLocaleLowerCase().localeCompare(valueB.toLocaleLowerCase());
+      return valueA.toLocaleLowerCase().localeCompare(valueB ? valueB.toLocaleLowerCase() : valueB);
     }
 
     if (!valueA || typeof valueA === 'undefined') {
@@ -107,11 +107,11 @@ export class PatientsService {
     return -(valueA - valueB);
   }
 
-  private filter (patient: {id: string, patient: Patient}, filterBy: string): boolean {
-    const filter = new RegExp( filterBy );
+  private filter(patient: { id: string, patient: Patient }, filterBy: string): boolean {
+    const filter = new RegExp(filterBy);
     const fullText: string =
-      (  patient.patient.LastName + '|' + patient.patient.FirstName + '|' + (patient.patient.Amka ? patient.patient.Amka + '|' : '')
-      + (patient.patient.Mobile ? patient.patient.Mobile + '|' : '') + (patient.patient.Telephone ? patient.patient.Telephone + '|' : '')
+      (patient.patient.LastName + '|' + patient.patient.FirstName + '|' + (patient.patient.Amka ? patient.patient.Amka + '|' : '')
+        + (patient.patient.Mobile ? patient.patient.Mobile + '|' : '') + (patient.patient.Telephone ? patient.patient.Telephone + '|' : '')
       ).toLocaleLowerCase();
     return filter.test(fullText);
   }

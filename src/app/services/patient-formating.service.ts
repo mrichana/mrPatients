@@ -13,10 +13,10 @@ export class PatientFormatingService {
   static regexMobile = /(?<country>\+\d{2})?(?<mobile>69\d{8})/;
   static regexAmka = /\b(?<birthdate>\d{6})\d{3}(?<sex>\d)(?<checksum>\d)\b/;
   static regexBirthdate = /\b(?<birthdate>(?<day>[0-3]?\d)\/(?<month>[0-1]?\d{1})\/(?<year>(?:19|20)?\d{2}))\b/;
-  static regexLastFirstName =
-    /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
-  static regexFirstLastName =
-    /(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?) (?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
+  /* tslint:disable */
+  static regexLastFirstName = /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
+  static regexFirstLastName = /(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?) (?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
+  /* tslint:enable */
   static regexLastName =
     /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
 
@@ -28,10 +28,15 @@ export class PatientFormatingService {
     return ret;
   }
 
-  public age(patient: Patient): string {
-    if (!patient.Birthdate) { return ''; }
-    return '(' + moment().diff(patient.Birthdate, 'years').toString() + ')';
+  public age(patient: Patient): number {
+    return moment().diff(patient.Birthdate, 'years');
   }
+
+  public ageAsString(patient: Patient): string | number {
+    if (!patient.Birthdate) { return ''; }
+    return '(' + this.age(patient).toString() + ')';
+  }
+
 
   public encodeURI(URI: string): string {
     return encodeURIComponent(URI);

@@ -10,10 +10,14 @@
     </mat-button-toggle-group>
   </mat-toolbar-row>
   <mat-button-toggle-group vertical value="LastUpdate" class="sortByToggle">
-    <mat-button-toggle class="sortByToggleItem" value="FirstName" (click)="sortBy('FirstName')">Όνομα</mat-button-toggle>
-    <mat-button-toggle class="sortByToggleItem" value="LastName" (click)="sortBy('LastName')">Επίθετο</mat-button-toggle>
-    <mat-button-toggle class="sortByToggleItem" value="Birthdate" (click)="sortBy('Birthdate')">Ηλικία</mat-button-toggle>
-    <mat-button-toggle class="sortByToggleItem" value="LastUpdate" (click)="sortBy('LastUpdate')">Επίσκεψη</mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="FirstName" (click)="sortBy('FirstName')">Όνομα
+    </mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="LastName" (click)="sortBy('LastName')">Επίθετο
+    </mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="Birthdate" (click)="sortBy('Birthdate')">Ηλικία
+    </mat-button-toggle>
+    <mat-button-toggle class="sortByToggleItem" value="LastUpdate" (click)="sortBy('LastUpdate')">Επίσκεψη
+    </mat-button-toggle>
   </mat-button-toggle-group>
 </mat-menu>
 
@@ -33,20 +37,24 @@
 
   <div>
     <mat-nav-list id="patients-list">
-      <mat-list-item *ngFor="let patient of patients.filteredPatients$ | async">
-        <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}}
-          {{patientFormat.age(patient.patient)}}</a>
-        <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}">
-          <mat-icon>phone</mat-icon>
-        </a>
-        <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}">
-          <mat-icon>phone_android</mat-icon>
-        </a>
-        <a *ngIf="patient.patient.Address" mat-icon-button
-          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}">
-          <mat-icon>home</mat-icon>
-        </a>
-      </mat-list-item>
+      <ng-container *ngFor="let patientTitle of patientsView">
+        <h3 matSubheader>{{patientTitle.title}}</h3>
+        <mat-list-item *ngFor="let patient of patientTitle.patients">
+          <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}}
+            {{patientFormat.ageAsString(patient.patient)}}</a>
+          <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}">
+            <mat-icon>phone</mat-icon>
+          </a>
+          <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}">
+            <mat-icon>phone_android</mat-icon>
+          </a>
+          <a *ngIf="patient.patient.Address" mat-icon-button
+            href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}">
+            <mat-icon>home</mat-icon>
+          </a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
     </mat-nav-list>
   </div>
 </div>

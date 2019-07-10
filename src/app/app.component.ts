@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
+import * as moment from 'moment';
 
 import { slideAnimation } from './animations';
 @Component({
@@ -13,6 +14,7 @@ import { slideAnimation } from './animations';
 })
 export class AppComponent {
   constructor(public auth: AuthService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    moment.locale('el');
     iconRegistry.addSvgIcon(
       'favicon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
