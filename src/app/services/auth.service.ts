@@ -16,7 +16,7 @@ import { User } from './user.model';
 export class AuthService {
   user$: Observable<User>;
 
-  constructor (
+  constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
@@ -32,19 +32,21 @@ export class AuthService {
     );
   }
 
-  async googleSignin () {
+  async googleSignin() {
     const provider = new auth.GoogleAuthProvider();
-    const credential = await this.afAuth.auth.signInWithPopup(provider);
-    this.updateUserData(credential.user);
-    this.router.navigate(['/']);
+    try {
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      this.updateUserData(credential.user);
+      this.router.navigate(['/']);
+    } catch (e) {    }
   }
 
-  async signOut () {
+  async signOut() {
     await this.afAuth.auth.signOut();
     return this.router.navigate(['/login']);
   }
 
-  private updateUserData (user: User) {
+  private updateUserData(user: User) {
     // Set user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
@@ -55,6 +57,6 @@ export class AuthService {
       photoURL: user.photoURL
     };
 
-    userRef.set(data, {merge: true});
+    userRef.set(data, { merge: true });
   }
 }
