@@ -41,7 +41,7 @@
       <h3 matSubheader>{{patientTitle.title}}</h3>
       <mat-list-item *ngFor="let patient of patientTitle.patients">
         <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}}
-          {{patientFormat.ageAsString(patient.patient)}}</a>
+          {{patientFormat.displayAge(patient.patient)}}</a>
         <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}">
           <mat-icon>phone</mat-icon>
         </a>

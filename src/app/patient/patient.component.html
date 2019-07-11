@@ -2,7 +2,7 @@
   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title *ngIf="!panelOpenState">
-        {{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}
+        {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
       </mat-panel-title>
       <mat-panel-description *ngIf="!panelOpenState">
         <span class="stretch"></span>
@@ -19,7 +19,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
-      <h2>{{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}
+      <h2>{{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
       </h2>
       <mat-list>
         <mat-list-item *ngIf="patient.Amka">Α.Μ.Κ.Α.<span class="stretch"></span>{{patient.Amka}}</mat-list-item>

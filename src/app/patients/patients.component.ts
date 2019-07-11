@@ -3,7 +3,7 @@ import { PatientsService } from './../services/patients.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
-import * as moment from 'moment';
+
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
@@ -44,7 +44,7 @@ export class PatientsComponent implements OnInit {
           const ageDecade = Math.trunc(this.patientFormat.age(n.patient) / 10) * 10;
           let ageDecadeString: string;
 
-          if (isNaN(ageDecade)){
+          if (isNaN(ageDecade)) {
             ageDecadeString = 'Άγνωστη ημ. γέννησης';
           } else if (ageDecade === 0 ) {
             ageDecadeString = 'Μικρότερος των 10 ετών';
@@ -60,7 +60,7 @@ export class PatientsComponent implements OnInit {
         }
         if (this._sortBy === 'LastUpdate') {
           const lastUpdateString = 'Τελευταία επίσκεψη ' +
-            this.patientFormat.timestampToMoment(n.patient.LastUpdate as firebase.firestore.Timestamp).fromNow(false);
+            n.patient.LastUpdate.fromNow(false);
           if (lastUpdateString !== compareString) {
             patients = [];
             compareString = lastUpdateString;

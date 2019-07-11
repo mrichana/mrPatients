@@ -1,15 +1,12 @@
 import * as moment from 'moment';
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
-
 
 export interface Patient {
     id: string;
-    LastUpdate?: firebase.firestore.Timestamp | firebase.firestore.FieldValue;
+    LastUpdate?: moment.Moment;
 
     FirstName?: string;
     LastName: string;
-    Birthdate?: moment.Moment | Date | firebase.firestore.Timestamp;
+    Birthdate?: moment.Moment;
     Sex?: boolean;
     Amka?: string;
     Telephone?: string;

@@ -4,7 +4,7 @@
       (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title *ngIf="!panelOpenState">
-          {{patientFormat.displayName(patient)}} {{patientFormat.age(patient)}} {{patientFormat.displaySex(patient)}}
+          {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
         </mat-panel-title>
         <mat-panel-description *ngIf="!panelOpenState">
           <span class="stretch"></span>

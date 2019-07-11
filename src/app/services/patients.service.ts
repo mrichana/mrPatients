@@ -5,8 +5,7 @@ import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import * as moment from 'moment';
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
+import * as PouchDB from 'pouchdb';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +49,8 @@ export class PatientsService {
               return actions.map((a: DocumentChangeAction<Patient>) => {
                 const id: string = a.payload.doc.id;
                 const patient: Patient = a.payload.doc.data();
-                patient.Birthdate = patient.Birthdate ? moment((patient.Birthdate as firebase.firestore.Timestamp).toDate()) : null;
+                patient.Birthdate = patient.Birthdate ? moment.unix(<number><unknown>patient.Birthdate) : null;
+                patient.LastUpdate = patient.LastUpdate ? moment.unix(<number><unknown>patient.LastUpdate) : null;
                 return { id, patient };
               });
             })

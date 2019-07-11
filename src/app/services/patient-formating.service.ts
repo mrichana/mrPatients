@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Patient } from './patient.model';
 import * as moment from 'moment';
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +30,7 @@ export class PatientFormatingService {
     return moment().diff(patient.Birthdate, 'years');
   }
 
-  public ageAsString(patient: Patient): string | number {
+  public displayAge(patient: Patient): string | number {
     if (!patient.Birthdate) { return ''; }
     return '(' + this.age(patient).toString() + ')';
   }
@@ -40,14 +38,6 @@ export class PatientFormatingService {
 
   public encodeURI(URI: string): string {
     return encodeURIComponent(URI);
-  }
-
-  public timestampToMoment(date: firebase.firestore.Timestamp): moment.Moment {
-    return date ? moment(date.toDate()) : null;
-  }
-
-  public timestampToString(date: firebase.firestore.Timestamp): string {
-    return moment(date.toDate()).format('DD/MM/YYYY');
   }
 
   public momentToString(date: moment.Moment): string {
@@ -114,15 +104,6 @@ export class PatientFormatingService {
         ret.Birthdate = date;
         ret.Sex = (!!(Number(result.groups['sex']) % 2));
       }
-
-      // if (result = PatientFormatingService.regexBirthdate.exec(searchString)) {
-      //   let date = moment(result[0], 'DDMMYYYY');
-      //   if (date.isAfter(moment())) {
-      //     date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
-      //   }
-      //   ret.Birthdate = date;
-      // }
-
 
       if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) { } else
         if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) { } else {

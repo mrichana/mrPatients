@@ -3,10 +3,8 @@ import { Observable, Subject, EMPTY } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
 import { PatientFormatingService } from '../services/patient-formating.service';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +23,8 @@ export class PatientService {
           .collection('patients').doc<Patient>(patientId).valueChanges().subscribe(
             d => {
               if (d) {
-                d.Birthdate = d.Birthdate ? this.patientFormat.timestampToMoment(d.Birthdate as firebase.firestore.Timestamp) : null;
+                d.Birthdate = d.Birthdate ? moment.unix(<number><unknown>d.Birthdate) : null;
+                d.LastUpdate = moment.unix(<number><unknown>d.LastUpdate);
               }
               ret.next(d);
             },
@@ -41,8 +40,8 @@ export class PatientService {
   public savePatient(patient: Patient) {
     this.auth.user$.subscribe(user => {
       if (user) {
-        patient.LastUpdate = firebase.firestore.FieldValue.serverTimestamp();
-        patient.Birthdate = patient.Birthdate ? (patient.Birthdate as Moment).toDate() : null;
+        patient.LastUpdate = <moment.Moment><unknown>(moment().unix());
+        patient.Birthdate = patient.Birthdate?<moment.Moment><unknown>(patient.Birthdate.unix()):null;
         this.db.collection('doctors').doc(user.uid)
           .collection('patients').doc<Patient>(patient.id).set(patient);
       }
