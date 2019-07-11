@@ -1,7 +1,7 @@
 {
-    "name": "Ασθενείς",
-    "short_name": "",
-    "start_url": ".",
+    "name": "Αρχείο Ασθενών",
+    "short_name": "Ασθενείς",
+    "start_url": "/",
     "icons": [
         {
             "src": "/assets/android-chrome-192x192.png",
