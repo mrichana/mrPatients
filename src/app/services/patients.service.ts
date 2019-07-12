@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import * as moment from 'moment';
-import * as PouchDB from 'pouchdb';
 
 @Injectable({
   providedIn: 'root'

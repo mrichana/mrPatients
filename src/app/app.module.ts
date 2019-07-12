@@ -97,7 +97,7 @@ const config = {
     MatDialogModule,
     MatChipsModule,
 
-    QuillModule,
+    QuillModule.forRoot(),
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
