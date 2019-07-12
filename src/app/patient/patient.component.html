@@ -6,14 +6,14 @@
       </mat-panel-title>
       <mat-panel-description *ngIf="!panelOpenState">
         <span class="stretch"></span>
-        <a *ngIf="patient.Telephone" mat-icon-button href="tel:{{patient.Telephone}}">
+        <a *ngIf="patient.Telephone" mat-icon-button href="tel:{{patient.Telephone}}" (click)="$event.stopPropagation()">
           <mat-icon>phone</mat-icon>
         </a>
-        <a *ngIf="patient.Mobile" mat-icon-button href="tel:{{patient.Mobile}}">
+        <a *ngIf="patient.Mobile" mat-icon-button href="tel:{{patient.Mobile}}" (click)="$event.stopPropagation()">
           <mat-icon>phone_android</mat-icon>
         </a>
         <a *ngIf="patient.Address" mat-icon-button
-          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}">
+          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}" (click)="$event.stopPropagation()">
           <mat-icon>home</mat-icon>
         </a>
       </mat-panel-description>
