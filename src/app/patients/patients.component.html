@@ -25,9 +25,12 @@
 
 <span style="display: flex">
   <mat-form-field id="search-field" class="stretch">
-    <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)">
-    <button matSuffix mat-button>
+    <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)" [ngModel]="searchString">
+    <button matSuffix mat-button *ngIf="!searchString">
       <mat-icon>search</mat-icon>
+    </button>
+    <button matSuffix mat-button *ngIf="searchString" (click)="search('')">
+      <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
   <button mat-button [matMenuTriggerFor]="sortMenu">
