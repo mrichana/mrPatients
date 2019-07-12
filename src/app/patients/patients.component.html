@@ -42,17 +42,17 @@
   <mat-nav-list id="patients-list">
     <ng-container *ngFor="let patientTitle of patientsView">
       <h3 matSubheader>{{patientTitle.title}}</h3>
-      <mat-list-item *ngFor="let patient of patientTitle.patients">
-        <a [routerLink]="['/patient',patient.id]" class="stretch">{{patientFormat.displayName(patient.patient)}}
+      <mat-list-item *ngFor="let patient of patientTitle.patients" [routerLink]="['/patient',patient.id]">
+        <a class="stretch" [routerLink]="['/patient',patient.id]">{{patientFormat.displayName(patient.patient)}}
           {{patientFormat.displayAge(patient.patient)}}</a>
-        <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}">
+        <a *ngIf="patient.patient.Telephone" mat-icon-button href="tel:{{patient.patient.Telephone}}" (click)="$event.stopPropagation()">
           <mat-icon>phone</mat-icon>
         </a>
-        <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}">
+        <a *ngIf="patient.patient.Mobile" mat-icon-button href="tel:{{patient.patient.Mobile}}" (click)="$event.stopPropagation()">
           <mat-icon>phone_android</mat-icon>
         </a>
         <a *ngIf="patient.patient.Address" mat-icon-button
-          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}">
+          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.patient.Address)}}" (click)="$event.stopPropagation()">
           <mat-icon>home</mat-icon>
         </a>
       </mat-list-item>
