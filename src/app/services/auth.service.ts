@@ -42,8 +42,6 @@ export class AuthService {
   }
 
   async signOut() {
-    const db = new PouchDB('test');
-    console.log(await db.info());
     await this.afAuth.auth.signOut();
     return this.router.navigate(['/login']);
   }
