@@ -84,7 +84,6 @@
                 }
               ]
             }
-        
           }
         },
         "serve": {
@@ -168,5 +167,8 @@
       }
     }
   },
-  "defaultProject": "mrPatients"
+  "defaultProject": "mrPatients",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }
