@@ -3,6 +3,7 @@ import { PatientsService } from './../services/patients.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-patients',
@@ -60,7 +61,7 @@ export class PatientsComponent implements OnInit {
         }
         if (this._sortBy === 'LastUpdate') {
           const lastUpdateString = 'Τελευταία επίσκεψη ' +
-            n.patient.LastUpdate.fromNow(false);
+            (n.patient.LastUpdate as moment.Moment).fromNow(false);
           if (lastUpdateString !== compareString) {
             patients = [];
             compareString = lastUpdateString;

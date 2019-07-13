@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { Patient, PatientAdapter } from '../patient.model';
 import { User } from '../user.model';
 import { flatMap, map, switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { flatMap, map, switchMap } from 'rxjs/operators';
 })
 export class FirebaseDbAdapterService {
 
-  user$: Observable<User>;
+  private user$: Observable<User>;
 
   constructor(
     private patientAdapter: PatientAdapter,
@@ -39,18 +39,18 @@ export class FirebaseDbAdapterService {
     });
   }
 
-  public deletePatient(patient: Patient): void {
+  public deletePatient(patient: Patient) {
     this.user$.subscribe(user => {
       this.db.collection('doctors').doc(user.uid)
         .collection('patients').doc<Patient>(patient.id).delete();
     });
   }
 
-  public createId() {
+  public createId(): string {
     return this.db.createId();
   }
 
-  public loadPatients() {
+  public loadPatients(): Observable<{id: string, patient: Patient}[]> {
     return this.user$.pipe(switchMap(user => {
       if (user) {
         return this.db.collection('doctors').doc(user.uid).collection<Patient>('patients').snapshotChanges().
@@ -120,15 +120,18 @@ export class FirebaseDbAdapterService {
   }
 
   public getUser(): Observable<User> {
-    return this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    if (!this.user$) {
+      this.user$ = this.afAuth.authState.pipe(
+        switchMap(user => {
+          if (user) {
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          } else {
+            return of(null);
+          }
+        })
+      );
+    }
+    return this.user$;
   }
 
   public async signIn() {
@@ -136,7 +139,7 @@ export class FirebaseDbAdapterService {
       const provider = new auth.GoogleAuthProvider();
       const credential = await this.afAuth.auth.signInWithPopup(provider);
       this.updateUserData(credential.user);
-    } finally { }
+    } catch (e) { console.log(e); }
   }
 
   public async signOut() {

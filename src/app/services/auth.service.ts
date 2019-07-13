@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { FirebaseDbAdapterService } from './FirebaseDB/firebase-db-adapter.service';
-
-import { Observable, EMPTY } from 'rxjs';
+import { DbAdapterService } from './db-adapter.service';
+import { Observable } from 'rxjs';
 import { User } from './user.model';
 
 @Injectable({
@@ -10,26 +8,21 @@ import { User } from './user.model';
 })
 export class AuthService {
 
-  constructor(
-    private db: FirebaseDbAdapterService,
-    private router: Router
-  ) {
-  }
+  constructor(private db: DbAdapterService) {  }
 
   async signIn() {
     try {
       await this.db.signIn();
-      this.router.navigate(['/']);
+    } catch (e) {
+      console.log(e);
     }
-    finally {}
   }
 
   async signOut() {
     await this.db.signOut();
-    return this.router.navigate(['/login']);
   }
 
   public user(): Observable<User> {
-    return this.db.user$;
+    return this.db.getUser();
   }
 }
