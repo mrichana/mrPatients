@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
-import { Observable, EMPTY } from 'rxjs';
+
+import { auth } from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable, EMPTY, of } from 'rxjs';
 import { Patient, PatientAdapter } from '../patient.model';
+import { User } from '../user.model';
 import { flatMap, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -10,10 +13,19 @@ import { flatMap, map, switchMap } from 'rxjs/operators';
 })
 export class FirebaseDbAdapterService {
 
-  constructor(private auth: AuthService, private patientAdapter: PatientAdapter, private db: AngularFirestore) { }
+  user$: Observable<User>;
+
+  constructor(
+    private patientAdapter: PatientAdapter,
+    private db: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+  ) {
+    this.user$ = this.getUser();
+  }
 
   public loadPatient(patientId: string): Observable<Patient> {
-    return this.auth.user$.pipe(
+    return this.user$.pipe(
       flatMap(user => this.db.collection('doctors').doc(user.uid).collection('patients').doc<Patient>(patientId).valueChanges().pipe(
         map(patient => this.patientAdapter.import(patient))
       ))
@@ -21,14 +33,14 @@ export class FirebaseDbAdapterService {
   }
 
   public savePatient(patient: Patient) {
-    this.auth.user$.subscribe(user => {
+    this.user$.subscribe(user => {
       this.db.collection('doctors').doc(user.uid)
         .collection('patients').doc<Patient>(patient.id).set(this.patientAdapter.export(patient));
     });
   }
 
   public deletePatient(patient: Patient): void {
-    this.auth.user$.subscribe(user => {
+    this.user$.subscribe(user => {
       this.db.collection('doctors').doc(user.uid)
         .collection('patients').doc<Patient>(patient.id).delete();
     });
@@ -39,7 +51,7 @@ export class FirebaseDbAdapterService {
   }
 
   public loadPatients() {
-    return this.auth.user$.pipe(switchMap(user => {
+    return this.user$.pipe(switchMap(user => {
       if (user) {
         return this.db.collection('doctors').doc(user.uid).collection<Patient>('patients').snapshotChanges().
           pipe(map(actions => {
@@ -107,5 +119,41 @@ export class FirebaseDbAdapterService {
     }
   }
 
+  public getUser(): Observable<User> {
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
+  }
+
+  public async signIn() {
+    try {
+      const provider = new auth.GoogleAuthProvider();
+      const credential = await this.afAuth.auth.signInWithPopup(provider);
+      this.updateUserData(credential.user);
+    } finally { }
+  }
+
+  public async signOut() {
+    await this.afAuth.auth.signOut();
+  }
+
+  private updateUserData(user: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
+    const data = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+    };
+
+    userRef.set(data, { merge: true });
+  }
 
 }

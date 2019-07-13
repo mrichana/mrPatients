@@ -53,8 +53,8 @@ export class PatientEditComponent implements OnInit {
     return new Date();
   }
 
-  Age(): null | number {
-    return this.patient.Birthdate ? moment().diff(this.patient.Birthdate, 'years') : null;
+  Age(): number {
+    return this.patientFormat.age(this.patient);
   }
 
   deletePatient() {

@@ -6,12 +6,12 @@
       </h2>
     </button>
     <span class="stretch"></span>
-    <button mat-icon-button (click)="auth.signOut()" *ngIf="auth.user$ | async as user; else login">
+    <button mat-icon-button (click)="auth.signOut()" *ngIf="auth.user() | async as user; else login">
       <img class="photo" src="{{user.photoURL}}">
     </button>
 
     <ng-template #login>
-      <button mat-icon-button (click)="auth.googleSignin()">
+      <button mat-icon-button (click)="auth.signIn()">
         <mat-icon>person</mat-icon>
       </button>
     </ng-template>
