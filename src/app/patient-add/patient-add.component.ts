@@ -53,10 +53,6 @@ export class PatientAddComponent implements OnInit {
     }
   }
 
-  Today(): Date {
-    return new Date();
-  }
-
   Age(): null | number {
     return this.patient.Birthdate ? moment().diff(this.patient.Birthdate, 'years') : null;
   }
@@ -81,7 +77,6 @@ export class PatientAddComponent implements OnInit {
       return true;
     }
 
-    const _this = this;
     const verifyDialog = this.dialog.open(VerifyDropChangesDialogComponent);
     return verifyDialog.afterClosed();
   }

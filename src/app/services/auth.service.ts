@@ -5,7 +5,7 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { User } from './user.model';
@@ -26,7 +26,7 @@ export class AuthService {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
-          return of(null);
+          return EMPTY;
         }
       })
     );
@@ -42,8 +42,6 @@ export class AuthService {
   }
 
   async signOut() {
-    const db = new PouchDB('test');
-    console.log(await db.info());
     await this.afAuth.auth.signOut();
     return this.router.navigate(['/login']);
   }

@@ -86,8 +86,6 @@ export class PatientEditComponent implements OnInit {
     if (this.patientForm.pristine || this.patientForm.submitted) {
       return true;
     }
-
-    const _this = this;
     const verifyDialog = this.dialog.open(VerifyDropChangesDialogComponent);
     return verifyDialog.afterClosed();
   }
