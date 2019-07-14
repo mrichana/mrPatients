@@ -53,8 +53,12 @@ export class PatientAddComponent implements OnInit {
     }
   }
 
+  Today(): Date {
+    return new Date();
+  }
+
   Age(): null | number {
-    return this.patient.Birthdate ? moment().diff(this.patient.Birthdate, 'years') : null;
+    return this.patientFormat.age(this.patient);
   }
 
 

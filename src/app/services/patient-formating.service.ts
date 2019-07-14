@@ -78,7 +78,10 @@ export class PatientFormatingService {
   }
 
   public fromString(searchString: string): Patient {
-    const ret: any = {};
+    const ret: Patient = {
+      id: '',
+      LastName: '',
+    };
 
     if (searchString) {
       let result: RegExpExecArray;
@@ -115,7 +118,7 @@ export class PatientFormatingService {
         ret.FirstName = result.groups['FirstName'] || '';
       }
     }
-    return ret;
+    return ret as Patient;
   }
 
 

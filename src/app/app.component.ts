@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 
 import { slideAnimation } from './animations';
+import { map } from 'rxjs/operators';
+import { Observable, concat, of } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,16 +16,18 @@ import { slideAnimation } from './animations';
   animations: [slideAnimation]
 })
 export class AppComponent {
+
   constructor(public auth: AuthService, iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private router: Router
-    ) {
+  ) {
     moment.locale('el');
     iconRegistry.addSvgIcon(
       'favicon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
     );
-    auth.user().subscribe( user => {
+    auth.user().subscribe(user => {
       if (user) {
         this.router.navigate(['/']);
+
       } else {
         this.router.navigate(['/login']);
       }

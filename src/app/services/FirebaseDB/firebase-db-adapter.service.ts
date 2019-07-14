@@ -4,9 +4,11 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable, of, EMPTY } from 'rxjs';
-import { Patient, PatientAdapter } from '../patient.model';
 import { User } from '../user.model';
 import { flatMap, map, switchMap } from 'rxjs/operators';
+import { PatientAdapter} from './firebase-patient-adapter';
+import { Patient } from '../patient.model';
+
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Patient } from './patient.model';
 import { Observable, Subject, BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { FirebaseDbAdapterService } from './FirebaseDB/firebase-db-adapter.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DbAdapterService } from './db-adapter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class PatientsService {
   private sortOrder$: Subject<string | null>;
   private filterBy$: Subject<string | null>;
 
-  constructor(private db: FirebaseDbAdapterService) {
+  constructor(private db: DbAdapterService) {
     this.sortBy$ = new BehaviorSubject('LastUpdate');
     this.sortOrder$ = new BehaviorSubject('normal');
     this.filterBy$ = new BehaviorSubject(null);

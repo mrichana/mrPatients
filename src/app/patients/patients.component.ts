@@ -1,14 +1,17 @@
 import { PatientFormatingService } from './../services/patient-formating.service';
 import { PatientsService } from './../services/patients.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
-  styleUrls: ['./patients.component.less']
+  styleUrls: ['./patients.component.less'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PatientsComponent implements OnInit {
 
@@ -16,29 +19,29 @@ export class PatientsComponent implements OnInit {
   public _sortOrder = 'normal';
   public _sortBy = 'LastUpdate';
 
-  constructor(private patientService: PatientsService, public patientFormat: PatientFormatingService, private titleService: Title) {
+  constructor(public patientService: PatientsService, public patientFormat: PatientFormatingService, private titleService: Title, private cdr: ChangeDetectorRef) {
   }
 
-  public patientsView: { title: string, patients: { id: string, patient: Patient }[] }[];
+  public patientsView: Observable<{ title: string, patients: { id: string, patient: Patient }[] }[]>;
 
   ngOnInit() {
     this.titleService.setTitle('Ασθενείς');
-    this.patientService.filteredPatients$.subscribe(d => {
-      this.patientsView = [];
+    this.patientsView = this.patientService.filteredPatients$.pipe(map(d => {
+      const patientsView = [];
       let patients: { id: string, patient: Patient }[] = [];
       let compareString: string;
       d.forEach(n => {
         if (this._sortBy === 'LastName' && !n.patient.LastName.startsWith(compareString)) {
           patients = [];
           compareString = n.patient.LastName.charAt(0);
-          this.patientsView.push({ title: compareString, patients });
+          patientsView.push({ title: compareString, patients });
         }
         if (this._sortBy === 'FirstName') {
           const firstNameCompareLetter = n.patient.FirstName ? n.patient.FirstName[0] : 'Χωρίς Όνομα';
           if (firstNameCompareLetter !== compareString) {
             patients = [];
             compareString = firstNameCompareLetter;
-            this.patientsView.push({ title: compareString, patients });
+            patientsView.push({ title: compareString, patients });
           }
         }
         if (this._sortBy === 'Birthdate') {
@@ -56,7 +59,7 @@ export class PatientsComponent implements OnInit {
           if (ageDecadeString !== compareString) {
             patients = [];
             compareString = ageDecadeString;
-            this.patientsView.push({ title: compareString, patients });
+            patientsView.push({ title: compareString, patients });
           }
         }
         if (this._sortBy === 'LastUpdate') {
@@ -65,12 +68,13 @@ export class PatientsComponent implements OnInit {
           if (lastUpdateString !== compareString) {
             patients = [];
             compareString = lastUpdateString;
-            this.patientsView.push({ title: compareString, patients });
+            patientsView.push({ title: compareString, patients });
           }
         }
         patients.push(n);
       });
-    });
+      return patientsView;
+    }));
   }
 
   public search(value: string): void {

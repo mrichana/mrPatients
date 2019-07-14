@@ -40,7 +40,7 @@
 
 <div>
   <mat-nav-list id="patients-list">
-    <ng-container *ngFor="let patientTitle of patientsView">
+    <ng-container *ngFor="let patientTitle of patientsView | async">
       <h3 matSubheader>{{patientTitle.title}}</h3>
       <mat-list-item *ngFor="let patient of patientTitle.patients" [routerLink]="['/patient',patient.id]">
         <a class="stretch" [routerLink]="['/patient',patient.id]">{{patientFormat.displayName(patient.patient)}}

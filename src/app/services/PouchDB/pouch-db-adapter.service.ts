@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, of, EMPTY } from 'rxjs';
-import { Patient, PatientAdapter } from '../patient.model';
+import { Observable, EMPTY, from, fromEvent, concat, of } from 'rxjs';
+import { Patient } from '../patient.model';
 import { User } from '../user.model';
-import { flatMap, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
-import PouchDB from 'pouchdb-browser';
+import PouchDB from 'pouchdb';
 import PouchDBUpsert from 'pouchdb-upsert';
+
+import { UUID } from 'angular2-uuid';
+import { PatientAdapter } from './pouch-patient-adapter';
 // import PouchDBFind from 'pouchdb-find';
 
 PouchDB.plugin(PouchDBUpsert);
@@ -18,61 +21,86 @@ PouchDB.plugin(PouchDBUpsert);
 @Injectable({
   providedIn: 'root'
 })
-export class PouchDBAdapterService {
+export class PouchDbAdapterService {
 
-  user$: Observable<User>;
+  private user$: Observable<User>;
+
+  private databaseName = 'patients';
+  private localDb: PouchDB.Database<{}>;
+  private databaseUuid: string;
 
   constructor(
     private patientAdapter: PatientAdapter,
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
+    private afs: AngularFirestore
   ) {
+    this.prepareDatabase();
     this.user$ = this.getUser();
   }
 
+  private async prepareDatabase() {
+    this.localDb = new PouchDB(this.databaseName);
+
+    const options = {
+      live: true,
+      retry: true,
+      continuous: true
+    };
+
+    try {
+      await this.localDb.put({ _id: '_local/databaseId', value: this.createId() });
+    } catch {
+    } finally {
+      const doc = await this.localDb.get('_local/databaseId');
+      this.databaseUuid = doc['value'];
+    }
+
+    this.localDb.sync('http://couchdb.richana.eu/' + this.databaseName + this.databaseUuid, options);
+  }
+
   public loadPatient(patientId: string): Observable<Patient> {
-    return this.user$.pipe(
-      flatMap(user => this.db.collection('doctors').doc(user.uid).collection('patients').doc<Patient>(patientId).valueChanges().pipe(
-        map(patient => this.patientAdapter.import(patient))
-      ))
-    );
+    return (from(this.localDb.get(patientId))).pipe(map(d => {
+      return this.patientAdapter.import(d);
+    }));
   }
 
   public savePatient(patient: Patient) {
-    this.user$.subscribe(user => {
-      this.db.collection('doctors').doc(user.uid)
-        .collection('patients').doc<Patient>(patient.id).set(this.patientAdapter.export(patient));
-    });
+    this.localDb.put({ _id: patient.id, _rev: patient['_rev'], value: this.patientAdapter.export(patient) });
   }
 
-  public deletePatient(patient: Patient): void {
-    this.user$.subscribe(user => {
-      this.db.collection('doctors').doc(user.uid)
-        .collection('patients').doc<Patient>(patient.id).delete();
-    });
+  public deletePatient(patient: Patient) {
+    this.localDb.remove({ _id: patient.id, _rev: patient['_rev'] });
   }
 
-  public createId() {
-    return this.db.createId();
+  public createId(): string {
+    return UUID.UUID();
   }
 
-  public loadPatients() {
-    return this.user$.pipe(switchMap(user => {
-      if (user) {
-        return this.db.collection('doctors').doc(user.uid).collection<Patient>('patients').snapshotChanges().
-          pipe(map(actions => {
-            return actions.map(action => {
+  public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
+    return concat((from(this.localDb.allDocs({ include_docs: true }))).pipe(
+      map(d => {
+        return d.rows.map(item => {
+          return {
+            id: item.doc._id,
+            patient: this.patientAdapter.import(item.doc)
+          };
+        });
+      })
+    ),
+      (fromEvent(this.localDb.changes({ since: 'now', live: true, include_docs: true }), 'change').pipe(switchMap(() => {
+        return from(this.localDb.allDocs({ include_docs: true })).pipe(
+          map(d => {
+            return d.rows.map(item => {
               return {
-                id: action.payload.doc.id,
-                patient: this.patientAdapter.import(action.payload.doc.data())
+                id: item.doc._id,
+                patient: this.patientAdapter.import(item.doc)
               };
             });
-          }));
-      } else {
-        return EMPTY;
-      }
-    }));
+          })
+        );
+      })))
+    );
   }
 
   private compare(a: any, b: any, field: string): number {
@@ -127,40 +155,15 @@ export class PouchDBAdapterService {
   }
 
   public getUser(): Observable<User> {
-    return this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    return of({uid: 'local', email: ''});
   }
 
   public async signIn() {
-    try {
-      const provider = new auth.GoogleAuthProvider();
-      const credential = await this.afAuth.auth.signInWithPopup(provider);
-      this.updateUserData(credential.user);
-    } finally { }
   }
 
   public async signOut() {
-    await this.afAuth.auth.signOut();
   }
 
   private updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
-    const data = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
-    };
-
-    userRef.set(data, { merge: true });
   }
-
 }

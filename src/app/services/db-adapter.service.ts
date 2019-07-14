@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Patient } from './patient.model';
-import { FirebaseDbAdapterService } from './FirebaseDB/firebase-db-adapter.service';
+import { PouchDbAdapterService } from './PouchDB/pouch-db-adapter.service';
 import { Observable } from 'rxjs';
 import { User } from './user.model';
 
@@ -9,7 +9,7 @@ import { User } from './user.model';
 })
 export class DbAdapterService {
 
-  constructor(private db: FirebaseDbAdapterService) { }
+  constructor(private db: PouchDbAdapterService) { }
 
   public loadPatient(patientId: string): Observable<Patient> {
     return this.db.loadPatient(patientId);

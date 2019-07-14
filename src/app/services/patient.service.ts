@@ -2,7 +2,7 @@ import { Patient } from './patient.model';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { PatientFormatingService } from './patient-formating.service';
-import { FirebaseDbAdapterService } from './FirebaseDB/firebase-db-adapter.service';
+import { DbAdapterService } from './db-adapter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { FirebaseDbAdapterService } from './FirebaseDB/firebase-db-adapter.servi
 
 export class PatientService {
 
-  constructor(public patientFormat: PatientFormatingService, private db: FirebaseDbAdapterService) {
+  constructor(public patientFormat: PatientFormatingService, private db: DbAdapterService) {
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
