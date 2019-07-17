@@ -18,8 +18,6 @@ import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/
 })
 export class PatientEditComponent implements OnInit {
 
-  static regexAmka = /\b(?<Birthdate>\d{6})\d{3}(?<Sex>\d)(?<Checksum>\d)\b/;
-
   public patient: Patient;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
@@ -77,7 +75,7 @@ export class PatientEditComponent implements OnInit {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
         this.patient.Birthdate = this.patient.Birthdate || date;
-        this.patient.Sex = (this.patient.Sex == null) ? (!(Number(result.groups['Sex']) % 2)) : this.patient.Sex;
+        this.patient.Sex = (this.patient.Sex == null) ? (!(Number(result[2]) % 2)) : this.patient.Sex;
       }
     }
   }

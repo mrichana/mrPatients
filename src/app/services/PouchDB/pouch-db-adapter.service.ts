@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { auth } from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, EMPTY, from, fromEvent, concat, of } from 'rxjs';
+import { Observable, from, fromEvent, concat, of } from 'rxjs';
 import { Patient } from '../patient.model';
 import { User } from '../user.model';
 import { map, switchMap } from 'rxjs/operators';
@@ -30,11 +27,7 @@ export class PouchDbAdapterService {
   private databaseUuid: string;
 
   constructor(
-    private patientAdapter: PatientAdapter,
-    private db: AngularFirestore,
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore
-  ) {
+    private patientAdapter: PatientAdapter) {
     this.prepareDatabase();
     this.user$ = this.getUser();
   }
@@ -56,7 +49,7 @@ export class PouchDbAdapterService {
       this.databaseUuid = doc['value'];
     }
 
-    this.localDb.sync('http://couchdb.richana.eu/' + this.databaseName + this.databaseUuid, options);
+    this.localDb.sync('https://couchdb.richana.eu/' + this.databaseName + this.databaseUuid, options);
   }
 
   public loadPatient(patientId: string): Observable<Patient> {

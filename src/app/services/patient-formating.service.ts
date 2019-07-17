@@ -7,16 +7,16 @@ import * as moment from 'moment';
 })
 export class PatientFormatingService {
 
-  static regexTelephone = /(?<country>\+\d{2})?(?<telephone>2\d{9})/;
-  static regexMobile = /(?<country>\+\d{2})?(?<mobile>69\d{8})/;
-  static regexAmka = /\b(?<birthdate>\d{6})\d{3}(?<sex>\d)(?<checksum>\d)\b/;
-  static regexBirthdate = /\b(?<birthdate>(?<day>[0-3]?\d)\/(?<month>[0-1]?\d{1})\/(?<year>(?:19|20)?\d{2}))\b/;
+  static regexTelephone = /(\+\d{2})?(2\d{9})/;
+  static regexMobile = /(\+\d{2})?(69\d{8})/;
+  static regexAmka = /\b(\d{6})\d{3}(\d)(\d)\b/;
+  static regexBirthdate = /\b(([0-3]?\d)\/([0-1]?\d{1})\/((?:19|20)?\d{2}))\b/;
   /* tslint:disable */
-  static regexLastFirstName = /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
-  static regexFirstLastName = /(?<FirstName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?) (?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
+  static regexLastFirstName = /([a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?),[ ]?([a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+[ ]?[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)/;
+  static regexFirstLastName = /([a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?) ([a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
   /* tslint:enable */
   static regexLastName =
-    /(?<LastName>[a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
+    /([a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+(?:[-][a-zA-Z\u0370-\u03ff\u1f00-\u1fff]+)?)/;
 
   constructor() { }
 
@@ -88,34 +88,34 @@ export class PatientFormatingService {
 
       if (this.verifyMobile(searchString)) {
         result = PatientFormatingService.regexMobile.exec(searchString);
-        ret.Mobile = result.groups['mobile'];
+        ret.Mobile = result[2];
       }
 
       if (this.verifyTelephone(searchString)) {
         result = PatientFormatingService.regexTelephone.exec(searchString);
-        ret.Telephone = result.groups['telephone'];
+        ret.Telephone = result[2];
       }
 
       if (this.verifyAmka(searchString)) {
         result = PatientFormatingService.regexAmka.exec(searchString);
         ret.Amka = result[0];
-        let date = moment(result.groups['birthdate'], 'DDMMYY');
+        let date = moment(result[1], 'DDMMYY');
 
         if (date.isAfter(moment())) {
           date = moment({ year: date.year() - 100, month: date.month(), day: date.day() });
         }
         ret.Birthdate = date;
-        ret.Sex = (!!(Number(result.groups['sex']) % 2));
+        ret.Sex = (!!(Number(result[2]) % 2));
       }
 
-      if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) { } else
-        if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) { } else {
-          result = PatientFormatingService.regexLastName.exec(searchString);
-        }
-
-      if (result) {
-        ret.LastName = result.groups['LastName'] || '';
-        ret.FirstName = result.groups['FirstName'] || '';
+      if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) {
+        ret.FirstName = result[2] || '';
+        ret.LastName = result[1] || '';
+       } else if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) {
+        ret.FirstName = result[1] || '';
+        ret.LastName = result[2] || '';
+       } else if (result = PatientFormatingService.regexLastName.exec(searchString)) {
+        ret.LastName = result[0] || '';
       }
     }
     return ret as Patient;
