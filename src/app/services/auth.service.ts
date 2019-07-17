@@ -19,6 +19,7 @@ export class AuthService {
   }
 
   async signOut() {
+
     await this.db.signOut();
   }
 
