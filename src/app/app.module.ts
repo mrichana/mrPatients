@@ -25,10 +25,6 @@ import { MatChipsModule } from '@angular/material/chips';
 
 import { QuillModule } from 'ngx-quill';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-
 import { PatientsComponent } from './patients/patients.component';
 import { LoginComponent } from './login/login.component';
 import { PatientComponent } from './patient/patient.component';
@@ -44,15 +40,6 @@ import { VerifyDeleteDialogComponent } from './verify-delete-dialog/verify-delet
 import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
-const config = {
-  apiKey: 'AIzaSyD6lYfaptJ5VtaNL8yolLD2UDEeEnuc7Ec',
-  authDomain: 'mrpatients-fbe9c.firebaseapp.com',
-  databaseURL: 'https://mrpatients-fbe9c.firebaseio.com',
-  projectId: 'mrpatients-fbe9c',
-  storageBucket: 'mrpatients-fbe9c.appspot.com',
-  messagingSenderId: '1062968270110'
-};
 
 @NgModule({
   declarations: [
@@ -77,10 +64,6 @@ const config = {
     FormsModule,
 
     HttpClientModule,
-
-    AngularFireModule.initializeApp(config),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
 
     MatButtonModule,
     MatIconModule,
