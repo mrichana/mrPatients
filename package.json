@@ -1,14 +1,16 @@
 {
   "name": "mr-patients",
   "version": "0.0.0",
-  "main": "electronjs/main.js",
+  "main": "electron/dist/main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "ng build -c es5 --base-href ./ && tsc --p electron && electron .",
+    "electron-restart": "tsc --p electron && electron ."
   },
   "private": true,
   "dependencies": {
@@ -23,6 +25,7 @@
     "@angular/pwa": "^0.801.0",
     "@angular/router": "~8.0.0",
     "@angular/service-worker": "~8.0.0",
+    "angular2-uuid": "^1.1.1",
     "core-js": "^3.1.3",
     "guard": "^0.1.2",
     "hammerjs": "^2.0.8",
@@ -32,7 +35,6 @@
     "pouchdb": "^7.1.1",
     "pouchdb-find": "^7.1.1",
     "pouchdb-upsert": "^2.2.0",
-    "angular2-uuid": "^1.1.1",
     "pwa": "^1.9.7",
     "quill": "^1.3.6",
     "roboto-fontface": "^0.10.0",
@@ -54,7 +56,7 @@
     "@types/pouchdb-upsert": "^2.2.6",
     "ajv": "^6.10.0",
     "codelyzer": "^5.0.1",
-    "electron": "^5.0.6",
+    "electron": "^5.0.7",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
