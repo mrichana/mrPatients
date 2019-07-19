@@ -27,6 +27,10 @@ export class DbAdapterService {
     return this.db.createId();
   }
 
+  public createPatientId(): string {
+    return this.db.createPatientId();
+  }
+
   public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
     return this.db.loadPatients();
   }

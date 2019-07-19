@@ -23,7 +23,7 @@ export class PatientService {
 
   public createPatient(data: string): Patient {
     const ret = this.patientFormat.fromString(data);
-    ret.id = this.db.createId();
+    ret.id = this.db.createPatientId();
     return ret;
   }
 

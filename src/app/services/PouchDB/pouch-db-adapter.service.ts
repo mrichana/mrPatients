@@ -53,9 +53,21 @@ export class PouchDbAdapterService {
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
-    return (from(this.localDb.get(patientId))).pipe(map(d => {
+    const patient = from(this.localDb.get(patientId)).pipe(map(d => {
       return this.patientAdapter.import(d);
     }));
+
+    const ret = concat(
+      patient,
+      fromEvent(this.localDb.changes({ since: 'now', live: true, doc_ids: [patientId], include_docs: true }), 'change').pipe(
+        map(d => {
+          return this.patientAdapter.import(d[0]['doc']);
+        })
+      )
+    );
+
+    return ret;
+
   }
 
   public savePatient(patient: Patient) {
@@ -70,8 +82,16 @@ export class PouchDbAdapterService {
     return UUID.UUID();
   }
 
+  public createPatientId(): string {
+    return 'patient::' + UUID.UUID();
+  }
+
   public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
-    return concat((from(this.localDb.allDocs({ include_docs: true }))).pipe(
+    const patientList = from(this.localDb.allDocs({
+      include_docs: true,
+      startkey: 'patient::',
+      endkey: 'patient::\ufff0'
+    })).pipe(
       map(d => {
         return d.rows.map(item => {
           return {
@@ -80,20 +100,15 @@ export class PouchDbAdapterService {
           };
         });
       })
-    ),
-      (fromEvent(this.localDb.changes({ since: 'now', live: true, include_docs: true }), 'change').pipe(switchMap(() => {
-        return from(this.localDb.allDocs({ include_docs: true })).pipe(
-          map(d => {
-            return d.rows.map(item => {
-              return {
-                id: item.doc._id,
-                patient: this.patientAdapter.import(item.doc)
-              };
-            });
-          })
-        );
-      })))
     );
+
+    const ret = concat(
+      patientList,
+      fromEvent(this.localDb.changes({ since: 'now', live: true }), 'change').pipe(switchMap(() => {
+        return patientList;
+      }))
+    );
+    return ret;
   }
 
   private compare(a: any, b: any, field: string): number {
