@@ -19,7 +19,11 @@ export class PatientsComponent implements OnInit {
   public _sortOrder = 'normal';
   public _sortBy = 'LastUpdate';
 
-  constructor(public patientService: PatientsService, public patientFormat: PatientFormatingService, private titleService: Title, private cdr: ChangeDetectorRef) {
+  constructor(
+    public patientService: PatientsService,
+    public patientFormat: PatientFormatingService,
+    private titleService: Title
+  ) {
   }
 
   public patientsView: Observable<{ title: string, patients: { id: string, patient: Patient }[] }[]>;
@@ -50,7 +54,7 @@ export class PatientsComponent implements OnInit {
 
           if (isNaN(ageDecade)) {
             ageDecadeString = 'Άγνωστη ημ. γέννησης';
-          } else if (ageDecade === 0 ) {
+          } else if (ageDecade === 0) {
             ageDecadeString = 'Μικρότερος των 10 ετών';
           } else {
             ageDecadeString = 'Μεγαλύτερος των ' + ageDecade.toString() + 'ετών';
@@ -75,6 +79,7 @@ export class PatientsComponent implements OnInit {
       });
       return patientsView;
     }));
+    this.patientsView.subscribe(d => console.log(d));
   }
 
   public search(value: string): void {

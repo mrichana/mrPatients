@@ -52,22 +52,21 @@ export class PouchDbAdapterService {
     this.localDb.sync('https://couchdb.richana.eu/patients_' + this.databaseUuid, options);
   }
 
-  public loadPatient(patientId: string): Observable<Patient> {
-    const patient = from(this.localDb.get(patientId)).pipe(map(d => {
+  private getPatient(patientId: string) {
+    return from(this.localDb.get(patientId)).pipe(map(d => {
       return this.patientAdapter.import(d);
     }));
-
-    const ret = concat(
-      patient,
+  }
+  public loadPatient(patientId: string): Observable<Patient> {
+      const ret = concat(
+      this.getPatient(patientId),
       fromEvent(this.localDb.changes({ since: 'now', live: true, doc_ids: [patientId], include_docs: true }), 'change').pipe(
         map(d => {
           return this.patientAdapter.import(d[0]['doc']);
         })
       )
     );
-
     return ret;
-
   }
 
   public savePatient(patient: Patient) {
@@ -86,8 +85,8 @@ export class PouchDbAdapterService {
     return 'patient::' + UUID.UUID();
   }
 
-  public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
-    const patientList = from(this.localDb.allDocs({
+  private patientList = () => {
+    return from(this.localDb.allDocs({
       include_docs: true,
       startkey: 'patient::',
       endkey: 'patient::\ufff0'
@@ -101,11 +100,14 @@ export class PouchDbAdapterService {
         });
       })
     );
+  }
+
+  public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
 
     const ret = concat(
-      patientList,
+      this.patientList(),
       fromEvent(this.localDb.changes({ since: 'now', live: true }), 'change').pipe(switchMap(() => {
-        return patientList;
+        return this.patientList();
       }))
     );
     return ret;
