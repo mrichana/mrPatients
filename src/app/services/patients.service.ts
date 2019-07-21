@@ -10,7 +10,6 @@ import { DbAdapterService } from './db-adapter.service';
 
 export class PatientsService {
 
-  public patients$: Observable<{ id: string, patient: Patient }[]>;
   public filteredPatients$: Subject<{ id: string, patient: Patient }[]>;
   private sortBy$: Subject<string | null>;
   private sortOrder$: Subject<string | null>;
@@ -37,9 +36,8 @@ export class PatientsService {
   }
 
   private loadPatients() {
-    this.patients$ = this.db.loadPatients();
     combineLatest([
-      this.patients$,
+      this.db.loadPatients(),
       this.filterBy$.pipe(debounceTime(300), distinctUntilChanged()),
       this.sortBy$.pipe(distinctUntilChanged()),
       this.sortOrder$.pipe(distinctUntilChanged())])
