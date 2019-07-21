@@ -52,14 +52,14 @@ export class PouchDbAdapterService {
     this.localDb.sync('https://couchdb.richana.eu/patients_' + this.databaseUuid, options);
   }
 
-  private getPatient(patientId: string) {
-    return from(this.localDb.get(patientId)).pipe(map(d => {
-      return this.patientAdapter.import(d);
-    }));
-  }
   public loadPatient(patientId: string): Observable<Patient> {
-      const ret = concat(
-      this.getPatient(patientId),
+    const getPatient = (id: string) => {
+      return from(this.localDb.get(patientId)).pipe(map(d => {
+        return this.patientAdapter.import(d);
+      }));
+    };
+    const ret = concat(
+      getPatient(patientId),
       fromEvent(this.localDb.changes({ since: 'now', live: true, doc_ids: [patientId], include_docs: true }), 'change').pipe(
         map(d => {
           return this.patientAdapter.import(d[0]['doc']);
@@ -85,29 +85,27 @@ export class PouchDbAdapterService {
     return 'patient::' + UUID.UUID();
   }
 
-  private patientList = () => {
-    return from(this.localDb.allDocs({
-      include_docs: true,
-      startkey: 'patient::',
-      endkey: 'patient::\ufff0'
-    })).pipe(
-      map(d => {
-        return d.rows.map(item => {
-          return {
-            id: item.doc._id,
-            patient: this.patientAdapter.import(item.doc)
-          };
-        });
-      })
-    );
-  }
-
   public loadPatients(): Observable<{ id: string, patient: Patient }[]> {
-
+    const patientList = () => {
+      return from(this.localDb.allDocs({
+        include_docs: true,
+        startkey: 'patient::',
+        endkey: 'patient::\ufff0'
+      })).pipe(
+        map(d => {
+          return d.rows.map(item => {
+            return {
+              id: item.doc._id,
+              patient: this.patientAdapter.import(item.doc)
+            };
+          });
+        })
+      );
+    };
     const ret = concat(
-      this.patientList(),
+      patientList(),
       fromEvent(this.localDb.changes({ since: 'now', live: true }), 'change').pipe(switchMap(() => {
-        return this.patientList();
+        return patientList();
       }))
     );
     return ret;

@@ -79,7 +79,6 @@ export class PatientsComponent implements OnInit {
       });
       return patientsView;
     }));
-    this.patientsView.subscribe(d => console.log(d));
   }
 
   public search(value: string): void {

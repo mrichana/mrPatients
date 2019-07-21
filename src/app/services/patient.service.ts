@@ -9,6 +9,15 @@ import { DbAdapterService } from './db-adapter.service';
 })
 
 export class PatientService {
+  // createALotOfPatients() {
+  //   let p: Patient;
+  //   for (let n = 0; n < 5000; n++) {
+  //     p = this.createPatient('');
+  //     p.LastName = this.db.createId();
+  //     p.FirstName = this.db.createId();
+  //     this.savePatient(p);
+  //   }
+  // }
 
   constructor(public patientFormat: PatientFormatingService, private db: DbAdapterService) {
   }
