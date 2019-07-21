@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   selector: 'app-patients',
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PatientsComponent implements OnInit {
 

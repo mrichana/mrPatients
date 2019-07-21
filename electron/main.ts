@@ -1,6 +1,6 @@
-import { app, BrowserWindow, Menu } from 'electron'
-import * as path from 'path'
-import * as url from 'url'
+import { app, BrowserWindow, Menu } from 'electron';
+import * as path from 'path';
+import * as url from 'url';
 
 let win: BrowserWindow;
 
@@ -16,6 +16,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: path.join(__dirname, `/../../dist/es5/assets/icons/icon-128x128.png`),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true
@@ -35,7 +36,7 @@ function createWindow() {
 
   win.setMenuBarVisibility(false);
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null;

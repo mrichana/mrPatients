@@ -1,13 +1,20 @@
 <div class="box">
   <mat-toolbar class="row header">
-    <button mat-button routerLink="/">
+    <a mat-button routerLink="/">
       <h2>
         <mat-icon svgIcon="favicon">Στηθοσκόπιο</mat-icon>Ασθενείς
       </h2>
-    </button>
+    </a>
+    <!-- <span class="stretch"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button> -->
   </mat-toolbar>
 
   <div [@routeAnimations]="prepareRoute(outlet)" class="row content">
     <router-outlet #outlet="outlet" class=""></router-outlet>
   </div>
 </div>
+
+<mat-menu #settingsMenu="matMenu">
+  <button mat-menu-item>Σύνδεση...</button>
+</mat-menu>

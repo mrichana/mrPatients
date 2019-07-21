@@ -49,7 +49,7 @@ export class PouchDbAdapterService {
       this.databaseUuid = doc['value'];
     }
 
-    this.localDb.sync('https://couchdb.richana.eu/patients_' + this.databaseUuid, options);
+//    this.localDb.sync('https://couchdb.richana.eu/patients_' + this.databaseUuid, options);
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
