@@ -5,9 +5,9 @@
         <mat-icon svgIcon="favicon">Στηθοσκόπιο</mat-icon>Ασθενείς
       </h2>
     </a>
-    <!-- <span class="stretch"></span>
+    <span class="stretch"></span>
 
-    <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button> -->
+    <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button>
   </mat-toolbar>
 
   <div [@routeAnimations]="prepareRoute(outlet)" class="row content">
@@ -16,5 +16,5 @@
 </div>
 
 <mat-menu #settingsMenu="matMenu">
-  <button mat-menu-item>Σύνδεση...</button>
+  <button mat-menu-item [routerLink]="['/login']">Σύνδεση...</button>
 </mat-menu>
