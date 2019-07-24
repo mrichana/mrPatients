@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ErrorHandler } from '@angular/core';
 
 import { Observable, from, fromEvent, concat, of } from 'rxjs';
 import { Patient } from '../patient.model';
@@ -44,22 +44,6 @@ export class PouchDbAdapterService {
       const doc = await this.localDb.get('_local/databaseId');
       this.databaseUuid = doc['value'];
     }
-
-    const pouchOpts: PouchDB.Configuration.DatabaseConfiguration = {
-      auth: {
-        username: 'mrichana@gmail.com',
-        password: 'X!0n0b4ll4'
-      }
-    };
-
-    const syncOptions: PouchDB.Replication.SyncOptions = {
-      live: true,
-      retry: true
-    };
-
-    const remoteDb = new PouchDB('https://couchdb.richana.eu/patients_' + this.databaseUuid, pouchOpts);
-
-    this.localDb.sync(remoteDb, syncOptions);
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -176,7 +160,30 @@ export class PouchDbAdapterService {
     return of({ uid: 'local', email: '' });
   }
 
-  public async signIn() {
+  public async signIn(options?) {
+    const pouchOpts: PouchDB.Configuration.DatabaseConfiguration = {
+      auth: {
+        username: options['user'],
+        password: options['pass']
+      }, 
+      
+    };
+
+    const syncOptions: PouchDB.Replication.SyncOptions = {
+      live: true,
+      retry: true
+    };
+
+    // console.log('https://couchdb.richana.eu/patients_' + encodeURI(pouchOpts.auth.username));
+    // const remoteDb = new PouchDB('https://couchdb.richana.eu/patients_' + encodeURI(pouchOpts.auth.username), pouchOpts);
+    const remoteDb = new PouchDB('https://couchdb.richana.eu/');
+    try {
+      console.log(await remoteDb.info());
+      //await this.localDb.sync(remoteDb, syncOptions);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   public async signOut() {

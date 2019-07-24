@@ -44,8 +44,8 @@ export class DbAdapterService {
     return this.db.getUser();
   }
 
-  public async signIn() {
-    await this.db.signIn();
+  public async signIn(options?) {
+    await this.db.signIn(options);
   }
 
   public async signOut() {
