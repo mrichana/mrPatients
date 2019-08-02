@@ -6,7 +6,6 @@ import { User } from '../user.model';
 import { map, switchMap } from 'rxjs/operators';
 
 import PouchDB from 'pouchdb';
-// import PouchDBAuthentication from 'pouchdb-authentication';
 // import PouchDBUpsert from 'pouchdb-upsert';
 
 import { UUID } from 'angular2-uuid';
@@ -15,7 +14,6 @@ import { PatientAdapter } from './pouch-patient-adapter';
 
 // PouchDB.plugin(PouchDBUpsert);
 // PouchDB.plugin(PouchDBFind);
-// PouchDB.plugin(PouchDBAuthentication);
 
 @Injectable({
   providedIn: 'root'
