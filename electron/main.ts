@@ -16,7 +16,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: path.join(__dirname, `/../../dist/es5/assets/icons/icon-128x128.png`),
+    icon: path.join(__dirname, `/dist/es5/assets/icons/icon-128x128.png`),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true
@@ -24,7 +24,7 @@ function createWindow() {
   });
   win.loadURL(
     url.format({
-      pathname: path.join(__dirname, `/../../dist/es5/index.html`),
+      pathname: path.join(__dirname, `/dist/es5/index.html`),
       protocol: 'file:',
       slashes: true,
     })

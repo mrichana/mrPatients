@@ -10,7 +10,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
 import { PatientPreloadService } from './services/patient-preload.service';
 
+
 const routes: Routes = [
+  { path: 'login', component: LoginComponent }
+];
+
+const routes2: Routes = [
   {
     path: 'login', component: LoginComponent,
     data: { animation: 'login' }
@@ -49,16 +54,16 @@ const routes: Routes = [
     data: { animation: 'details' }
   },
   {
-    path: '', redirectTo: '/patients', pathMatch: 'full',
+    path: '/', redirectTo: '/patients', pathMatch: 'full',
     canActivate: [AuthGuard]
   },
 
-   { path: '404', component: PageNotFoundComponent },
-   { path: '**', redirectTo: '404' }
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

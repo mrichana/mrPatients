@@ -6,7 +6,7 @@ import { User } from '../user.model';
 import { map, switchMap } from 'rxjs/operators';
 
 import PouchDB from 'pouchdb';
-import PouchDBAuthentication from 'pouchdb-authentication';
+// import PouchDBAuthentication from 'pouchdb-authentication';
 // import PouchDBUpsert from 'pouchdb-upsert';
 
 import { UUID } from 'angular2-uuid';
@@ -15,7 +15,7 @@ import { PatientAdapter } from './pouch-patient-adapter';
 
 // PouchDB.plugin(PouchDBUpsert);
 // PouchDB.plugin(PouchDBFind);
-PouchDB.plugin(PouchDBAuthentication);
+// PouchDB.plugin(PouchDBAuthentication);
 
 @Injectable({
   providedIn: 'root'
@@ -161,29 +161,12 @@ export class PouchDbAdapterService {
   }
 
   public async signIn(options?) {
-    const pouchOpts: PouchDB.Configuration.DatabaseConfiguration = {
-      auth: {
-        username: options['user'],
-        password: options['pass']
-      }, 
-      
-    };
-
-    const syncOptions: PouchDB.Replication.SyncOptions = {
+    const syncOptions = {
       live: true,
-      retry: true
+      retry: true,
+      continuous: true
     };
-
-    // console.log('https://couchdb.richana.eu/patients_' + encodeURI(pouchOpts.auth.username));
-    // const remoteDb = new PouchDB('https://couchdb.richana.eu/patients_' + encodeURI(pouchOpts.auth.username), pouchOpts);
-    const remoteDb = new PouchDB('https://couchdb.richana.eu/');
-    try {
-      console.log(await remoteDb.info());
-      //await this.localDb.sync(remoteDb, syncOptions);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    this.localDb.sync('https://missel:test@couchdb.richana.eu/patients_' + this.databaseUuid, syncOptions);
   }
 
   public async signOut() {

@@ -55,12 +55,12 @@
                   "maximumError": "5mb"
                 }
               ],
-              "serviceWorker": true,
+              "serviceWorker": false,
               "ngswConfigPath": "ngsw-config.json"
             },
             "es5": {
               "tsConfig": "src/tsconfig-es5.app.json",
-              "outputPath": "dist/es5",
+              "outputPath": "electron/dist/es5",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
