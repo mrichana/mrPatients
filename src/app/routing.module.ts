@@ -12,10 +12,6 @@ import { PatientPreloadService } from './services/patient-preload.service';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent }
-];
-
-const routes2: Routes = [
   {
     path: 'login', component: LoginComponent,
     data: { animation: 'login' }
@@ -54,7 +50,7 @@ const routes2: Routes = [
     data: { animation: 'details' }
   },
   {
-    path: '/', redirectTo: '/patients', pathMatch: 'full',
+    path: '', redirectTo: '/patients', pathMatch: 'full',
     canActivate: [AuthGuard]
   },
 
@@ -63,7 +59,7 @@ const routes2: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { /*enableTracing: true*/ })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

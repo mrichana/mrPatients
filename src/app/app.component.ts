@@ -24,14 +24,14 @@ export class AppComponent {
       'favicon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
     );
-    auth.user().subscribe(user => {
-      if (user) {
-        this.router.navigate(['/']);
+    // auth.user().subscribe(user => {
+    //   if (user) {
+    //     this.router.navigate(['/']);
 
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+    //   } else {
+    //     this.router.navigate(['/login']);
+    //   }
+    // });
   }
 
   prepareRoute(outlet: RouterOutlet) {
