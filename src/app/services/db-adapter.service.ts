@@ -45,10 +45,14 @@ export class DbAdapterService {
   }
 
   public async signIn(options?) {
-    await this.db.signIn(options);
+    return this.db.signIn(options);
+  }
+
+  public async signUp(options?) {
+    return this.db.signUp(options);
   }
 
   public async signOut() {
-    await this.db.signOut();
+    return this.db.signOut();
   }
 }

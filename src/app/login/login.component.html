@@ -1,29 +1,71 @@
-<form class="formContainer" (submit)=login($event)>
-  <div class="row">
-    <span class="stretch"></span>
-    <h2>Διαλέξτε όνομα και κωδικό για να συγχρονισθεί το αρχείο σας με το Cloud...</h2>
-    <span class="stretch"></span>
-  </div>
-    <div class="row">
-    <span class="stretch"></span>
-    <mat-form-field class="userName">
-      <input matInput autofocus placeholder="Όνομα" name="user" autocomplete="username" type="text" [(ngModel)]="user">
-    </mat-form-field>
-    <span class="stretch"></span>
-  </div>
-  <div class="row">
-    <span class="stretch"></span>
-    <mat-form-field class="password">
-      <input matInput autofocus placeholder="Κωδικός" name="pass" autocomplete="current-password" type="password" [(ngModel)]="pass">
-    </mat-form-field>
-    <span class="stretch"></span>
-  </div>
-  <div class="row">
-    <span class="stretch"></span>
-    <span class="stretch row">
-      <span class="stretch"></span>
-      <button type="submit" mat-button>Σύνδεση...</button>
-    </span>
-    <span class="stretch"></span>
-  </div>
-</form>
+<mat-tab-group>
+  <mat-tab label="Σύνδεση">
+    <form class="formContainer" (submit)=login($event)>
+      <div class="row">
+        <span class="stretch"></span>
+        <mat-form-field class="userName">
+          <input matInput autofocus placeholder="Όνομα" name="user" autocomplete="username" type="text"
+            [(ngModel)]="user">
+        </mat-form-field>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <mat-form-field class="password">
+          <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="current-password" type="password"
+            [(ngModel)]="pass">
+        </mat-form-field>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <span class="stretch row">
+          <span class="stretch"></span>
+          <button type="submit" mat-button>Σύνδεση...</button>
+        </span>
+        <span class="stretch"></span>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="Εγγραφή">
+    <form class="formContainer" (submit)=signup($event)>
+      <div class="row">
+        <span class="stretch"></span>
+        <h2>Επιλέξτε όνομα και κωδικό για να εγγραφείτε στην υπηρεσία...</h2>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <mat-form-field class="userName">
+          <input matInput autofocus placeholder="Όνομα" name="username" autocomplete="username" type="text"
+            [(ngModel)]="user">
+        </mat-form-field>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <mat-form-field class="password">
+          <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="new-password" type="password"
+            [(ngModel)]="pass">
+        </mat-form-field>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <mat-form-field class="password">
+          <input matInput autofocus placeholder="Επαλήθευση Κωδικού" name="passverify" autocomplete="new-password" type="password"
+            [(ngModel)]="passverify">
+        </mat-form-field>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
+        <span class="stretch row">
+          <span class="stretch"></span>
+          <button type="submit" mat-button>Εγγραφή...</button>
+        </span>
+        <span class="stretch"></span>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

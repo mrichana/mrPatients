@@ -7,8 +7,6 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 
 import { slideAnimation } from './animations';
-import { map } from 'rxjs/operators';
-import { Observable, concat, of } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,14 +22,6 @@ export class AppComponent {
       'favicon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
     );
-    // auth.user().subscribe(user => {
-    //   if (user) {
-    //     this.router.navigate(['/']);
-
-    //   } else {
-    //     this.router.navigate(['/login']);
-    //   }
-    // });
   }
 
   prepareRoute(outlet: RouterOutlet) {

@@ -22,11 +22,13 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTabsModule} from '@angular/material/tabs';
 
 import { QuillModule } from 'ngx-quill';
 
 import { PatientsComponent } from './patients/patients.component';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PatientAddComponent } from './patient-add/patient-add.component';
@@ -45,6 +47,7 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     LoginComponent,
+    LogoutComponent,
     PatientsComponent,
     PatientComponent,
     PageNotFoundComponent,
@@ -79,6 +82,7 @@ import { environment } from '../environments/environment';
     MatCardModule,
     MatDialogModule,
     MatChipsModule,
+    MatTabsModule,
 
     QuillModule.forRoot(),
 

@@ -9,12 +9,17 @@ import { PatientComponent } from './patient/patient.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PatientEditComponent } from './patient-edit/patient-edit.component';
 import { PatientPreloadService } from './services/patient-preload.service';
+import { LogoutComponent } from './logout/logout.component';
 
 
 const routes: Routes = [
   {
     path: 'login', component: LoginComponent,
     data: { animation: 'login' }
+  },
+  {
+    path: 'logout', component: LogoutComponent,
+    data: { animation: 'logout' }
   },
   {
     path: 'patients', component: PatientsComponent,

@@ -24,7 +24,7 @@ export class PouchDbAdapterService {
 
   private databaseName = 'patients';
   private localDb: PouchDB.Database<{}>;
-  private databaseUuid: string;
+  private sync;
 
   constructor(
     private patientAdapter: PatientAdapter) {
@@ -34,14 +34,6 @@ export class PouchDbAdapterService {
 
   private async prepareDatabase() {
     this.localDb = new PouchDB(this.databaseName);
-
-    try {
-      await this.localDb.put({ _id: '_local/databaseId', value: this.createId() });
-    } catch {
-    } finally {
-      const doc = await this.localDb.get('_local/databaseId');
-      this.databaseUuid = doc['value'];
-    }
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -158,16 +150,49 @@ export class PouchDbAdapterService {
     return of({ uid: 'local', email: '' });
   }
 
-  public async signIn(options?) {
+  public signIn(options?) {
     const syncOptions = {
       live: true,
       retry: true,
       continuous: true
     };
-    this.localDb.sync('https://missel:test@couchdb.richana.eu/patients_' + this.databaseUuid, syncOptions);
+
+    const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(options.user)
+      , { auth: { username: options.user, password: options.pass } });
+    const ret = db.info();
+    ret.then(() => {
+      this.sync = this.localDb.sync(
+        db, syncOptions
+      );
+    });
+
+    return ret;
   }
 
+  public async signUp(options?) {
+    const userdb = new PouchDB('https://couchdb.richana.eu/_users');
+    await userdb.put({
+      _id: 'org.couchdb.user:' + options.user,
+      name: options.user, password: options.pass, roles: [], type: 'user'
+    });
+    return this.signIn(options);
+  }
+
+  private convertToHex(str: string): string {
+    let hex = '';
+    for (let i = 0; i < str.length; i++) {
+      hex += '' + str.charCodeAt(i).toString(16);
+    }
+    return hex;
+  }
+
+
   public async signOut() {
+    if (this.sync) {
+      const ret = this.sync.cancel();
+      this.sync = null;
+      return ret;
+    }
   }
 
   private updateUserData(user: User) {
