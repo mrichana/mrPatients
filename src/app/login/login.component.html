@@ -5,7 +5,7 @@
         <span class="stretch"></span>
         <mat-form-field class="userName">
           <input matInput autofocus placeholder="Όνομα" name="user" autocomplete="username" type="text"
-            [(ngModel)]="user">
+            [(ngModel)]="user" required>
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -13,7 +13,7 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="current-password" type="password"
-            [(ngModel)]="pass">
+            [(ngModel)]="pass" required>
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -38,7 +38,7 @@
         <span class="stretch"></span>
         <mat-form-field class="userName">
           <input matInput autofocus placeholder="Όνομα" name="username" autocomplete="username" type="text"
-            [(ngModel)]="user">
+            [(ngModel)]="user" required minlength="6" >
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -46,7 +46,7 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="new-password" type="password"
-            [(ngModel)]="pass">
+            [(ngModel)]="pass" required minlength="6" pattern="(?=.*[0-9])(?=.*[a-zα-ωάέήίόύώ])(?=.*[A-ZΑ-Ω])\S{8,}">
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -54,7 +54,7 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Επαλήθευση Κωδικού" name="passverify" autocomplete="new-password" type="password"
-            [(ngModel)]="passverify">
+            [(ngModel)]="passverify" required minlength="6" appPasswordValidator >
         </mat-form-field>
         <span class="stretch"></span>
       </div>

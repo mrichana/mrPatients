@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -42,6 +42,7 @@ import { VerifyDeleteDialogComponent } from './verify-delete-dialog/verify-delet
 import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PasswordValidatorDirective } from './directives/password-validator.directive';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { environment } from '../environments/environment';
     PatientEditComponent,
     VerifyDeleteDialogComponent,
     VerifyDropChangesDialogComponent,
+    PasswordValidatorDirective,
   ],
   imports: [
     BrowserModule,
