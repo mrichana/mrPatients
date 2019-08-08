@@ -1,6 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Σύνδεση">
-    <form class="formContainer" (submit)=login($event)>
+    <form class="formContainer" (submit)=login()>
       <div class="row">
         <span class="stretch"></span>
         <mat-form-field class="userName">
@@ -28,7 +28,7 @@
     </form>
   </mat-tab>
   <mat-tab label="Εγγραφή">
-    <form class="formContainer" (submit)=signup($event)>
+    <form class="formContainer" (submit)=signup()>
       <div class="row">
         <span class="stretch"></span>
         <h2>Επιλέξτε όνομα και κωδικό για να εγγραφείτε στην υπηρεσία...</h2>
