@@ -1,11 +1,14 @@
 <mat-tab-group>
   <mat-tab label="Σύνδεση">
-    <form class="formContainer" (submit)=login()>
+    <form class="formContainer" (submit)=login() #loginForm="ngForm">
       <div class="row">
         <span class="stretch"></span>
         <mat-form-field class="userName">
           <input matInput autofocus placeholder="Όνομα" name="user" autocomplete="username" type="text"
-            [(ngModel)]="user" required>
+            [(ngModel)]="user" required minlength="6">
+          <mat-error>
+            Το όνομα χρήστη πρέπει να έχει τουλάχιστον 6 χαρακτήρες.
+          </mat-error>
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -13,22 +16,25 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="current-password" type="password"
-            [(ngModel)]="pass" required>
-        </mat-form-field>
+            [(ngModel)]="pass" required >
+          <mat-error>
+            Παρακαλώ γράψτε τον κωδικό σας.
+          </mat-error>
+          </mat-form-field>
         <span class="stretch"></span>
       </div>
       <div class="row">
         <span class="stretch"></span>
         <span class="stretch row">
           <span class="stretch"></span>
-          <button type="submit" mat-button>Σύνδεση...</button>
+          <button type="submit" mat-button [disabled]="loginForm.invalid || loginForm.pristine">Σύνδεση...</button>
         </span>
         <span class="stretch"></span>
       </div>
     </form>
   </mat-tab>
   <mat-tab label="Εγγραφή">
-    <form class="formContainer" (submit)=signup()>
+    <form class="formContainer" appPasswordValidator (submit)=signup() #signupForm="ngForm">
       <div class="row">
         <span class="stretch"></span>
         <h2>Επιλέξτε όνομα και κωδικό για να εγγραφείτε στην υπηρεσία...</h2>
@@ -38,7 +44,9 @@
         <span class="stretch"></span>
         <mat-form-field class="userName">
           <input matInput autofocus placeholder="Όνομα" name="username" autocomplete="username" type="text"
-            [(ngModel)]="user" required minlength="6" >
+            [(ngModel)]="user" required minlength="6">
+          <mat-error>
+          </mat-error>
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -46,7 +54,10 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="new-password" type="password"
-            [(ngModel)]="pass" required minlength="6" pattern="(?=.*[0-9])(?=.*[a-zα-ωάέήίόύώ])(?=.*[A-ZΑ-Ω])\S{8,}">
+            [(ngModel)]="pass" required pattern="(?=.*[0-9])(?=.*[a-zα-ωάέήίόύώ])(?=.*[A-ZΑ-Ω])\S{8,}">
+          <mat-error>
+            Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες, συμπεριλαμβανομένων κεφαλαίων, μικρών και αριθμούς.
+          </mat-error>
         </mat-form-field>
         <span class="stretch"></span>
       </div>
@@ -54,15 +65,18 @@
         <span class="stretch"></span>
         <mat-form-field class="password">
           <input matInput autofocus placeholder="Επαλήθευση Κωδικού" name="passverify" autocomplete="new-password" type="password"
-            [(ngModel)]="passverify" required minlength="6" appPasswordValidator >
-        </mat-form-field>
+            [(ngModel)]="passverify" required>
+            <mat-error>
+              Η επαλήθευση κωδικού δεν είναι ίδια με τον κωδικό.
+            </mat-error>
+          </mat-form-field>
         <span class="stretch"></span>
       </div>
       <div class="row">
         <span class="stretch"></span>
         <span class="stretch row">
           <span class="stretch"></span>
-          <button type="submit" mat-button>Εγγραφή...</button>
+          <button type="submit" mat-button [disabled]="signupForm.invalid || signupForm.pristine">Εγγραφή...</button>
         </span>
         <span class="stretch"></span>
       </div>

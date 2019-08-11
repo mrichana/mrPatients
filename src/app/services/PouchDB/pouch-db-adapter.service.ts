@@ -1,4 +1,4 @@
-import { Injectable, ErrorHandler } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Observable, from, fromEvent, concat, of } from 'rxjs';
 import { Patient } from '../patient.model';
@@ -157,8 +157,8 @@ export class PouchDbAdapterService {
       continuous: true
     };
 
-    const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(options.user)
-      , { auth: { username: options.user, password: options.pass } });
+    const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(encodeURIComponent(options.user))
+      , { auth: { username: encodeURIComponent(options.user), password: encodeURIComponent(options.pass) } });
     const ret = db.info();
     ret.then(() => {
       this.sync = this.localDb.sync(
@@ -171,9 +171,10 @@ export class PouchDbAdapterService {
 
   public async signUp(options?) {
     const userdb = new PouchDB('https://couchdb.richana.eu/_users');
+    console.log('org.couchdb.user:' + encodeURIComponent(options.user));
     await userdb.put({
-      _id: 'org.couchdb.user:' + options.user,
-      name: options.user, password: options.pass, roles: [], type: 'user'
+      _id: 'org.couchdb.user:' + encodeURIComponent(options.user),
+      name: encodeURIComponent(options.user), password: encodeURIComponent(options.pass), roles: [], type: 'user'
     });
     return this.signIn(options);
   }
