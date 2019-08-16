@@ -27,7 +27,10 @@
         <span class="stretch"></span>
         <span class="stretch row">
           <span class="stretch"></span>
-          <button type="submit" mat-button [disabled]="loginForm.invalid || loginForm.pristine">Σύνδεση...</button>
+          <mat-spinner diameter=25 *ngIf="!loginForm.enabled"></mat-spinner>
+          <button *ngIf="loginForm.enabled" type="submit" mat-button [disabled]="loginForm.invalid || loginForm.pristine">
+            Σύνδεση...
+          </button>
         </span>
         <span class="stretch"></span>
       </div>

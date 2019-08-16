@@ -150,7 +150,7 @@ export class PouchDbAdapterService {
     return of({ uid: 'local', email: '' });
   }
 
-  public signIn(options?) {
+  public async signIn(options?) {
     const syncOptions = {
       live: true,
       retry: true,
@@ -159,13 +159,10 @@ export class PouchDbAdapterService {
 
     const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(encodeURIComponent(options.user))
       , { auth: { username: encodeURIComponent(options.user), password: encodeURIComponent(options.pass) } });
-    const ret = db.info();
-    ret.then(() => {
-      this.sync = this.localDb.sync(
-        db, syncOptions
-      );
-    });
-
+    const ret = await db.info();
+    this.sync = this.localDb.sync(
+      db, syncOptions
+    );
     return ret;
   }
 
