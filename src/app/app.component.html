@@ -6,7 +6,7 @@
       </h2>
     </a>
     <span class="stretch"></span>
-
+    <span>{{(auth.user() | async).displayName}}</span>
     <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button>
   </mat-toolbar>
 

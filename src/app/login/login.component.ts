@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { DbAdapterService } from '../services/db-adapter.service';
 import { Title } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('signupForm', { static: false }) public signupForm: NgForm;
 
   constructor(
-    private db: DbAdapterService,
+    private auth: AuthService,
     private router: Router,
     private titleService: Title,
     private snackBar: MatSnackBar
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
   public async login() {
     try {
       this.loginForm.form.disable();
-      await this.db.signIn({ user: this.user, pass: this.pass });
+      await this.auth.signIn({ username: this.user, password: this.pass });
       this.router.navigate(['/patients']);
     } catch (e) {
       /* wrong username or password
@@ -51,8 +52,12 @@ export class LoginComponent implements OnInit {
         case 401:
           message = 'Λάθος όνομα ή κωδικός';
           break;
+        default:
+          message = 'Άγνωστο λάθος';
+          console.log(e);
+          break;
       }
-      this.snackBar.open(message, null, {duration: 3000});
+      this.snackBar.open(message, null, { duration: 3000 });
       this.pass = '';
     } finally {
       this.loginForm.form.enable();
@@ -63,7 +68,7 @@ export class LoginComponent implements OnInit {
     if (this.pass === this.passverify) {
       try {
         this.signupForm.form.disable();
-        await this.db.signUp({ user: this.user, pass: this.pass });
+        await this.auth.signUp({ username: this.user, password: this.pass });
         this.router.navigate(['/patients']);
       } catch (e) {
         /* wrong username or password
@@ -81,8 +86,13 @@ export class LoginComponent implements OnInit {
             break;
           case 409:
             message = 'Το όνομα χρήστη χρησιμοποιείται ήδη.';
+            break;
+          default:
+            message = 'Άγνωστο λάθος';
+            console.log(e);
+            break;
         }
-        this.snackBar.open(message, null, {duration: 3000});
+        this.snackBar.open(message, null, { duration: 3000 });
         this.pass = '';
         this.passverify = '';
       } finally {

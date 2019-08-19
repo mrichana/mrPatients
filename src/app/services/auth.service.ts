@@ -8,14 +8,14 @@ import { User } from './user.model';
 })
 export class AuthService {
 
-  constructor(private db: DbAdapterService) {  }
+  constructor(private db: DbAdapterService) { }
 
-  async signIn() {
-    try {
-      await this.db.signIn();
-    } catch (e) {
-      console.log(e);
-    }
+  async signIn(credentials: { username: string, password: string }) {
+    return await this.db.signIn(credentials);
+  }
+
+  async signUp(credentials: { username: string, password: string }) {
+    return await this.db.signUp(credentials);
   }
 
   async signOut() {

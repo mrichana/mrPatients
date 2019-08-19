@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, from, fromEvent, concat, of } from 'rxjs';
+import { Observable, from, fromEvent, concat, BehaviorSubject } from 'rxjs';
 import { Patient } from '../patient.model';
 import { User } from '../user.model';
 import { map, switchMap } from 'rxjs/operators';
@@ -20,20 +20,23 @@ import { PatientAdapter } from './pouch-patient-adapter';
 })
 export class PouchDbAdapterService {
 
-  private user$: Observable<User>;
+  private user$: BehaviorSubject<User>;
 
   private databaseName = 'patients';
   private localDb: PouchDB.Database<{}>;
-  private sync;
+  private sync: PouchDB.Replication.Sync<{}>;
 
   constructor(
     private patientAdapter: PatientAdapter) {
     this.prepareDatabase();
-    this.user$ = this.getUser();
   }
 
   private async prepareDatabase() {
     this.localDb = new PouchDB(this.databaseName);
+    try {
+      const credentials = await this.loadCredentials();
+      await this.signIn(credentials);
+    } catch (e) { console.log(e); }
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -146,40 +149,33 @@ export class PouchDbAdapterService {
     }
   }
 
-  public getUser(): Observable<User> {
-    return of({ uid: 'local', email: '' });
-  }
-
-  public async signIn(options?) {
+  public async signIn(credentials: { username: string; password: string }) {
     const syncOptions = {
       live: true,
       retry: true,
       continuous: true
     };
 
-    const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(encodeURIComponent(options.user))
-      , { auth: { username: encodeURIComponent(options.user), password: encodeURIComponent(options.pass) } });
+    const db = new PouchDB('https://couchdb.richana.eu/userdb-' + this.convertToHex(encodeURIComponent(credentials.username))
+      , { auth: { username: encodeURIComponent(credentials.username), password: encodeURIComponent(credentials.password) } });
     const ret = await db.info();
     this.sync = this.localDb.sync(
       db, syncOptions
     );
 
-    // remove old credentials
-    this.localDb.get('user').then(doc => {
-      this.localDb.remove(doc);
-    });
-    // add new credentials
-    this.localDb.put({_id: 'user', value: options});
+    this.saveCredentials(credentials);
+    this.setRemoteUser(credentials.username);
+
     return ret;
   }
 
-  public async signUp(options?) {
+  public async signUp(credentials: { username: string; password: string }) {
     const userdb = new PouchDB('https://couchdb.richana.eu/_users');
     await userdb.put({
-      _id: 'org.couchdb.user:' + encodeURIComponent(options.user),
-      name: encodeURIComponent(options.user), password: encodeURIComponent(options.pass), roles: [], type: 'user'
+      _id: 'org.couchdb.user:' + encodeURIComponent(credentials.username),
+      name: encodeURIComponent(credentials.username), password: encodeURIComponent(credentials.password), roles: [], type: 'user'
     });
-    return this.signIn(options);
+    return this.signIn(credentials);
   }
 
   private convertToHex(str: string): string {
@@ -190,15 +186,45 @@ export class PouchDbAdapterService {
     return hex;
   }
 
+  private async saveCredentials(credentials: { username: string, password: string }) {
+    await this.deleteCredentials();
+    await this.localDb.put({ _id: '_local/usercredentials', value: credentials });
+  }
+
+  private async loadCredentials(): Promise<{ username: string, password: string }> {
+    const credentials = await this.localDb.get('_local/usercredentials');
+    return credentials['value'];
+  }
+
+  private async deleteCredentials() {
+    try {
+      const credentials = await this.localDb.get('_local/usercredentials');
+      await this.localDb.remove(credentials);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   public async signOut() {
     if (this.sync) {
       const ret = this.sync.cancel();
       this.sync = null;
+      this.deleteCredentials();
+      this.setLocalUser();
       return ret;
     }
   }
 
-  private updateUserData(user: User) {
+  private setLocalUser() {
+    this.user$.next({displayName: 'local', local: true});
+  }
+  private setRemoteUser(username: string) {
+    this.user$.next({displayName: username, local: false});
+  }
+  public getUser(): Observable<User> {
+    if (!this.user$) {
+      this.user$ = new BehaviorSubject<User>({displayName: 'local', local: false});
+    }
+    return this.user$.asObservable();
   }
 }

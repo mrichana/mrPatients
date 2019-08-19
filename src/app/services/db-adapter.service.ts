@@ -44,12 +44,12 @@ export class DbAdapterService {
     return this.db.getUser();
   }
 
-  public async signIn(options?) {
-    return this.db.signIn(options);
+  public async signIn(credentials: {username: string, password: string}) {
+    return this.db.signIn(credentials);
   }
 
-  public async signUp(options?) {
-    return this.db.signUp(options);
+  public async signUp(credentials: {username: string, password: string}) {
+    return this.db.signUp(credentials);
   }
 
   public async signOut() {
