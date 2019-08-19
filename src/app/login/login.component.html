@@ -3,6 +3,16 @@
     <form class="formContainer" (submit)=login() #loginForm="ngForm">
       <div class="row">
         <span class="stretch"></span>
+        <h3>Συνδεθείτε στην υπηρεσία...</h3>
+        <span class="stretch"></span>
+      </div>      
+      <div class="row">
+        <span class="stretch"></span>
+        <h4> Όλες οι συνδεδεμένες συσκευές σας μοιράζονται τα δεδομένα.</h4>
+        <span class="stretch"></span>
+      </div>
+      <div class="row">
+        <span class="stretch"></span>
         <mat-form-field class="userName">
           <input matInput autofocus placeholder="Όνομα" name="user" autocomplete="username" type="text"
             [(ngModel)]="user" required minlength="6">
@@ -15,12 +25,12 @@
       <div class="row">
         <span class="stretch"></span>
         <mat-form-field class="password">
-          <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="current-password" type="password"
-            [(ngModel)]="pass" required >
+          <input matInput autofocus placeholder="Κωδικός" name="password" autocomplete="current-password"
+            type="password" [(ngModel)]="pass" required>
           <mat-error>
             Παρακαλώ γράψτε τον κωδικό σας.
           </mat-error>
-          </mat-form-field>
+        </mat-form-field>
         <span class="stretch"></span>
       </div>
       <div class="row">
@@ -28,7 +38,8 @@
         <span class="stretch row">
           <span class="stretch"></span>
           <mat-spinner diameter=25 *ngIf="!loginForm.enabled"></mat-spinner>
-          <button *ngIf="loginForm.enabled" type="submit" mat-button [disabled]="loginForm.invalid || loginForm.pristine">
+          <button *ngIf="loginForm.enabled" type="submit" mat-button
+            [disabled]="loginForm.invalid || loginForm.pristine">
             Σύνδεση...
           </button>
         </span>
@@ -40,7 +51,7 @@
     <form class="formContainer" appPasswordValidator (submit)=signup() #signupForm="ngForm">
       <div class="row">
         <span class="stretch"></span>
-        <h2>Επιλέξτε όνομα και κωδικό για να εγγραφείτε στην υπηρεσία...</h2>
+        <h3>Επιλέξτε όνομα και κωδικό για να εγγραφείτε στην υπηρεσία...</h3>
         <span class="stretch"></span>
       </div>
       <div class="row">
@@ -67,19 +78,23 @@
       <div class="row">
         <span class="stretch"></span>
         <mat-form-field class="password">
-          <input matInput autofocus placeholder="Επαλήθευση Κωδικού" name="passverify" autocomplete="new-password" type="password"
-            [(ngModel)]="passverify" required>
-            <mat-error>
-              Η επαλήθευση κωδικού δεν είναι ίδια με τον κωδικό.
-            </mat-error>
-          </mat-form-field>
+          <input matInput autofocus placeholder="Επαλήθευση Κωδικού" name="passverify" autocomplete="new-password"
+            type="password" [(ngModel)]="passverify" required>
+          <mat-error>
+            Η επαλήθευση κωδικού δεν είναι ίδια με τον κωδικό.
+          </mat-error>
+        </mat-form-field>
         <span class="stretch"></span>
       </div>
       <div class="row">
         <span class="stretch"></span>
         <span class="stretch row">
           <span class="stretch"></span>
-          <button type="submit" mat-button [disabled]="signupForm.invalid || signupForm.pristine">Εγγραφή...</button>
+          <mat-spinner diameter=25 *ngIf="!signupForm.enabled"></mat-spinner>
+          <button *ngIf="signupForm.enabled" type="submit" mat-button
+            [disabled]="signupForm.invalid || signupForm.pristine">
+            Εγγραφή...
+          </button>
         </span>
         <span class="stretch"></span>
       </div>

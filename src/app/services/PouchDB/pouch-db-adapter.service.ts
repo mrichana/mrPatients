@@ -163,12 +163,18 @@ export class PouchDbAdapterService {
     this.sync = this.localDb.sync(
       db, syncOptions
     );
+
+    // remove old credentials
+    this.localDb.get('user').then(doc => {
+      this.localDb.remove(doc);
+    });
+    // add new credentials
+    this.localDb.put({_id: 'user', value: options});
     return ret;
   }
 
   public async signUp(options?) {
     const userdb = new PouchDB('https://couchdb.richana.eu/_users');
-    console.log('org.couchdb.user:' + encodeURIComponent(options.user));
     await userdb.put({
       _id: 'org.couchdb.user:' + encodeURIComponent(options.user),
       name: encodeURIComponent(options.user), password: encodeURIComponent(options.pass), roles: [], type: 'user'

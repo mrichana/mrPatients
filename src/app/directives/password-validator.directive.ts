@@ -17,7 +17,7 @@ export class PasswordValidatorDirective implements Validator {
       return null;
     }
 
-    if (password.errors && !verifypassword.errors['passwordsDoNotMatch']) {
+    if (password.errors) {
       return null;
     }
 

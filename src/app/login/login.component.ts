@@ -13,6 +13,7 @@ import { NgForm } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   @ViewChild('loginForm', { static: false }) public loginForm: NgForm;
+  @ViewChild('signupForm', { static: false }) public signupForm: NgForm;
 
   constructor(
     private db: DbAdapterService,
@@ -61,18 +62,31 @@ export class LoginComponent implements OnInit {
   public async signup() {
     if (this.pass === this.passverify) {
       try {
+        this.signupForm.form.disable();
         await this.db.signUp({ user: this.user, pass: this.pass });
         this.router.navigate(['/patients']);
       } catch (e) {
+        /* wrong username or password
+        { status: 401, error: "unauthorized", name: "unauthorized", 
+        message: "Name or password is incorrect.", reason: "Name or password is incorrect."}
+        */
+        /* connection error
+        { message: "Failed to fetch", stack: "TypeError: Failed to fetch" }
+        */
+        console.log(e);
         let message = '';
         switch (e.status) {
           case undefined:
             message = 'Αδυναμία σύνδεσης';
             break;
+          case 409:
+            message = 'Το όνομα χρήστη χρησιμοποιείται ήδη.';
         }
-        this.snackBar.open(message);
-          this.pass = '';
+        this.snackBar.open(message, null, {duration: 3000});
+        this.pass = '';
         this.passverify = '';
+      } finally {
+        this.signupForm.form.enable();
       }
     }
   }
