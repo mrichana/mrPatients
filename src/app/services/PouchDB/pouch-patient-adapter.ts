@@ -24,6 +24,9 @@ export class PatientAdapter implements Adapter<Patient> {
             Address: item.Address || null,
 
             Diagnoses: item.Diagnoses || null,
+            Allergies: item.Allergies || null,
+            Surgeries: item.Surgeries || null,
+            Drugs: item.Drugs || null,
 
             Notes: item.Notes || null,
         };
@@ -46,6 +49,9 @@ export class PatientAdapter implements Adapter<Patient> {
             Address: item.value.Address,
 
             Diagnoses: item.value.Diagnoses,
+            Allergies: item.value.Allergies,
+            Surgeries: item.value.Surgeries,
+            Drugs: item.value.Drugs,
 
             Notes: item.value.Notes,
 

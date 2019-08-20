@@ -17,5 +17,11 @@ export interface Patient {
 
     Diagnoses?: string[];
 
+    Allergies?: string[];
+
+    Surgeries?: string[];
+
+    Drugs?: string[];
+
     Notes?: string;
 }

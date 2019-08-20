@@ -4,7 +4,8 @@
       (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title *ngIf="!panelOpenState">
-          {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
+          {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}}
+          {{patientFormat.displaySex(patient)}}
         </mat-panel-title>
         <mat-panel-description *ngIf="!panelOpenState">
           <span class="stretch"></span>
@@ -81,8 +82,9 @@
       </ng-template>
     </mat-expansion-panel>
     <mat-card>
+
       <div class="row">
-        <mat-form-field class="diagnoses">
+        <mat-form-field class="chipLine">
           <mat-chip-list #diagnosesList aria-label="Διαγνώσεις" ngController="patientForm">
             <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true" removable="true"
               (removed)="removeDiagnosis(Diagnosis)">
@@ -91,6 +93,48 @@
             </mat-chip>
             <input [matChipInputFor]="diagnosesList" placeholder="Διαγνώσεις..." matChipInputAddOnBlur="true"
               [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addDiagnosis($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="chipLine">
+          <mat-chip-list #allergiesList aria-label="Αλλεργίες" ngController="patientForm">
+            <mat-chip *ngFor="let Allergy of patient.Allergies" disableRipple="true" removable="true"
+              (removed)="removeAllergy(Allergy)">
+              {{Allergy}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="allergiesList" placeholder="Αλλεργίες..." matChipInputAddOnBlur="true"
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addAllergies($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="chipLine">
+          <mat-chip-list #surgeriesList aria-label="Χειρουργεία" ngController="patientForm">
+            <mat-chip *ngFor="let Surgery of patient.Surgeries" disableRipple="true" removable="true"
+              (removed)="removeSurgery(Surgery)">
+              {{Surgery}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="surgeriesList" placeholder="Χειρουργεία..." matChipInputAddOnBlur="true"
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addSurgeries($event)">
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="chipLine">
+          <mat-chip-list #drugsList aria-label="Φάρμακα" ngController="patientForm">
+            <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" removable="true"
+              (removed)="removeDrug(Drug)">
+              {{Drug}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="drugsList" placeholder="Φάρμακα..." matChipInputAddOnBlur="true"
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addDrugs($event)">
           </mat-chip-list>
         </mat-form-field>
       </div>

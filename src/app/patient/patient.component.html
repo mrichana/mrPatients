@@ -2,24 +2,28 @@
   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title *ngIf="!panelOpenState">
-        {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
+        {{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}}
+        {{patientFormat.displaySex(patient)}}
       </mat-panel-title>
       <mat-panel-description *ngIf="!panelOpenState">
         <span class="stretch"></span>
-        <a *ngIf="patient.Telephone" mat-icon-button href="tel:{{patient.Telephone}}" (click)="$event.stopPropagation()">
+        <a *ngIf="patient.Telephone" mat-icon-button href="tel:{{patient.Telephone}}"
+          (click)="$event.stopPropagation()">
           <mat-icon>phone</mat-icon>
         </a>
         <a *ngIf="patient.Mobile" mat-icon-button href="tel:{{patient.Mobile}}" (click)="$event.stopPropagation()">
           <mat-icon>phone_android</mat-icon>
         </a>
         <a *ngIf="patient.Address" mat-icon-button
-          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}" (click)="$event.stopPropagation()">
+          href="https://www.google.com/maps/search/?api=1&query={{patientFormat.encodeURI(patient.Address)}}"
+          (click)="$event.stopPropagation()">
           <mat-icon>home</mat-icon>
         </a>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
-      <h2>{{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}} {{patientFormat.displaySex(patient)}}
+      <h2>{{patientFormat.displayName(patient)}} {{patientFormat.displayAge(patient)}}
+        {{patientFormat.displaySex(patient)}}
       </h2>
       <mat-list>
         <mat-list-item *ngIf="patient.Amka">Α.Μ.Κ.Α.<span class="stretch"></span>{{patient.Amka}}</mat-list-item>
@@ -41,9 +45,26 @@
     </ng-template>
   </mat-expansion-panel>
   <mat-card>
-    <mat-chip-list selectable="false">
+    <mat-chip-list selectable="false" *ngIf="patient.Diagnoses && patient.Diagnoses.length">
+      <h5>Διαγνώσεις </h5>
       <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true">{{Diagnosis}}</mat-chip>
     </mat-chip-list>
+
+    <mat-chip-list selectable="false" *ngIf="patient.Allergies && patient.Allergies.length">
+      <h5>Αλλεργίες </h5>
+      <mat-chip *ngFor="let Allergy of patient.Allergies" disableRipple="true">{{Allergy}}</mat-chip>
+    </mat-chip-list>
+
+    <mat-chip-list selectable="false" *ngIf="patient.Surgeries && patient.Surgeries.length">
+      <h5>Χειρουργεία </h5>
+      <mat-chip *ngFor="let Surgery of patient.Surgeries" disableRipple="true">{{Surgery}}</mat-chip>
+    </mat-chip-list>
+
+    <mat-chip-list selectable="false" *ngIf="patient.Drugs && patient.Drugs.length">
+      <h5>Φάρμακα </h5>
+      <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true">{{Drug}}</mat-chip>
+    </mat-chip-list>
+
     <quill-view [content]="patient.Notes" format="json"></quill-view>
   </mat-card>
 </div>

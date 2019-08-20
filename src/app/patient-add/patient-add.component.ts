@@ -115,5 +115,90 @@ export class PatientAddComponent implements OnInit {
       this.patientForm.form.markAsDirty();
     }
   }
+
+  addAllergies(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      if (!this.patient.Allergies) {
+        this.patient.Allergies = [] as string[];
+      }
+      this.patient.Allergies.push(value.trim());
+      this.patientForm.form.markAsDirty();
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeAllergy(allergy: string) {
+    if (!this.patient.Allergies) { return; }
+    const index = this.patient.Allergies.indexOf(allergy);
+
+    if (index >= 0) {
+      this.patient.Allergies.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
+  addSurgeries(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      if (!this.patient.Surgeries) {
+        this.patient.Surgeries = [] as string[];
+      }
+      this.patient.Surgeries.push(value.trim());
+      this.patientForm.form.markAsDirty();
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeSurgery(Surgery: string) {
+    if (!this.patient.Surgeries) { return; }
+    const index = this.patient.Surgeries.indexOf(Surgery);
+
+    if (index >= 0) {
+      this.patient.Surgeries.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
+  addDrugs(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      if (!this.patient.Drugs) {
+        this.patient.Drugs = [] as string[];
+      }
+      this.patient.Drugs.push(value.trim());
+      this.patientForm.form.markAsDirty();
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeDrug(Drug: string) {
+    if (!this.patient.Drugs) { return; }
+    const index = this.patient.Drugs.indexOf(Drug);
+
+    if (index >= 0) {
+      this.patient.Drugs.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
 }
 
