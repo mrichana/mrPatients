@@ -15,13 +15,24 @@ import { slideAnimation } from './animations';
 })
 export class AppComponent {
 
-  constructor(public auth: AuthService, iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private router: Router
+  public localUser = true;
+  public userName: string;
+
+  constructor(
+    public auth: AuthService,
+    iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
     moment.locale('el');
     iconRegistry.addSvgIcon(
       'favicon',
       sanitizer.bypassSecurityTrustResourceUrl('assets/Stethoscope.svg')
     );
+    auth.user().subscribe(user => {
+      this.localUser = user.local;
+      this.userName = user.displayName;
+    });
   }
 
   prepareRoute(outlet: RouterOutlet) {

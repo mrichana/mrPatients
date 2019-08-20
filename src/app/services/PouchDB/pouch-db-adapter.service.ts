@@ -36,7 +36,7 @@ export class PouchDbAdapterService {
     try {
       const credentials = await this.loadCredentials();
       await this.signIn(credentials);
-    } catch (e) { console.log(e); }
+    } catch {}
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -200,8 +200,7 @@ export class PouchDbAdapterService {
     try {
       const credentials = await this.localDb.get('_local/usercredentials');
       await this.localDb.remove(credentials);
-    } catch (e) {
-      console.log(e);
+    } catch {
     }
   }
 
@@ -223,7 +222,7 @@ export class PouchDbAdapterService {
   }
   public getUser(): Observable<User> {
     if (!this.user$) {
-      this.user$ = new BehaviorSubject<User>({displayName: 'local', local: false});
+      this.user$ = new BehaviorSubject<User>({displayName: 'local', local: true});
     }
     return this.user$.asObservable();
   }

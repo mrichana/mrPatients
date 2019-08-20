@@ -6,7 +6,8 @@
       </h2>
     </a>
     <span class="stretch"></span>
-    <span>{{(auth.user() | async).displayName}}</span>
+    <span *ngIf="localUser"><mat-icon>cloud_off</mat-icon> Χωρίς σύνδεση</span>
+    <span *ngIf="!localUser"><mat-icon>cloud_queue</mat-icon> {{userName}}</span>
     <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button>
   </mat-toolbar>
 
@@ -16,6 +17,6 @@
 </div>
 
 <mat-menu #settingsMenu="matMenu">
-  <button mat-menu-item [routerLink]="['/login']">Σύνδεση...</button>
-  <button mat-menu-item [routerLink]="['/logout']">Αποσύνδεση</button>
+  <button mat-menu-item [routerLink]="['/login']" [disabled]="!localUser">Σύνδεση...</button>
+  <button mat-menu-item [routerLink]="['/logout']"  [disabled]="localUser">Αποσύνδεση</button>
 </mat-menu>
