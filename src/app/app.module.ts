@@ -25,6 +25,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule} from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { QuillModule } from 'ngx-quill';
 
@@ -89,6 +90,7 @@ import { PasswordValidatorDirective } from './directives/password-validator.dire
     MatTabsModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
 
     QuillModule.forRoot(),
 

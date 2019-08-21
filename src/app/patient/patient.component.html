@@ -47,12 +47,12 @@
   <mat-card>
     <mat-chip-list selectable="false" *ngIf="patient.Diagnoses && patient.Diagnoses.length">
       <h5>Διαγνώσεις </h5>
-      <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true">{{Diagnosis}}</mat-chip>
+      <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true" color="primary" selected>{{Diagnosis}}</mat-chip>
     </mat-chip-list>
 
     <mat-chip-list selectable="false" *ngIf="patient.Allergies && patient.Allergies.length">
       <h5>Αλλεργίες </h5>
-      <mat-chip *ngFor="let Allergy of patient.Allergies" disableRipple="true">{{Allergy}}</mat-chip>
+      <mat-chip *ngFor="let Allergy of patient.Allergies" disableRipple="true" color="warn" selected>{{Allergy}}</mat-chip>
     </mat-chip-list>
 
     <mat-chip-list selectable="false" *ngIf="patient.Surgeries && patient.Surgeries.length">
@@ -62,7 +62,7 @@
 
     <mat-chip-list selectable="false" *ngIf="patient.Drugs && patient.Drugs.length">
       <h5>Φάρμακα </h5>
-      <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true">{{Drug}}</mat-chip>
+      <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" color="accent" selected>{{Drug}}</mat-chip>
     </mat-chip-list>
 
     <quill-view [content]="patient.Notes" format="json"></quill-view>

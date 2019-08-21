@@ -19,6 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'logout', component: LogoutComponent,
+    canActivate: [AuthGuard],
     data: { animation: 'logout' }
   },
   {

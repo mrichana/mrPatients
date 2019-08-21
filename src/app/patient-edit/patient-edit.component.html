@@ -87,7 +87,7 @@
         <mat-form-field class="chipLine">
           <mat-chip-list #diagnosesList aria-label="Διαγνώσεις" ngController="patientForm">
             <mat-chip *ngFor="let Diagnosis of patient.Diagnoses" disableRipple="true" removable="true"
-              (removed)="removeDiagnosis(Diagnosis)">
+              (removed)="removeDiagnosis(Diagnosis)" color="primary" selected>
               {{Diagnosis}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -101,7 +101,7 @@
         <mat-form-field class="chipLine">
           <mat-chip-list #allergiesList aria-label="Αλλεργίες" ngController="patientForm">
             <mat-chip *ngFor="let Allergy of patient.Allergies" disableRipple="true" removable="true"
-              (removed)="removeAllergy(Allergy)">
+              (removed)="removeAllergy(Allergy)" color="warn" selected>
               {{Allergy}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -129,7 +129,7 @@
         <mat-form-field class="chipLine">
           <mat-chip-list #drugsList aria-label="Φάρμακα" ngController="patientForm">
             <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" removable="true"
-              (removed)="removeDrug(Drug)">
+              (removed)="removeDrug(Drug)" color="accent" selected>
               {{Drug}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>

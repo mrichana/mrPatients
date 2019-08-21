@@ -6,8 +6,8 @@
       </h2>
     </a>
     <span class="stretch"></span>
-    <span *ngIf="localUser"><mat-icon>cloud_off</mat-icon> Χωρίς σύνδεση</span>
-    <span *ngIf="!localUser"><mat-icon>cloud_queue</mat-icon> {{userName}}</span>
+    <mat-icon *ngIf="localUser">cloud_off</mat-icon>
+    <mat-icon *ngIf="!localUser" [matTooltip]="userName">cloud_queue</mat-icon>
     <button mat-icon-button [matMenuTriggerFor]="settingsMenu"><mat-icon>settings</mat-icon></button>
   </mat-toolbar>
 

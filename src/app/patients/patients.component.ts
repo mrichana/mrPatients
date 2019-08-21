@@ -1,6 +1,6 @@
 import { PatientFormatingService } from './../services/patient-formating.service';
 import { PatientsService } from './../services/patients.service';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Patient } from '../services/patient.model';
 import * as moment from 'moment';
@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./patients.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PatientsComponent implements OnInit {
+export class PatientsComponent implements OnInit, OnDestroy {
 
   public searchString = '';
   public _sortOrder = 'normal';
@@ -79,6 +79,11 @@ export class PatientsComponent implements OnInit {
       });
       return patientsView;
     }));
+  }
+
+  ngOnDestroy() {
+    this.patientService.Unsubscribe();
+
   }
 
   public search(value: string): void {
