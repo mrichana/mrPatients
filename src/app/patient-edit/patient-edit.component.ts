@@ -5,11 +5,12 @@ import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MatChipInputEvent } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
+import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
 
 @Component({
   selector: 'app-patient-edit',
@@ -174,6 +175,10 @@ export class PatientEditComponent implements OnInit {
       this.patient.Surgeries.splice(index, 1);
       this.patientForm.form.markAsDirty();
     }
+  }
+
+  openSurgeryEditDialog() {
+    this.dialog.open(SurgeryEditDialogComponent);
   }
 
   addDrugs(event: MatChipInputEvent) {

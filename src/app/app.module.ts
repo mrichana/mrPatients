@@ -46,6 +46,7 @@ import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/v
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
+import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { PasswordValidatorDirective } from './directives/password-validator.dire
     VerifyDeleteDialogComponent,
     VerifyDropChangesDialogComponent,
     PasswordValidatorDirective,
+    SurgeryEditDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +103,10 @@ import { PasswordValidatorDirective } from './directives/password-validator.dire
     Title
   ],
   bootstrap: [AppComponent],
-  entryComponents: [VerifyDeleteDialogComponent, VerifyDropChangesDialogComponent]
+  entryComponents: [
+    VerifyDeleteDialogComponent,
+    VerifyDropChangesDialogComponent,
+    SurgeryEditDialogComponent,
+  ]
 })
 export class AppModule { }
