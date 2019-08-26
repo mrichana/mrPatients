@@ -120,7 +120,8 @@
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input [matChipInputFor]="surgeriesList" placeholder="Χειρουργεία..." matChipInputAddOnBlur="true"
-              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addSurgeries($event)">
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addSurgeries($event)"
+              [imask]=surgeryMask>>
           </mat-chip-list>
         </mat-form-field>
       </div>

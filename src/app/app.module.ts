@@ -47,6 +47,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
 
+import {IMaskModule} from 'angular-imask';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +95,8 @@ import { PasswordValidatorDirective } from './directives/password-validator.dire
     MatTooltipModule,
 
     QuillModule.forRoot(),
+
+    IMaskModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

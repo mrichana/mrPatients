@@ -19,6 +19,7 @@ import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/
 export class PatientEditComponent implements OnInit {
 
   public patient: Patient;
+  public surgeryMask = /^(.*?) *(\(?[0-9\\\/]*\)?)?$/;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
 

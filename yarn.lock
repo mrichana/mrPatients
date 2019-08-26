@@ -937,6 +937,13 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+angular-imask@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/angular-imask/-/angular-imask-5.2.0.tgz#e0a6f5d62cf57cf32bbc735635eaacf1d7aea0c3"
+  integrity sha512-qfx/byRsh/uy0bpk98wb4PYM5UsfNzQ+FgLiFcXzQnFA1zA3i4eSJAKUiktljr6pEj7NVIVKmb80Kf79Q7hxng==
+  dependencies:
+    imask "^5.2.0"
+
 angular2-uuid@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/angular2-uuid/-/angular2-uuid-1.1.1.tgz#72f03cd532b7f40032eb1ecfb9f8457384be956e"
@@ -3808,6 +3815,11 @@ image-size@~0.5.0:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
+
+imask@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/imask/-/imask-5.2.0.tgz#54039022115826e24dffad13020fc173df816556"
+  integrity sha512-udl82B8ppmCUATmmD6xF38pzoZTSaRrJ0TG2PfQIExVeg7znvx+4YX8XAFePo47zmz9oPnyVDoiyre3b30XjFw==
 
 immediate@3.0.6, immediate@~3.0.5:
   version "3.0.6"

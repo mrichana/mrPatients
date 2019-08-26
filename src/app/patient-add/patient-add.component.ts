@@ -19,6 +19,7 @@ export class PatientAddComponent implements OnInit {
 
   public patient: Patient;
   private patientParameters: string;
+  public surgeryMask = /^(.*?) *(\(?[0-9\\\/]*\)?)?$/;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
 
