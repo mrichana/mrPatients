@@ -1,3 +1,20 @@
-<p>
-  surgery-edit-dialog works!
-</p>
+<form class="formContainer" #surgeryForm="ngForm">
+  <div class="row">
+    <mat-form-field class="surgeryName">
+      <input matInput ngController="surgeryForm" placeholder="Χειρουργείο" type="text" [(ngModel)]="surgeryName"
+        name="surgery" #surgery="ngModel" required />
+      <mat-error>
+        Παρακαλώ προσθέστε τον τύπο του χειρουργείου.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="surgeryDate">
+      <input matInput ngController="surgeryForm" [matDatepicker]="picker" [max]="Today()"
+        placeholder="Ημερομηνία Χειρουργείου" [(ngModel)]="surgeryDate" name="surgeryDate" #surgerydate="ngModel" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>
+        Παρακαλώ ελέγξτε την ημερομηνία.
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
