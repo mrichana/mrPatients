@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import * as moment from 'moment';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-surgery-edit-dialog',
@@ -11,7 +12,9 @@ export class SurgeryEditDialogComponent implements OnInit {
   public surgeryName: string;
   public surgeryDate: moment.Moment;
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<SurgeryEditDialogComponent>
+  ) {}
 
   ngOnInit() {
   }
@@ -20,6 +23,9 @@ export class SurgeryEditDialogComponent implements OnInit {
     return new Date();
   }
 
-
-
+  Submit() {
+    console.log(this.surgeryName);
+    console.log(this.surgeryDate);
+    this.dialogRef.close({SurgeryName: this.surgeryName, SurgeryDate: this.surgeryDate});
+  }
 }

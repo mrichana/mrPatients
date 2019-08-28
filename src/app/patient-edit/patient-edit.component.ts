@@ -178,7 +178,20 @@ export class PatientEditComponent implements OnInit {
   }
 
   openSurgeryEditDialog() {
-    this.dialog.open(SurgeryEditDialogComponent);
+    this.dialog.open(SurgeryEditDialogComponent).afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
+      if ((result.SurgeryName || '').trim()) {
+        if (!this.patient.Surgeries) {
+          this.patient.Surgeries = [] as string[];
+        }
+
+        console.log(result);
+        console.log(result.SurgeryName.trim());
+        const value = result.SurgeryName.trim() +
+          (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : '');
+        this.patient.Surgeries.push(value);
+        this.patientForm.form.markAsDirty();
+      }
+    });
   }
 
   addDrugs(event: MatChipInputEvent) {
