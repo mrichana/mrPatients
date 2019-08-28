@@ -48,8 +48,6 @@ import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
 import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
 
-import {IMaskModule} from 'angular-imask';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,8 +95,6 @@ import {IMaskModule} from 'angular-imask';
     MatTooltipModule,
 
     QuillModule.forRoot(),
-
-    IMaskModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
