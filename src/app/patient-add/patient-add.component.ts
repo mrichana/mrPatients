@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
+import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
 
 @Component({
   selector: 'app-patient-add',
@@ -171,6 +172,23 @@ export class PatientAddComponent implements OnInit {
       this.patient.Surgeries.splice(index, 1);
       this.patientForm.form.markAsDirty();
     }
+  }
+
+  openSurgeryEditDialog() {
+    this.dialog.open(SurgeryEditDialogComponent).afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
+      if ((result.SurgeryName || '').trim()) {
+        if (!this.patient.Surgeries) {
+          this.patient.Surgeries = [] as string[];
+        }
+
+        console.log(result);
+        console.log(result.SurgeryName.trim());
+        const value = result.SurgeryName.trim() +
+          (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : '');
+        this.patient.Surgeries.push(value);
+        this.patientForm.form.markAsDirty();
+      }
+    });
   }
 
   addDrugs(event: MatChipInputEvent) {

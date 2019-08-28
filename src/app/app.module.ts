@@ -46,6 +46,7 @@ import { VerifyDropChangesDialogComponent } from './verify-drop-changes-dialog/v
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
+import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
 
 import {IMaskModule} from 'angular-imask';
 
@@ -66,6 +67,7 @@ import {IMaskModule} from 'angular-imask';
     VerifyDeleteDialogComponent,
     VerifyDropChangesDialogComponent,
     PasswordValidatorDirective,
+    SurgeryEditDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +107,10 @@ import {IMaskModule} from 'angular-imask';
     Title
   ],
   bootstrap: [AppComponent],
-  entryComponents: [VerifyDeleteDialogComponent, VerifyDropChangesDialogComponent]
+  entryComponents: [
+    VerifyDeleteDialogComponent,
+    VerifyDropChangesDialogComponent,
+    SurgeryEditDialogComponent,
+  ]
 })
 export class AppModule { }
