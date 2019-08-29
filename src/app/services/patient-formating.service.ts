@@ -35,6 +35,9 @@ export class PatientFormatingService {
     return '(' + this.age(patient).toString() + ')';
   }
 
+  public displaySurgery(surgery: {Name: string, Date?: moment.Moment}): string {
+    return surgery.Name + (surgery.Date ? ' (' + this.momentToString(surgery.Date) + ')' : '');
+  }
 
   public encodeURI(URI: string): string {
     return encodeURIComponent(URI);

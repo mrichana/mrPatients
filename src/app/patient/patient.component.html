@@ -57,7 +57,7 @@
 
     <mat-chip-list selectable="false" *ngIf="patient.Surgeries && patient.Surgeries.length">
       <h5>Χειρουργεία </h5>
-      <mat-chip *ngFor="let Surgery of patient.Surgeries" disableRipple="true">{{Surgery}}</mat-chip>
+      <mat-chip *ngFor="let Surgery of patient.Surgeries" disableRipple="true">{{patientFormat.displaySurgery(Surgery)}}</mat-chip>
     </mat-chip-list>
 
     <mat-chip-list selectable="false" *ngIf="patient.Drugs && patient.Drugs.length">

@@ -116,17 +116,17 @@
           <mat-chip-list #surgeriesList aria-label="Χειρουργεία" ngController="patientForm">
             <mat-chip *ngFor="let Surgery of patient.Surgeries" disableRipple="true" removable="true"
               (removed)="removeSurgery(Surgery)">
-              {{Surgery}}
+              {{patientFormat.displaySurgery(Surgery)}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input [matChipInputFor]="surgeriesList" placeholder="Χειρουργεία..." matChipInputAddOnBlur="true"
               [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addSurgeries($event)">
           </mat-chip-list>
         </mat-form-field>
-        <button type="button" mat-icon-button matSuffix (click)="openSurgeryEditDialog()">
+        <button type="button" mat-icon-button (click)="openSurgeryEditDialog()">
           <mat-icon>add</mat-icon>
         </button>
-  </div>
+      </div>
 
       <div class="row">
         <mat-form-field class="chipLine">
@@ -140,6 +140,9 @@
               [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addDrugs($event)">
           </mat-chip-list>
         </mat-form-field>
+        <button type="button" mat-icon-button (click)="openDrugEditDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
 
       <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις"

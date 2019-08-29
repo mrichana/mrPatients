@@ -19,7 +19,7 @@ export interface Patient {
 
     Allergies?: string[];
 
-    Surgeries?: string[];
+    Surgeries?: {Name: string, Date?: moment.Moment | number}[];
 
     Drugs?: string[];
 

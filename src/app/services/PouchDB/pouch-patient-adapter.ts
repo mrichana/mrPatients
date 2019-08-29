@@ -7,6 +7,12 @@ import * as moment from 'moment';
     providedIn: 'root'
 })
 export class PatientAdapter implements Adapter<Patient> {
+    private dateExport(date) {
+        return (
+            date ? (typeof date['unix'] === 'function' ? (<moment.Moment>date).unix() : date) : null
+        );
+    }
+
     export(item: Patient): any {
         return {
             id: item.id,
@@ -14,9 +20,7 @@ export class PatientAdapter implements Adapter<Patient> {
 
             FirstName: item.FirstName || null,
             LastName: item.LastName,
-            Birthdate: item.Birthdate ? (
-                typeof item.Birthdate['unix'] === 'function' ? (<moment.Moment>item.Birthdate).unix() : item.Birthdate
-            ) : null,
+            Birthdate: this.dateExport(item.Birthdate),
             Sex: !((typeof item.Sex === 'undefined') || item.Sex === null) ? item.Sex : null,
             Amka: item.Amka || null,
             Telephone: item.Telephone || null,
@@ -25,23 +29,27 @@ export class PatientAdapter implements Adapter<Patient> {
 
             Diagnoses: item.Diagnoses || null,
             Allergies: item.Allergies || null,
-            Surgeries: item.Surgeries || null,
+            Surgeries: item.Surgeries.map(surgery => {
+                return { Name: surgery.Name, Date: this.dateExport(surgery.Date) };
+            }),
             Drugs: item.Drugs || null,
 
             Notes: item.Notes || null,
         };
     }
+
+    private dateImport(date) {
+        return (date ? (typeof date['unix'] === 'function' ? date : moment.unix(<number>date)) : null);
+    }
+
     import(item: any): Patient {
         return {
             id: item.value.id,
-            LastUpdate: typeof item.value.LastUpdate['unix'] === 'function' ?
-                item.value.LastUpdate : moment.unix(<number>item.value.LastUpdate),
+            LastUpdate: this.dateImport(item.value.LastUpdate),
 
             FirstName: item.value.FirstName,
             LastName: item.value.LastName,
-            Birthdate: item.value.Birthdate ? (
-                typeof item.value.Birthdate['unix'] === 'function' ? item.value.Birthdate : moment.unix(<number>item.value.Birthdate)
-            ) : null,
+            Birthdate: this.dateImport(item.value.Birthdate),
             Sex: item.value.Sex,
             Amka: item.value.Amka,
             Telephone: item.value.Telephone,
@@ -50,7 +58,9 @@ export class PatientAdapter implements Adapter<Patient> {
 
             Diagnoses: item.value.Diagnoses,
             Allergies: item.value.Allergies,
-            Surgeries: item.value.Surgeries,
+            Surgeries: item.value.Surgeries.map( surgery => {
+                return {Name: surgery.Name, Date: this.dateImport(surgery.Date)};
+            }),
             Drugs: item.value.Drugs,
 
             Notes: item.value.Notes,

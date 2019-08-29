@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
-
+import { DrugEditDialogComponent} from '../drug-edit-dialog/drug-edit-dialog.component';
 @Component({
   selector: 'app-patient-edit',
   templateUrl: './patient-edit.component.html',
@@ -153,13 +153,12 @@ export class PatientEditComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    if ((value || '').trim()) {
-      if (!this.patient.Surgeries) {
-        this.patient.Surgeries = [] as string[];
-      }
-      this.patient.Surgeries.push(value.trim());
-      this.patientForm.form.markAsDirty();
-    }
+      const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
+      const result = regexDate.exec(value);
+      //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
+      // });
+
+    this.addSurgeriesCommon(result[1], (result[2] ? moment(result[2]) : undefined));
 
     // Reset the input value
     if (input) {
@@ -167,7 +166,30 @@ export class PatientEditComponent implements OnInit {
     }
   }
 
-  removeSurgery(Surgery: string) {
+  openSurgeryEditDialog() {
+    this.dialog.open(SurgeryEditDialogComponent).afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
+      if ((result.SurgeryName || '').trim()) {
+        this.addSurgeriesCommon(result.SurgeryName.trim() +
+          (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : ''));
+      }
+    });
+  }
+
+  addSurgeriesCommon(Name: string, Date?: moment.Moment) {
+    if ((Name || '').trim()) {
+      if (!this.patient.Surgeries) {
+        this.patient.Surgeries = [] as {Name: string, Date: moment.Moment}[];
+      }
+      this.patient.Surgeries.push({Name: Name.trim(), Date: Date});
+      this.patient.Surgeries.sort((a, b) => {
+        return (moment.isMoment(a.Date) ? a.Date.valueOf() : moment.now()) -
+          (moment.isMoment(b.Date) ? b.Date.valueOf() : moment.now());
+      });
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
+  removeSurgery(Surgery: {Name: string, Date?: moment.Moment}) {
     if (!this.patient.Surgeries) { return; }
     const index = this.patient.Surgeries.indexOf(Surgery);
 
@@ -177,38 +199,35 @@ export class PatientEditComponent implements OnInit {
     }
   }
 
-  openSurgeryEditDialog() {
-    this.dialog.open(SurgeryEditDialogComponent).afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
-      if ((result.SurgeryName || '').trim()) {
-        if (!this.patient.Surgeries) {
-          this.patient.Surgeries = [] as string[];
-        }
-
-        console.log(result);
-        console.log(result.SurgeryName.trim());
-        const value = result.SurgeryName.trim() +
-          (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : '');
-        this.patient.Surgeries.push(value);
-        this.patientForm.form.markAsDirty();
-      }
-    });
-  }
 
   addDrugs(event: MatChipInputEvent) {
     const input = event.input;
     const value = event.value;
 
-    if ((value || '').trim()) {
-      if (!this.patient.Drugs) {
-        this.patient.Drugs = [] as string[];
-      }
-      this.patient.Drugs.push(value.trim());
-      this.patientForm.form.markAsDirty();
-    }
+    this.addDrugsCommon(value);
 
     // Reset the input value
     if (input) {
       input.value = '';
+    }
+  }
+
+  openDrugEditDialog() {
+    this.dialog.open(DrugEditDialogComponent).afterClosed().subscribe((result: { Name: string, Dosage: string, Frequency: string}) => {
+      if ((result.Name || '').trim()) {
+        this.addDrugsCommon(result.Name.trim() + (result.Dosage ? ' ' + result.Dosage.trim() : '') +
+          (result.Frequency ? ' ' + result.Frequency : ''));
+      }
+    });
+  }
+
+  addDrugsCommon(Drug: string) {
+    if ((Drug || '').trim()) {
+      if (!this.patient.Drugs) {
+        this.patient.Drugs = [] as string[];
+      }
+      this.patient.Drugs.push(Drug.trim());
+      this.patientForm.form.markAsDirty();
     }
   }
 

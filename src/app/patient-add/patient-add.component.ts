@@ -1,16 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PatientEditComponent } from '../patient-edit/patient-edit.component';
 import { Title } from '@angular/platform-browser';
-import { Patient } from '../services/patient.model';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { NgForm } from '@angular/forms';
-import { MatDialog, MatChipInputEvent } from '@angular/material';
-import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
-import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-patient-add',

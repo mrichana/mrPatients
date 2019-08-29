@@ -49,6 +49,7 @@ import { PasswordValidatorDirective } from './directives/password-validator.dire
 import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
 
 import {IMaskModule} from 'angular-imask';
+import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {IMaskModule} from 'angular-imask';
     VerifyDropChangesDialogComponent,
     PasswordValidatorDirective,
     SurgeryEditDialogComponent,
+    DrugEditDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +113,7 @@ import {IMaskModule} from 'angular-imask';
     VerifyDeleteDialogComponent,
     VerifyDropChangesDialogComponent,
     SurgeryEditDialogComponent,
+    DrugEditDialogComponent
   ]
 })
 export class AppModule { }
