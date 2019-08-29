@@ -47,8 +47,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
 import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
-
-import {IMaskModule} from 'angular-imask';
 import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.component';
 
 @NgModule({
@@ -99,8 +97,6 @@ import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.com
     MatTooltipModule,
 
     QuillModule.forRoot(),
-
-    IMaskModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
