@@ -26,6 +26,7 @@ import { MatTabsModule} from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { QuillModule } from 'ngx-quill';
 
@@ -95,6 +96,7 @@ import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.com
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatAutocompleteModule,
 
     QuillModule.forRoot(),
 

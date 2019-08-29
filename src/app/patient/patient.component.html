@@ -62,7 +62,7 @@
 
     <mat-chip-list selectable="false" *ngIf="patient.Drugs && patient.Drugs.length">
       <h5>Φάρμακα </h5>
-      <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" color="accent" selected>{{Drug}}</mat-chip>
+      <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" color="accent" selected>{{patientFormat.displayDrug(Drug)}}</mat-chip>
     </mat-chip-list>
 
     <quill-view [content]="patient.Notes" format="json"></quill-view>

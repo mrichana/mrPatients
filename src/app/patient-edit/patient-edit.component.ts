@@ -7,11 +7,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
-import { DrugEditDialogComponent} from '../drug-edit-dialog/drug-edit-dialog.component';
+import { DrugEditDialogComponent } from '../drug-edit-dialog/drug-edit-dialog.component';
 @Component({
   selector: 'app-patient-edit',
   templateUrl: './patient-edit.component.html',
@@ -22,6 +22,7 @@ export class PatientEditComponent implements OnInit {
   public patient: Patient;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
+  public diagnosisListInput;
 
   panelOpenState = false;
 
@@ -153,10 +154,10 @@ export class PatientEditComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-      const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
-      const result = regexDate.exec(value);
-      //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
-      // });
+    const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
+    const result = regexDate.exec(value);
+    //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
+    // });
 
     this.addSurgeriesCommon(result[1], (result[2] ? moment(result[2]) : undefined));
 
@@ -167,20 +168,21 @@ export class PatientEditComponent implements OnInit {
   }
 
   openSurgeryEditDialog() {
-    this.dialog.open(SurgeryEditDialogComponent).afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
-      if ((result.SurgeryName || '').trim()) {
-        this.addSurgeriesCommon(result.SurgeryName.trim() +
-          (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : ''));
-      }
-    });
+    this.dialog.open(SurgeryEditDialogComponent, { width: '70%' })
+      .afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
+        if ((result.SurgeryName || '').trim()) {
+          this.addSurgeriesCommon(result.SurgeryName.trim() +
+            (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : ''));
+        }
+      });
   }
 
   addSurgeriesCommon(Name: string, Date?: moment.Moment) {
     if ((Name || '').trim()) {
       if (!this.patient.Surgeries) {
-        this.patient.Surgeries = [] as {Name: string, Date: moment.Moment}[];
+        this.patient.Surgeries = [] as { Name: string, Date: moment.Moment }[];
       }
-      this.patient.Surgeries.push({Name: Name.trim(), Date: Date});
+      this.patient.Surgeries.push({ Name: Name.trim(), Date: Date });
       this.patient.Surgeries.sort((a, b) => {
         return (moment.isMoment(a.Date) ? a.Date.valueOf() : moment.now()) -
           (moment.isMoment(b.Date) ? b.Date.valueOf() : moment.now());
@@ -189,7 +191,7 @@ export class PatientEditComponent implements OnInit {
     }
   }
 
-  removeSurgery(Surgery: {Name: string, Date?: moment.Moment}) {
+  removeSurgery(Surgery: { Name: string, Date?: moment.Moment }) {
     if (!this.patient.Surgeries) { return; }
     const index = this.patient.Surgeries.indexOf(Surgery);
 
@@ -204,7 +206,12 @@ export class PatientEditComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    this.addDrugsCommon(value);
+    // tslint:disable-next-line: max-line-length
+    const regexDrug = /^(?:(tb|tab|tabs|cp|cap|caps|amp|inj|sc\.inj|im\.inj|iv\.inj|sup|sups|supp|v\.sup|v\.sups|v\.supp) )?(.*) ([0-9].*)(?: (.+x.+))?$/;
+    // TODO: The above regex works only in simple cases...
+    const result = regexDrug.exec(value);
+
+    this.addDrugsCommon(result[2], result[1], result[3], result[4]);
 
     // Reset the input value
     if (input) {
@@ -213,25 +220,25 @@ export class PatientEditComponent implements OnInit {
   }
 
   openDrugEditDialog() {
-    this.dialog.open(DrugEditDialogComponent).afterClosed().subscribe((result: { Name: string, Dosage: string, Frequency: string}) => {
-      if ((result.Name || '').trim()) {
-        this.addDrugsCommon(result.Name.trim() + (result.Dosage ? ' ' + result.Dosage.trim() : '') +
-          (result.Frequency ? ' ' + result.Frequency : ''));
-      }
-    });
+    this.dialog.open(DrugEditDialogComponent, { width: '70%' })
+      .afterClosed().subscribe((result: { Name: string, Type: string, Concentration: string, Dosage: string }) => {
+        if ((result.Name || '').trim()) {
+          this.addDrugsCommon(result.Name, result.Type, result.Concentration, result.Dosage);
+        }
+      });
   }
 
-  addDrugsCommon(Drug: string) {
-    if ((Drug || '').trim()) {
+  addDrugsCommon(Name: string, Type?: string, Concentration?: string, Dosage?: string) {
+    if ((Name || '').trim()) {
       if (!this.patient.Drugs) {
-        this.patient.Drugs = [] as string[];
+        this.patient.Drugs = [] as {Name: string, Type?: string, Concentration?: string, Dosage?: string}[];
       }
-      this.patient.Drugs.push(Drug.trim());
+      this.patient.Drugs.push({Name, Type, Concentration, Dosage});
       this.patientForm.form.markAsDirty();
     }
   }
 
-  removeDrug(Drug: string) {
+  removeDrug(Drug: {Name: string, Type?: string, Concentration?: string, Dosage?: string}) {
     if (!this.patient.Drugs) { return; }
     const index = this.patient.Drugs.indexOf(Drug);
 

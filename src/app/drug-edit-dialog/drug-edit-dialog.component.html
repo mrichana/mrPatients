@@ -1,3 +1,55 @@
-<p>
-  drug-edit-dialog works!
-</p>
+<h1 mat-dialog-title>Προσθήκη Φάρμακου...</h1>
+<div mat-dialog-content>
+  <form class="formContainer" #drugForm="ngForm" id="form" (submit)="Submit()">
+    <div class="row">
+      <mat-form-field class="type">
+        <input matInput ngController="drugForm" placeholder="Μορφή" type="text" [(ngModel)]="type" name="type"
+          [matAutocomplete]='autoType' />
+        <mat-autocomplete #autoType="matAutocomplete">
+          <mat-option value="tabs">tabs</mat-option>
+          <mat-option value="caps">caps</mat-option>
+          <mat-option value="sc.inj">sc.inj</mat-option>
+          <mat-option value="im.inj">im.inj</mat-option>
+          <mat-option value="iv.inj">iv.inj</mat-option>
+          <mat-option value="supp">supp</mat-option>
+          <mat-option value="v.supp">v.supp</mat-option>
+          <mat-option value="tts">tts</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="name">
+        <input matInput ngController="drugForm" placeholder="Όνομα" type="text" [(ngModel)]="name" name="drug"
+          #drug="ngModel" required cdkFocusInitial />
+        <mat-error>
+          Παρακαλώ προσθέστε το όνομα του φαρμάκου.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="concentration">
+        <input matInput ngController="drugForm" placeholder="Συγκέντρωση" type="text" [(ngModel)]="concentration"
+          name="concentration">
+      </mat-form-field>
+      <mat-form-field class="dosage">
+        <input matInput ngController="drugForm" placeholder="Δοσολογία" type="text" [(ngModel)]="dosage" name="dosage"
+          [matAutocomplete]="autoDosage">
+        <mat-autocomplete #autoDosage="matAutocomplete">
+            <mat-option value="¼x1">¼x1</mat-option>
+            <mat-option value="½x1">½x1</mat-option>
+            <mat-option value="¾x1">¾x1</mat-option>
+            <mat-option value="1x1">1x1</mat-option>
+            <mat-option value="¼x2">¼x2</mat-option>
+            <mat-option value="½x2">½x2</mat-option>
+            <mat-option value="¾x2">¾x2</mat-option>
+            <mat-option value="1x2">1x2</mat-option>
+            <mat-option value="¼x3">¼x3</mat-option>
+            <mat-option value="½x3">½x3</mat-option>
+            <mat-option value="¾x3">¾x3</mat-option>
+            <mat-option value="1x3">1x3</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Απόρριψη</button>
+  <span class="stretch"></span>
+  <button mat-button color="warn" type="submit" form="form" [disabled]="drugForm.invalid">Αποθήκευση</button>
+</div>

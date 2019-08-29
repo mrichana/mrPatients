@@ -35,8 +35,15 @@ export class PatientFormatingService {
     return '(' + this.age(patient).toString() + ')';
   }
 
-  public displaySurgery(surgery: {Name: string, Date?: moment.Moment}): string {
+  public displaySurgery(surgery: { Name: string, Date?: moment.Moment }): string {
     return surgery.Name + (surgery.Date ? ' (' + this.momentToString(surgery.Date) + ')' : '');
+  }
+
+  public displayDrug(drug: { Name: string, Type?: string, Concentration?: string, Dosage?: string }): string {
+    return (drug.Type ? drug.Type + ' ' : '')
+      + drug.Name.trim() + (drug.Concentration ? ' ' + drug.Concentration : '')
+      + (drug.Dosage ? ' ' + drug.Dosage : '');
+
   }
 
   public encodeURI(URI: string): string {
@@ -62,21 +69,21 @@ export class PatientFormatingService {
     return (sum % 10 === 0 && sum > 0);
   }
 
-  public verifyAmka (amka: string): boolean {
+  public verifyAmka(amka: string): boolean {
     const amkaTest = PatientFormatingService.regexAmka.test(amka);
     return amkaTest && this.luhnTest(amka);
   }
 
-  public verifyBirthdate (birthdate: string): boolean {
+  public verifyBirthdate(birthdate: string): boolean {
     const Birthdate = moment(birthdate, 'DDMMYYYY');
     return Birthdate.isSameOrBefore(moment());
   }
 
-  public verifyMobile (mobile: string): boolean {
+  public verifyMobile(mobile: string): boolean {
     return PatientFormatingService.regexMobile.test(mobile);
   }
 
-  public verifyTelephone (telephone: string): boolean {
+  public verifyTelephone(telephone: string): boolean {
     return PatientFormatingService.regexTelephone.test(telephone);
   }
 
@@ -114,10 +121,10 @@ export class PatientFormatingService {
       if (result = PatientFormatingService.regexLastFirstName.exec(searchString)) {
         ret.FirstName = result[2] || '';
         ret.LastName = result[1] || '';
-       } else if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) {
+      } else if (result = PatientFormatingService.regexFirstLastName.exec(searchString)) {
         ret.FirstName = result[1] || '';
         ret.LastName = result[2] || '';
-       } else if (result = PatientFormatingService.regexLastName.exec(searchString)) {
+      } else if (result = PatientFormatingService.regexLastName.exec(searchString)) {
         ret.LastName = result[0] || '';
       }
     }

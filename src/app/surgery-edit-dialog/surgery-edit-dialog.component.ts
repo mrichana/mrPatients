@@ -24,8 +24,6 @@ export class SurgeryEditDialogComponent implements OnInit {
   }
 
   Submit() {
-    console.log(this.surgeryName);
-    console.log(this.surgeryDate);
     this.dialogRef.close({SurgeryName: this.surgeryName, SurgeryDate: this.surgeryDate});
   }
 }

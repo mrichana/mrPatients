@@ -21,7 +21,7 @@ export interface Patient {
 
     Surgeries?: {Name: string, Date?: moment.Moment | number}[];
 
-    Drugs?: string[];
+    Drugs?: {Name: string, Type?: string, Concentration?: string, Dosage?: string}[];
 
     Notes?: string;
 }

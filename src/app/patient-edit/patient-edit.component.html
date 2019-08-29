@@ -133,7 +133,7 @@
           <mat-chip-list #drugsList aria-label="Φάρμακα" ngController="patientForm">
             <mat-chip *ngFor="let Drug of patient.Drugs" disableRipple="true" removable="true"
               (removed)="removeDrug(Drug)" color="accent" selected>
-              {{Drug}}
+              {{patientFormat.displayDrug(Drug)}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input [matChipInputFor]="drugsList" placeholder="Φάρμακα..." matChipInputAddOnBlur="true"
