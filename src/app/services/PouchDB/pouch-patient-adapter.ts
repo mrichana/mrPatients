@@ -29,9 +29,9 @@ export class PatientAdapter implements Adapter<Patient> {
 
             Diagnoses: item.Diagnoses || null,
             Allergies: item.Allergies || null,
-            Surgeries: item.Surgeries.map(surgery => {
+            Surgeries: item.Surgeries ? item.Surgeries.map(surgery => {
                 return { Name: surgery.Name, Date: this.dateExport(surgery.Date) };
-            }),
+            }) : null,
             Drugs: item.Drugs || null,
 
             Notes: item.Notes || null,
@@ -58,9 +58,9 @@ export class PatientAdapter implements Adapter<Patient> {
 
             Diagnoses: item.value.Diagnoses,
             Allergies: item.value.Allergies,
-            Surgeries: item.value.Surgeries.map( surgery => {
+            Surgeries: item.value.Surgeries ? item.value.Surgeries.map( surgery => {
                 return {Name: surgery.Name, Date: this.dateImport(surgery.Date)};
-            }),
+            }) : null,
             Drugs: item.value.Drugs,
 
             Notes: item.value.Notes,
