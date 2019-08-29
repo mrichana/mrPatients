@@ -121,12 +121,12 @@
             </mat-chip>
             <input [matChipInputFor]="surgeriesList" placeholder="Χειρουργεία..." matChipInputAddOnBlur="true"
               [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addSurgeries($event)">
-            <button type="button" mat-icon-button matSuffix (click)="openSurgeryEditDialog()">
-              <mat-icon>add</mat-icon>
-            </button>
           </mat-chip-list>
         </mat-form-field>
-      </div>
+        <button type="button" mat-icon-button matSuffix (click)="openSurgeryEditDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+  </div>
 
       <div class="row">
         <mat-form-field class="chipLine">

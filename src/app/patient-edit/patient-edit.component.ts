@@ -5,7 +5,7 @@ import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MAT_DIALOG_DATA, MatChipInputEvent } from '@angular/material';
+import { MatDialog, MatChipInputEvent } from '@angular/material';
 import { VerifyDeleteDialogComponent } from '../verify-delete-dialog/verify-delete-dialog.component';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -20,19 +20,18 @@ import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-
 export class PatientEditComponent implements OnInit {
 
   public patient: Patient;
-  public surgeryMask = /^(.*?) *(\(?[0-9\\\/]*\)?)?$/;
 
   @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
 
   panelOpenState = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private patientService: PatientService,
-    private router: Router,
     public patientFormat: PatientFormatingService,
-    private dialog: MatDialog,
-    private titleService: Title
+    protected route: ActivatedRoute,
+    protected patientService: PatientService,
+    protected router: Router,
+    protected dialog: MatDialog,
+    protected titleService: Title
   ) { }
 
   ngOnInit() {
