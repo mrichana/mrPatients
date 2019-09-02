@@ -45,15 +45,16 @@ export class PouchDbAdapterService {
         return this.patientAdapter.import(d);
       }));
     };
-    const ret = concat(
-      getPatient(patientId),
-      fromEvent(this.localDb.changes({ since: 'now', live: true, doc_ids: [patientId], include_docs: true }), 'change').pipe(
-        map(d => {
-          return this.patientAdapter.import(d[0]['doc']);
-        })
-      )
-    );
-    return ret;
+    // const ret = concat(
+    //   getPatient(patientId),
+    //   fromEvent(this.localDb.changes({ since: 'now', live: true, doc_ids: [patientId], include_docs: true }), 'change').pipe(
+    //     map(d => {
+    //       return this.patientAdapter.import(d[0]['doc']);
+    //     })
+    //   )
+    // );
+    // return ret;
+    return getPatient(patientId);
   }
 
   public savePatient(patient: Patient) {
