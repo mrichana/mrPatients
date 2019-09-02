@@ -154,13 +154,14 @@ export class PatientEditComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
-    const result = regexDate.exec(value);
-    //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
-    // });
+    if ((value || '').trim()) {
+      const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
+      const result = regexDate.exec(value);
+      //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
+      // });
 
-    this.addSurgeriesCommon(result[1], (result[2] ? moment(result[2]) : undefined));
-
+      this.addSurgeriesCommon(result[1], (result[2] ? moment(result[2]) : undefined));
+    }
     // Reset the input value
     if (input) {
       input.value = '';
@@ -206,13 +207,14 @@ export class PatientEditComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // tslint:disable-next-line: max-line-length
-    const regexDrug = /^(?:(tb|tab|tabs|cp|cap|caps|amp|inj|sc\.inj|im\.inj|iv\.inj|sup|sups|supp|v\.sup|v\.sups|v\.supp) )?(.*) ([0-9].*)(?: (.+x.+))?$/;
-    // TODO: The above regex works only in simple cases...
-    const result = regexDrug.exec(value);
+    if ((value || '').trim()) {
+      // tslint:disable-next-line: max-line-length
+      const regexDrug = /^(?:(tb|tab|tabs|cp|cap|caps|amp|inj|sc\.inj|im\.inj|iv\.inj|sup|sups|supp|v\.sup|v\.sups|v\.supp) )?(.*) ([0-9].*)(?: (.+x.+))?$/;
+      // TODO: The above regex works only in simple cases...
+      const result = regexDrug.exec(value);
 
-    this.addDrugsCommon(result[2], result[1], result[3], result[4]);
-
+      this.addDrugsCommon(result[2], result[1], result[3], result[4]);
+    }
     // Reset the input value
     if (input) {
       input.value = '';
@@ -231,14 +233,14 @@ export class PatientEditComponent implements OnInit {
   addDrugsCommon(Name: string, Type?: string, Concentration?: string, Dosage?: string) {
     if ((Name || '').trim()) {
       if (!this.patient.Drugs) {
-        this.patient.Drugs = [] as {Name: string, Type?: string, Concentration?: string, Dosage?: string}[];
+        this.patient.Drugs = [] as { Name: string, Type?: string, Concentration?: string, Dosage?: string }[];
       }
-      this.patient.Drugs.push({Name, Type, Concentration, Dosage});
+      this.patient.Drugs.push({ Name, Type, Concentration, Dosage });
       this.patientForm.form.markAsDirty();
     }
   }
 
-  removeDrug(Drug: {Name: string, Type?: string, Concentration?: string, Dosage?: string}) {
+  removeDrug(Drug: { Name: string, Type?: string, Concentration?: string, Dosage?: string }) {
     if (!this.patient.Drugs) { return; }
     const index = this.patient.Drugs.indexOf(Drug);
 

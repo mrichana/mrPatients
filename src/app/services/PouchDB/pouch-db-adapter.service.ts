@@ -36,7 +36,7 @@ export class PouchDbAdapterService {
     try {
       const credentials = await this.loadCredentials();
       await this.signIn(credentials);
-    } catch {}
+    } catch { }
   }
 
   public loadPatient(patientId: string): Observable<Patient> {
@@ -58,7 +58,7 @@ export class PouchDbAdapterService {
   }
 
   public savePatient(patient: Patient) {
-    this.localDb.put({ _id: patient.id, _rev: patient['_rev'], value: this.patientAdapter.export(patient) });
+      this.localDb.put({ _id: patient.id, _rev: patient['_rev'], value: this.patientAdapter.export(patient) });
   }
 
   public deletePatient(patient: Patient) {
@@ -216,14 +216,14 @@ export class PouchDbAdapterService {
   }
 
   private setLocalUser() {
-    this.user$.next({displayName: 'local', local: true});
+    this.user$.next({ displayName: 'local', local: true });
   }
   private setRemoteUser(username: string) {
-    this.user$.next({displayName: username, local: false});
+    this.user$.next({ displayName: username, local: false });
   }
   public getUser(): Observable<User> {
     if (!this.user$) {
-      this.user$ = new BehaviorSubject<User>({displayName: 'local', local: true});
+      this.user$ = new BehaviorSubject<User>({ displayName: 'local', local: true });
     }
     return this.user$.asObservable();
   }
