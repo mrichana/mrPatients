@@ -79,6 +79,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
       });
       return patientsView;
     }));
+    // this.patientsView.subscribe(d => console.log('Updated'));
   }
 
   ngOnDestroy() {

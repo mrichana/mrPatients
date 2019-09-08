@@ -32,7 +32,25 @@ export class AppComponent {
     auth.user().subscribe(user => {
       this.localUser = user.local;
       this.userName = user.displayName;
+      this.notifyMe();
     });
+  }
+
+   notifyMe() {
+    // Let's check if the browser supports notifications
+    if (!('Notification' in window)) {
+      alert('This browser does not support system notifications');
+      // This is not how you would really do things if they aren't supported. :)
+    } else if (Notification.permission === 'granted') {
+      // If it's okay let's create a notification
+      var notification = new Notification('Hi there!');
+    }  else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function (permission) {
+      if (permission === 'granted') {
+          var notification = new Notification('Hi there!');
+        }
+      });
+    }
   }
 
   prepareRoute(outlet: RouterOutlet) {
