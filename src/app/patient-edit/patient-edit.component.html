@@ -145,6 +145,23 @@
         </button>
       </div>
 
+      <div class="row">
+        <mat-form-field class="chipLine">
+          <mat-chip-list #reminderList aria-label="Υπενθυμίσεις" ngController="patientForm">
+            <mat-chip *ngFor="let Reminder of patient.Reminders" disableRipple="true" removable="true"
+              (removed)="removeReminder(Reminder)">
+              {{patientFormat.displayReminder(Reminder)}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="reminderList" placeholder="Υπενθυμίσεις..." matChipInputAddOnBlur="true"
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addReminder($event)">
+          </mat-chip-list>
+        </mat-form-field>
+        <button type="button" mat-icon-button (click)="openReminderEditDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
       <quill-editor (onEditorCreated)="notesEditorCreated($event)" ngController="patientForm" placeholder="Σημειώσεις"
         [(ngModel)]="patient.Notes" name="notes" format="json">
         <div quill-editor-toolbar>

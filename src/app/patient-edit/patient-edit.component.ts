@@ -172,8 +172,7 @@ export class PatientEditComponent implements OnInit {
     this.dialog.open(SurgeryEditDialogComponent, { width: '70%' })
       .afterClosed().subscribe((result: { SurgeryName: string, SurgeryDate: moment.Moment }) => {
         if ((result.SurgeryName || '').trim()) {
-          this.addSurgeriesCommon(result.SurgeryName.trim() +
-            (result.SurgeryDate && result.SurgeryDate.isValid ? ' (' + this.patientFormat.momentToString(result.SurgeryDate) + ')' : ''));
+          this.addSurgeriesCommon(result.SurgeryName, result.SurgeryDate && result.SurgeryDate.isValid ? result.SurgeryDate : undefined);
         }
       });
   }
@@ -249,5 +248,58 @@ export class PatientEditComponent implements OnInit {
       this.patientForm.form.markAsDirty();
     }
   }
+
+  addReminders(event: MatChipInputEvent) {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      const regexDate = /(.*?)(?: *)(?:(?:\(([0-9\/\\\-\.]*)\))?)$/;
+      const result = regexDate.exec(value);
+      //   return {fulltext: result[0], name: result[1], date: result[2] ? moment(result[2]) : null};
+      // });
+
+      this.addRemindersCommon(result[1], (result[2] ? moment(result[2]) : undefined));
+    }
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  openReminderEditDialog() {
+    this.dialog.open(ReminderEditDialogComponent, { width: '70%' })
+      .afterClosed().subscribe((result: { ReminderName: string, ReminderDate: moment.Moment, Global: boolean }) => {
+        if (result.ReminderDate && result.ReminderDate.isValid) {
+          this.addRemindersCommon(result.ReminderName, result.ReminderDate);
+        }
+      });
+  }
+
+  addRemindersCommon(Name: string, Date: moment.Moment ) {
+    if ((Name || '').trim()) {
+      if (!this.patient.Reminders) {
+        this.patient.Reminders = [] as { Name: string, Date: moment.Moment }[];
+      }
+      this.patient.Reminders.push({ Name: Name.trim(), Date: Date });
+      this.patient.Reminders.sort((a, b) => {
+        return (moment.isMoment(a.Date) ? a.Date.valueOf() : moment.now()) -
+          (moment.isMoment(b.Date) ? b.Date.valueOf() : moment.now());
+      });
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
+  removeReminder(Reminder: { Name: string, Date: moment.Moment }) {
+    if (!this.patient.Reminders) { return; }
+    const index = this.patient.Reminders.indexOf(Reminder);
+
+    if (index >= 0) {
+      this.patient.Reminders.splice(index, 1);
+      this.patientForm.form.markAsDirty();
+    }
+  }
+
+
 
 }

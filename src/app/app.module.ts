@@ -49,6 +49,7 @@ import { environment } from '../environments/environment';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
 import { SurgeryEditDialogComponent } from './surgery-edit-dialog/surgery-edit-dialog.component';
 import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.component';
+import { ReminderEditDialogComponent } from './reminder-edit-dialog/reminder-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.com
     PasswordValidatorDirective,
     SurgeryEditDialogComponent,
     DrugEditDialogComponent,
+    ReminderEditDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,7 +113,8 @@ import { DrugEditDialogComponent } from './drug-edit-dialog/drug-edit-dialog.com
     VerifyDeleteDialogComponent,
     VerifyDropChangesDialogComponent,
     SurgeryEditDialogComponent,
-    DrugEditDialogComponent
+    DrugEditDialogComponent,
+    ReminderEditDialogComponent,
   ]
 })
 export class AppModule { }

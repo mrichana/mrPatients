@@ -1,6 +1,4 @@
 import * as moment from 'moment';
-import { Injectable } from '@angular/core';
-import { Adapter } from './adapter';
 
 export interface Patient {
     id: string;
@@ -22,6 +20,8 @@ export interface Patient {
     Surgeries?: {Name: string, Date?: moment.Moment | number}[];
 
     Drugs?: {Name: string, Type?: string, Concentration?: string, Dosage?: string}[];
+
+    Reminders?: {Name: string, Date: moment.Moment | number}[];
 
     Notes?: string;
 }

@@ -33,6 +33,9 @@ export class PatientAdapter implements Adapter<Patient> {
                 return { Name: surgery.Name, Date: this.dateExport(surgery.Date) };
             }) : null,
             Drugs: item.Drugs || null,
+            Reminders: item.Reminders ? item.Reminders.map(reminder => {
+                return { Name: reminder.Name, Date: this.dateExport(reminder.Date) };
+            }) : null,
 
             Notes: item.Notes || null,
         };
@@ -62,6 +65,9 @@ export class PatientAdapter implements Adapter<Patient> {
                 return {Name: surgery.Name, Date: this.dateImport(surgery.Date)};
             }) : null,
             Drugs: item.value.Drugs,
+            Remiders: item.value.Remiders ? item.value.Remiders.map( reminder => {
+                return {Name: reminder.Name, Date: this.dateImport(reminder.Date)};
+            }) : null,
 
             Notes: item.value.Notes,
 
