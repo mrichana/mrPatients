@@ -46,6 +46,10 @@ export class PatientFormatingService {
 
   }
 
+  public displayReminder(reminder: { Name: string, Date: moment.Moment }): string {
+    return reminder.Name + (reminder.Date ? ' (' + this.momentToString(reminder.Date) + ')' : '');
+  }
+
   public encodeURI(URI: string): string {
     return encodeURIComponent(URI);
   }

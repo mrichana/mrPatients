@@ -2,24 +2,22 @@
 <div mat-dialog-content>
   <form class="formContainer" #reminderForm="ngForm" id="form" (submit)="Submit()">
     <div class="row">
-      <mat-form-field class="reminderName">
-        <input matInput ngController="reminderForm" placeholder="Υπενθύμηση" type="text" [(ngModel)]="reminderName"
-          name="reminder" #reminder="ngModel" required cdkFocusInitial/>
-        <mat-error>
-          Παρακαλώ προσθέστε τον τύπο της υπενθύμησης.
-        </mat-error>
-      </mat-form-field>
       <mat-form-field class="reminderDate">
-        <input matInput ngController="reminderForm" [matDatepicker]="picker" [max]="Today()"
-          placeholder="Ημερομηνία Υπενθύμησης" [(ngModel)]="reminderDate" name="reminderDate" #reminderdate="ngModel" />
+        <input matInput ngController="reminderForm" [matDatepicker]="picker" [min]="Today()" required
+          placeholder="Ημερομηνία Υπενθύμησης" [(ngModel)]="reminderDate" name="reminderDate" #reminderdate="ngModel" cdkFocusInitial/>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error>
           Παρακαλώ ελέγξτε την ημερομηνία.
         </mat-error>
       </mat-form-field>
+      <mat-form-field class="reminderName">
+        <input matInput ngController="reminderForm" placeholder="Όνομα" type="text" [(ngModel)]="reminderName"
+          name="reminder" #reminder="ngModel" />
+      </mat-form-field>
     </div>
-  </form></div>
+  </form>
+</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Απόρριψη</button>
   <span class="stretch"></span>

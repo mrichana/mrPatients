@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 import { VerifyDropChangesDialogComponent } from '../verify-drop-changes-dialog/verify-drop-changes-dialog.component';
 import { SurgeryEditDialogComponent } from '../surgery-edit-dialog/surgery-edit-dialog.component';
 import { DrugEditDialogComponent } from '../drug-edit-dialog/drug-edit-dialog.component';
+import { ReminderEditDialogComponent } from '../reminder-edit-dialog/reminder-edit-dialog.component';
+
 @Component({
   selector: 'app-patient-edit',
   templateUrl: './patient-edit.component.html',

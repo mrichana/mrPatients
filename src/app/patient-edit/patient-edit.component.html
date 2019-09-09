@@ -154,7 +154,7 @@
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input [matChipInputFor]="reminderList" placeholder="Υπενθυμίσεις..." matChipInputAddOnBlur="true"
-              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addReminder($event)">
+              [matChipInputSeparatorKeyCodes]="[13,188]" (matChipInputTokenEnd)="addReminders($event)">
           </mat-chip-list>
         </mat-form-field>
         <button type="button" mat-icon-button (click)="openReminderEditDialog()">
