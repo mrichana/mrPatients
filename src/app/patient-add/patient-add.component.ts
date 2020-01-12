@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { PatientService } from '../services/patient.service';
 import { PatientFormatingService } from '../services/patient-formating.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-patient-add',
