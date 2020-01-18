@@ -13,8 +13,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('loginForm', { static: false }) public loginForm: NgForm;
-  @ViewChild('signupForm', { static: false }) public signupForm: NgForm;
+  @ViewChild('loginForm') public loginForm: NgForm;
+  @ViewChild('signupForm') public signupForm: NgForm;
 
   constructor(
     private auth: AuthService,

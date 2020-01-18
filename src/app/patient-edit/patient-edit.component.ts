@@ -23,7 +23,7 @@ export class PatientEditComponent implements OnInit {
 
   public patient: Patient;
 
-  @ViewChild('patientForm', { static: false }) public patientForm: NgForm;
+  @ViewChild('patientForm') public patientForm: NgForm;
   public diagnosisListInput;
 
   panelOpenState = false;
