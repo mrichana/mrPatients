@@ -141,10 +141,10 @@
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-9.0.1.tgz#7daaaab1ab518fe90689672f4845281a2c002492"
   integrity sha512-R0FLhAfylFIiRArhtLOUokOAVtWCH20ocRXo6E8HHOc3fbaUS9ci3rIbFZQkaAv9RgZfKewrcV6Wa3TY905w5g==
 
-"@angular/cdk@^9.0.0-rc.8":
-  version "9.0.0-rc.8"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-9.0.0-rc.8.tgz#278806a1d7115d24c04dc5d59eec1ca5116fc86f"
-  integrity sha512-t0tvZGCUiiO/SfsY4LYG8i49d2mlXE1k1qtyXhBB31dJPivkAF6tthDhwt0jMNOMb3hpTfinYHwJOBhy1u0a6w==
+"@angular/cdk@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-9.0.0.tgz#5734817ae97044f90d304fa0f25c9c1a7fa0bf96"
+  integrity sha512-2kYpyYbewIB6fubSIDMvSprJLNplRZoL/AtXW3od4dLyRxtzX+7iWTAtzUG/dhq8CKev0lpd1HENh5lLR/Lhjw==
   optionalDependencies:
     parse5 "^5.0.0"
 
@@ -216,15 +216,15 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-9.0.1.tgz#297f5f43ce5e843559a44ab81a89d42c0682b566"
   integrity sha512-e/8CGATX7C0ElwBk6QjCfWk7A6lwikrBR1cesNu1kNwneZkiIeIel1jklbDUT0NFr4C2/FdBu2Z3GbvDeCO8Vw==
 
-"@angular/material-moment-adapter@^9.0.0-rc.8":
-  version "9.0.0-rc.8"
-  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-9.0.0-rc.8.tgz#064dc10b349d6ee60c16c199541c8369361f1259"
-  integrity sha512-RyBC9myQfCltlo3IM3C72E37BEubflfGJJg0tnry8j5rx/5OwNcSegsFw0fnZyhqf0B1zzplgAl2/p9gxp5gPw==
+"@angular/material-moment-adapter@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-9.0.0.tgz#7670dde83dd9fb3f5e0812f58cb198f3bb6a3ae3"
+  integrity sha512-xKCSodpJYOOdZ30EH/kGRbjkwkKnupuQQbr9eRGlCoBdnXm4Wkwpjkwl9l4MbpWZRZFQgsqR1X5D9C8nZCPoiA==
 
-"@angular/material@^9.0.0-rc.8":
-  version "9.0.0-rc.8"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.0.0-rc.8.tgz#2d4be3a56eb49023323d86af7d1b650dea269f54"
-  integrity sha512-g7D9fZabdBNzAVDmECumGwC2SqQzL8LHsroUzRmLlXampyHqeUs57xdt0YCkdYY38frAc6eTxTPbIWxm6ERqNA==
+"@angular/material@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.0.0.tgz#655bfd4d4047337e84480b9f92be8e81af375b92"
+  integrity sha512-QxN2rmR5mvg2YE1NoIGWLpbnmcJq0iFidzy6odzvN17+XkoCJBZ65IdYsHrJgfwGpoIy6bywuixrDHHcSh9I5w==
 
 "@angular/platform-browser-dynamic@~9.0.1":
   version "9.0.1"
