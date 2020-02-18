@@ -9,6 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "electron": "ng build -c es5 --base-href ./ && tsc --p electron && electron .",
     "electron-restart": "tsc --p electron && electron ."
   },
