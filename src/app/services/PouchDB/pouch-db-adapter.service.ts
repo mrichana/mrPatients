@@ -93,6 +93,7 @@ export class PouchDbAdapterService {
     const ret = concat(
       patientList(),
       fromEvent(this.localDb.changes({ since: 'now', live: true }), 'change').pipe(switchMap(() => {
+        console.log("updatedList");
         return patientList();
       }))
     );

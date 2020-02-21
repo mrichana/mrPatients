@@ -43,7 +43,7 @@ export class PatientsService {
       this.filterBy$.pipe(debounceTime(300), distinctUntilChanged()),
       this.sortBy$.pipe(distinctUntilChanged()),
       this.sortOrder$.pipe(distinctUntilChanged())])
-      .subscribe(d => this.filteredPatients$.next(this.db.filterAndSortPatients(d)));
+      .subscribe(d => {console.log("updated filteredPatients$");this.filteredPatients$.next(this.db.filterAndSortPatients(d));});
   }
 
   public Unsubscribe() {

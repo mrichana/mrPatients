@@ -1,0 +1,1 @@
+npm run build -- --prod --stats-json --extra-webpack-config webpack.extra.js

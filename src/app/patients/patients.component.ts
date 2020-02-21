@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   selector: 'app-patients',
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PatientsComponent implements OnInit, OnDestroy {
 
@@ -22,15 +22,17 @@ export class PatientsComponent implements OnInit, OnDestroy {
   constructor(
     public patientService: PatientsService,
     public patientFormat: PatientFormatingService,
-    private titleService: Title
+    private titleService: Title,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
-  public patientsView: Observable<{ title: string, patients: { id: string, patient: Patient }[] }[]>;
+  public patientsView$: Observable<{ title: string, patients: { id: string, patient: Patient }[] }[]>;
 
   ngOnInit() {
     this.titleService.setTitle('Ασθενείς');
-    this.patientsView = this.patientService.filteredPatients$.pipe(map(d => {
+    this.patientService.filteredPatients$.subscribe(d=>{console.dir(d)});
+    this.patientsView$ = this.patientService.filteredPatients$.pipe(map(d => {
       const patientsView = [];
       let patients: { id: string, patient: Patient }[] = [];
       let compareString: string;
@@ -79,6 +81,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
       });
       return patientsView;
     }));
+    //this.patientsView.subscribe(d=>{console.log("patientsView updated"); console.dir(d); this.cdr.detectChanges()});
   }
 
   ngOnDestroy() {

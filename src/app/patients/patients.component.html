@@ -26,21 +26,21 @@
 <span style="display: flex">
   <mat-form-field id="search-field" class="stretch">
     <input matInput type="search" placeholder="Αναζήτηση..." (input)="search($event.target.value)" [ngModel]="searchString">
-    <button matSuffix mat-button *ngIf="!searchString">
+    <button matSuffix mat-button *ngIf="!searchString" aria-label="Αναζήτηση">
       <mat-icon>search</mat-icon>
     </button>
-    <button matSuffix mat-button *ngIf="searchString" (click)="search('')">
+    <button matSuffix mat-button *ngIf="searchString" (click)="search('')" aria-label="Νέα Αναζήτηση">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
-  <button mat-button [matMenuTriggerFor]="sortMenu">
+  <button mat-button [matMenuTriggerFor]="sortMenu" aria-label="Ορισμός Σειράς...">
     <mat-icon>sort</mat-icon>
   </button>
 </span>
 
 <div>
   <mat-nav-list id="patients-list">
-    <ng-container *ngFor="let patientTitle of patientsView | async">
+    <ng-container *ngFor="let patientTitle of patientsView$ | async">
       <h3 matSubheader>{{patientTitle.title}}</h3>
       <mat-list-item *ngFor="let patient of patientTitle.patients" [routerLink]="['/patient',patient.id]">
         <a class="stretch" [routerLink]="['/patient',patient.id]">{{patientFormat.displayName(patient.patient)}}
@@ -61,6 +61,12 @@
   </mat-nav-list>
 </div>
 
-<a mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]" [skipLocationChange]="true">
+<div>
+  <ul>
+    <li *ngFor="let p of patientsView$ | async">{{p.title}}</li>
+  </ul>
+</div>
+
+<button mat-fab class="fab-bottom-right" [routerLink]="['/patient/add', this.searchString]" [skipLocationChange]="true" aria-label="Προσθήκη...">
   <mat-icon>add</mat-icon>
-</a>
+</button>
