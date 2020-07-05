@@ -170,6 +170,7 @@
   },
   "defaultProject": "mrPatients",
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "analytics": "2c5cfa4b-ec99-48b7-ba6b-905368e331ad"
   }
 }
